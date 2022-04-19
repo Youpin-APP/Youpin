@@ -10,8 +10,11 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Youpin">
         <activity
+            android:name=".StoreActivity"
+            android:exported="false" />
+        <activity
             android:name=".DebugActivity"
-            android:exported="true" >
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

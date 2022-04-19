@@ -3,7 +3,11 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/Users/46172/AndroidStudioProjects/Youpin/app/src/main/res/layout/activity_debug.xml" value="0.1" />
+        <entry key="..\:/Users/46172/AndroidStudioProjects/Youpin/app/src/main/res/drawable/ic_launcher_foreground.xml" value="0.223" />
+        <entry key="..\:/Users/46172/AndroidStudioProjects/Youpin/app/src/main/res/layout/activity_debug.xml" value="0.34974358974358977" />
+        <entry key="..\:/Users/46172/AndroidStudioProjects/Youpin/app/src/main/res/layout/activity_store.xml" value="0.35520833333333335" />
+        <entry key="..\:/Users/46172/AndroidStudioProjects/Youpin/app/src/main/res/layout/item_grid.xml" value="0.35520833333333335" />
+        <entry key="..\:/Users/46172/AndroidStudioProjects/Youpin/app/src/main/res/layout/item_linear.xml" value="0.35520833333333335" />
       </map>
     </option>
   </component>

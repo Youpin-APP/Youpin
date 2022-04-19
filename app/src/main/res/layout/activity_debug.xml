@@ -4,11 +4,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     android:gravity="center_vertical"
     tools:context=".DebugActivity">
     <Button
         android:layout_width="match_parent"
         android:layout_height="80sp"
         android:text="用于跳转各个页面"/>
+    <Button
+        android:id="@+id/openStore"
+        android:layout_width="match_parent"
+        android:layout_height="80sp"
+        android:text="商品列表"/>
 
 </LinearLayout>
