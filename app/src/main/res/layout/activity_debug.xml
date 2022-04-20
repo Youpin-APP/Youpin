@@ -16,5 +16,10 @@
         android:layout_width="match_parent"
         android:layout_height="80sp"
         android:text="商品列表"/>
+    <Button
+        android:id="@+id/openHomePage"
+        android:layout_width="match_parent"
+        android:layout_height="80sp"
+        android:text="首页"/>
 
 </LinearLayout>

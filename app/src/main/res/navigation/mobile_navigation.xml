@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/navigation_home">
+
+    <fragment
+        android:id="@+id/navigation_home"
+        android:name="com.neu.youpin.fragments.HomeFragment"
+        tools:layout="@layout/fragment_home" />
+
+    <fragment
+        android:id="@+id/navigation_class"
+        android:name="com.neu.youpin.fragments.ClassFragment"
+        tools:layout="@layout/fragment_class" />
+
+    <fragment
+        android:id="@+id/navigation_shopping"
+        android:name="com.neu.youpin.fragments.ShoppingFragment"
+        tools:layout="@layout/fragment_shopping" />
+
+    <fragment
+        android:id="@+id/navigation_mine"
+        android:name="com.neu.youpin.fragments.MineFragment"
+        tools:layout="@layout/fragment_mine" />
+</navigation>

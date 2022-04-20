@@ -10,6 +10,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Youpin">
         <activity
+            android:name=".HomePageActivity"
+            android:exported="false" />
+        <activity
             android:name=".StoreActivity"
             android:exported="false" />
         <activity

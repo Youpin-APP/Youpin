@@ -15,5 +15,10 @@ class DebugActivity : AppCompatActivity() {
             val intent = Intent(this,StoreActivity::class.java)
             startActivity(intent)
         })
+        val openHomePage = findViewById<Button>(R.id.openHomePage)
+        openHomePage.setOnClickListener {
+            val intent = Intent(this, HomePageActivity::class.java)
+            startActivity(intent)
+        }
     }
 }
