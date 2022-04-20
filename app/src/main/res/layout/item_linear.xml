@@ -36,7 +36,7 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="12dp"
-            android:orientation="h orizontal"
+            android:orientation="horizontal"
             android:gravity="start"
             android:layout_marginTop="40dp">
             <TextView
