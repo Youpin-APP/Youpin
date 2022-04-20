@@ -1,10 +1,12 @@
 package com.neu.youpin
 
-import androidx.appcompat.app.AppCompatActivity
+import android.annotation.SuppressLint
 import android.os.Bundle
-import android.text.Layout
+import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+
 
 class StoreActivity : AppCompatActivity() {
     private val shopItemList = ArrayList<ShopItem>()
@@ -17,6 +19,14 @@ class StoreActivity : AppCompatActivity() {
         recyclerView.layoutManager = layoutManager
         val adapter = StoreListAdapter(shopItemList)
         recyclerView.adapter = adapter
+
+        val sendText = findViewById<TextView>(R.id.searchBox) //初始化文本
+        val left = resources.getDrawable(R.drawable.search_img)
+        left.setBounds(0, 0, 50, 50) //必须设置图片的大小否则没有作用
+
+        sendText.setCompoundDrawables(left, null, null, null) //设置图片left这里如果是右边就放到第二个参数里面依次对应
+
+
     }
 
     private fun initItem() {
