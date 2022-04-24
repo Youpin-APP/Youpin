@@ -21,5 +21,10 @@
         android:layout_width="match_parent"
         android:layout_height="80sp"
         android:text="首页"/>
+    <Button
+        android:id="@+id/openCart"
+        android:layout_width="match_parent"
+        android:layout_height="80sp"
+        android:text="购物车"/>
 
 </LinearLayout>

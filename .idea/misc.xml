@@ -3,12 +3,19 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/46172/AndroidStudioProjects/Youpin/app/src/main/res/drawable/cart_checkbox_selector.xml" value="0.1" />
+        <entry key="..\:/Users/46172/AndroidStudioProjects/Youpin/app/src/main/res/drawable/cart_checked.xml" value="0.233" />
+        <entry key="..\:/Users/46172/AndroidStudioProjects/Youpin/app/src/main/res/drawable/cart_checkout_button.xml" value="0.2465" />
+        <entry key="..\:/Users/46172/AndroidStudioProjects/Youpin/app/src/main/res/drawable/cart_unchecked.xml" value="0.233" />
         <entry key="..\:/Users/46172/AndroidStudioProjects/Youpin/app/src/main/res/drawable/ic_launcher_foreground.xml" value="0.223" />
         <entry key="..\:/Users/46172/AndroidStudioProjects/Youpin/app/src/main/res/drawable/search_box.xml" value="0.2865" />
         <entry key="..\:/Users/46172/AndroidStudioProjects/Youpin/app/src/main/res/drawable/search_box_button.xml" value="0.2085" />
         <entry key="..\:/Users/46172/AndroidStudioProjects/Youpin/app/src/main/res/layout-v23/activity_store.xml" value="0.29322916666666665" />
+        <entry key="..\:/Users/46172/AndroidStudioProjects/Youpin/app/src/main/res/layout/activity_cart.xml" value="0.23697916666666666" />
         <entry key="..\:/Users/46172/AndroidStudioProjects/Youpin/app/src/main/res/layout/activity_debug.xml" value="0.34974358974358977" />
         <entry key="..\:/Users/46172/AndroidStudioProjects/Youpin/app/src/main/res/layout/activity_store.xml" value="0.35520833333333335" />
+        <entry key="..\:/Users/46172/AndroidStudioProjects/Youpin/app/src/main/res/layout/cart_checkbox_selector.xml" value="0.23697916666666666" />
+        <entry key="..\:/Users/46172/AndroidStudioProjects/Youpin/app/src/main/res/layout/fragment_mine.xml" value="0.4484375" />
         <entry key="..\:/Users/46172/AndroidStudioProjects/Youpin/app/src/main/res/layout/item_grid.xml" value="0.35520833333333335" />
         <entry key="..\:/Users/46172/AndroidStudioProjects/Youpin/app/src/main/res/layout/item_linear.xml" value="0.35520833333333335" />
         <entry key="..\:/Users/46172/AndroidStudioProjects/Youpin/app/src/main/res/layout/search_box.xml" value="0.29322916666666665" />

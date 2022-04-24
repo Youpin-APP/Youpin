@@ -1,4 +1,4 @@
-package com.neu.youpin
+package com.neu.youpin.store
 
 import android.view.LayoutInflater
 import android.view.View
@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.neu.youpin.R
 
 class StoreListAdapter(private val itemList:List<ShopItem>) : RecyclerView.Adapter<StoreListAdapter.ViewHolder>() {
     inner class ViewHolder(view: View):RecyclerView.ViewHolder(view) {

@@ -1,11 +1,11 @@
-package com.neu.youpin
+package com.neu.youpin.store
 
-import android.annotation.SuppressLint
 import android.os.Bundle
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.neu.youpin.R
 
 
 class StoreActivity : AppCompatActivity() {
@@ -31,7 +31,7 @@ class StoreActivity : AppCompatActivity() {
 
     private fun initItem() {
         repeat(10) {
-            shopItemList.add(ShopItem("furry",R.drawable.item_img,"11415元"))
+            shopItemList.add(ShopItem("furry", R.drawable.item_img,"11415元"))
         }
     }
 }
