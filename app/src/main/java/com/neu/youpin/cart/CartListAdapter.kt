@@ -1,5 +1,6 @@
 package com.neu.youpin.cart
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -34,10 +35,11 @@ class CartListAdapter(private var itemList: Vector<CartItem>) :
         return ViewHolder(view)
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val cartItem = itemList[position]
         holder.cartItemImg.setImageResource(cartItem.pic)
-        holder.cartItemPrice.text = cartItem.price
+        holder.cartItemPrice.text = cartItem.price.toString() + "元"
         holder.cartItemName.text = cartItem.name
         holder.cartItemCount.text = cartItem.count.toString()
         holder.cartItemType.text = cartItem.type
