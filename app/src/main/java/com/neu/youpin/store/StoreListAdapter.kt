@@ -16,7 +16,7 @@ class StoreListAdapter(private val itemList:List<ShopItem>) : RecyclerView.Adapt
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_linear,parent,false)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.store_item_linear,parent,false)
         return ViewHolder(view)
     }
 

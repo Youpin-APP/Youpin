@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="test_itemName">商品名称</string>
+    <string name="test_itemPrice">114514元</string>
+    <string name="editCartFinish">完成</string>
+</resources>

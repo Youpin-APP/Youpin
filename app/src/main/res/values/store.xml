@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="test_itemName">商品名称</string>
-    <string name="test_itemPrice">114514元</string>
     <string name="test_sales_volume">月销1000件</string>
     <string name="test_comment_count">65535条评论</string>
     <string name="test_good_comment_rate">1%好评</string>

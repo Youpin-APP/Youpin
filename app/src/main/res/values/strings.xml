@@ -2,5 +2,10 @@
     <string name="app_name">Youpin</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="test_item_type">蓝色</string>
+    <string name="cartName">购物车</string>
+    <string name="editCart">编辑</string>
+    <string name="cartCheckoutName">结算</string>
+    <string name="cartDeleteName">删除</string>
 
 </resources>

@@ -2,6 +2,6 @@
 <shape xmlns:android="http://schemas.android.com/apk/res/android"
     android:shape="ring"
     android:useLevel="false"
-    android:thickness="3dp">
+    android:thickness="1dp">
     <solid android:color="#A9A9A9"/>
 </shape>
