@@ -10,6 +10,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Youpin">
         <activity
+            android:name=".user.UserActivity"
+            android:exported="false" />
+        <activity
             android:name=".cart.CartActivity"
             android:exported="false" />
         <activity

@@ -7,6 +7,7 @@ import android.view.View
 import android.widget.Button
 import com.neu.youpin.cart.CartActivity
 import com.neu.youpin.store.StoreActivity
+import com.neu.youpin.user.UserActivity
 
 class DebugActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -25,6 +26,11 @@ class DebugActivity : AppCompatActivity() {
         val openCart = findViewById<Button>(R.id.openCart)
         openCart.setOnClickListener {
             val intent = Intent(this, CartActivity::class.java)
+            startActivity(intent)
+        }
+        val openUser = findViewById<Button>(R.id.openUser)
+        openUser.setOnClickListener {
+            val intent = Intent(this, UserActivity::class.java)
             startActivity(intent)
         }
     }

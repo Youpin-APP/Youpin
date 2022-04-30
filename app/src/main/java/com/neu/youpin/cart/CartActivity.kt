@@ -80,6 +80,9 @@ class CartActivity : AppCompatActivity() , OnItemClickListener{
                 cartItemList.removeIf { it.selected }
                 adapter.notifyDataSetChanged()
                 totalPrice = 0
+                for (cartItem in cartItemList) {
+                    totalPrice += cartItem.price * cartItem.count
+                }
                 cartTotalPrice.text = "合计: "+totalPrice.toString()+"元"
             }
         }
