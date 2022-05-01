@@ -3,7 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="140dp"
-    android:gravity="center_vertical">
+    android:gravity="center_vertical"
+    android:id="@+id/storeItemBox">
     <ImageView
         android:id="@+id/thumbnailImage"
         android:layout_width="140dp"
@@ -40,6 +41,7 @@
             android:gravity="start"
             android:layout_marginTop="40dp">
             <TextView
+                android:id="@+id/itemSellingCount"
                 android:layout_width="wrap_content"
                 android:layout_height="12dp"
                 android:text="@string/test_sales_volume"
@@ -52,6 +54,7 @@
                 android:layout_height="match_parent"
                 android:background="#A8A7A7" />
             <TextView
+                android:id="@+id/itemRecommendCount"
                 android:layout_width="wrap_content"
                 android:layout_height="12dp"
                 android:text="@string/test_comment_count"
@@ -64,6 +67,7 @@
                 android:layout_height="match_parent"
                 android:background="#A8A7A7" />
             <TextView
+                android:id="@+id/itemPositiveRate"
                 android:layout_width="wrap_content"
                 android:layout_height="12dp"
                 android:text="@string/test_good_comment_rate"

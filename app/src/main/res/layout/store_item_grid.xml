@@ -1,6 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/storeItemBox"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="235dp"
+    android:orientation="vertical"
+    android:background="@drawable/rect_box"
+    android:padding="5dp"
+    android:layout_marginBottom="10dp">
+    <ImageView
+        android:id="@+id/thumbnailImage"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:src="@drawable/item_img"/>
+    <TextView
+        android:id="@+id/itemName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:text="@string/test_itemName"
+        android:textColor="@color/black"/>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
+        <TextView
+            android:id="@+id/itemPrice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/test_itemPrice"
+            android:textColor="#FE4301"
+            android:textSize="15sp"/>
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1"/>
+        <TextView
+            android:id="@+id/itemPositiveRate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="98%好评"
+            android:textSize="10sp"
+            tools:ignore="SmallSp" />
+    </LinearLayout>
 
-</RelativeLayout>
+</LinearLayout>
