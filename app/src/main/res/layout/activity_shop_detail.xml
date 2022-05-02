@@ -1,0 +1,282 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:scrollbars="vertical"
+    android:orientation="vertical"
+    tools:context=".store.ShopDetailActivity">
+
+<com.donkingliang.consecutivescroller.ConsecutiveScrollerLayout
+    android:id="@+id/scrollerLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:scrollbars="vertical"
+    tools:context=".store.ShopDetailActivity">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="410dp">
+<!--        <ImageView-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="410dp"-->
+<!--            android:src="@drawable/shop_item_3080"-->
+<!--            android:text="@string/home_str"-->
+<!--            />-->
+        <com.youth.banner.Banner
+            android:id="@+id/ShopDetailBanner"
+            android:layout_width="match_parent"
+            android:layout_height="410dp" />
+        <LinearLayout
+            android:layout_marginTop="40dp"
+            android:layout_width="match_parent"
+            android:layout_height="24dp"
+            android:gravity="center_horizontal">
+            <ImageButton
+                android:id="@+id/ShopDetailBack"
+                android:layout_marginEnd="260dp"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:scaleType="fitCenter"
+                android:src="@drawable/icon_detail_nav_back_white"
+                android:background="#00000000"/>
+            <ImageButton
+                android:id="@+id/ShopDetailShare"
+                android:layout_marginStart="30dp"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:scaleType="fitCenter"
+                android:src="@drawable/icon_detail_nav_share_white"
+                android:background="#00000000"/>
+            <ImageButton
+                android:id="@+id/ShopDetailMore"
+                android:layout_marginStart="10dp"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:scaleType="fitCenter"
+                android:src="@drawable/icon_detail_nav_more_white"
+                android:background="#00000000"/>
+        </LinearLayout>
+
+    </FrameLayout>
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:background="@color/grey_bg_color"/>
+
+    <FrameLayout
+        android:layout_marginStart="15dp"
+        android:layout_marginEnd="15dp"
+        android:background="@drawable/custom_price_show_background"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal">
+        <RelativeLayout
+            android:layout_marginTop="13dp"
+            android:layout_width="200dp"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:layout_gravity="start">
+
+            <TextView
+                android:id="@+id/ShopDetailItemSign"
+                android:layout_width="10dp"
+                android:layout_height="match_parent"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="10dp"
+                android:text="@string/shop_price_sign"
+                android:textColor="@color/white"
+                android:textSize="11sp" />
+
+            <TextView
+                android:id="@+id/ShopDetailItemPrice"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignBaseline="@id/ShopDetailItemSign"
+                android:layout_alignParentBottom="true"
+                android:layout_marginStart="30dp"
+                android:text="@string/item_price_text"
+                android:textColor="@color/white"
+                android:textSize="20sp" />
+
+        </RelativeLayout>
+        <LinearLayout
+            android:layout_marginTop="12dp"
+            android:layout_marginEnd="15dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:layout_gravity="end">
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:scaleType="fitCenter"
+                android:src="@drawable/icon_collection_default_v2"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/ShopDetailCollection"
+                android:textColor="@color/white"
+                android:textSize="8sp"
+                tools:ignore="SmallSp" />
+
+        </LinearLayout>
+    </FrameLayout>
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:background="@color/grey_bg_color"/>
+    <TextView
+        android:layout_marginStart="15dp"
+        android:layout_marginEnd="15dp"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:text="@string/ShopDetailItemTest"
+        android:textColor="@color/black"/>
+    <TextView
+        android:layout_marginStart="15dp"
+        android:layout_marginEnd="15dp"
+        android:layout_width="match_parent"
+        android:layout_height="25dp"
+        android:text="@string/ShopDetailItemMoreTest"
+        android:textColor="@color/grey_color"/>
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:background="@color/grey_bg_color"/>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:orientation="horizontal"
+        android:gravity="center">
+        <ImageView
+            android:layout_marginEnd="10dp"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/icon_manufacturer_location_2"
+            android:layout_alignBottom="@+id/ShopDetailUserLocation"
+            android:layout_toStartOf="@+id/ShopDetailUserLocation"/>
+        <TextView
+            android:id="@+id/ShopDetailUserLocation"
+            android:layout_width="300dp"
+            android:layout_height="20dp"
+            android:text="@string/ShopDetailUserLocation"
+            android:textColor="@color/black" />
+        <ImageView
+            android:layout_marginStart="20dp"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/icon_public_arrow_gray"
+            android:layout_alignBottom="@+id/ShopDetailUserLocation"
+            android:layout_toEndOf="@+id/ShopDetailUserLocation"/>
+    </RelativeLayout>
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:background="@color/grey_bg_color"/>
+
+    <LinearLayout
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:background="@color/white"
+        android:gravity="center_vertical">
+        <TextView
+            android:layout_marginStart="15dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/ShopDetailItemDetail"
+            android:textColor="@color/black"
+            android:textSize="15sp"/>
+    </LinearLayout>
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/ShopDetailRecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="@color/grey_bg_color"/>
+
+</com.donkingliang.consecutivescroller.ConsecutiveScrollerLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:background="@color/white"
+        android:layout_gravity="bottom">
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center">
+            <ImageButton
+                android:id="@+id/ShopDetailService"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:scaleType="fitCenter"
+                android:src="@drawable/icon_order_service_purple"
+                android:background="#00000000"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/ShopDetailService"
+                android:textSize="15sp"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_marginStart="20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center">
+            <ImageButton
+                android:id="@+id/ShopDetailCart"
+                android:layout_marginEnd="0dp"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:scaleType="fitCenter"
+                android:src="@drawable/icon_shopping_cart_black"
+                android:background="#00000000"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/ShopDetailCart"
+                android:textSize="15sp"/>
+        </LinearLayout>
+
+        <Button
+            android:layout_marginStart="80dp"
+            android:id="@+id/ShopDetailAddCart"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:text="@string/ShopDetailAddCart"
+            android:background="@drawable/custom_button_cart_background"
+            android:gravity="center"
+            android:textColor="@color/white"/>
+
+        <Button
+            android:layout_marginStart="10dp"
+            android:id="@+id/ShopDetailBuy"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:text="@string/ShopDetailBuy"
+            android:background="@drawable/custom_button_buy_background"
+            android:gravity="center"
+            android:textColor="@color/white"/>
+
+    </LinearLayout>
+</FrameLayout>

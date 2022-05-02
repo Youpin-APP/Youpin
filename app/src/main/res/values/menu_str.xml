@@ -3,4 +3,21 @@
     <string name="class_str">分类</string>
     <string name="shopping_str">购物车</string>
     <string name="mine_str">我的</string>
+    <string name="home_search_box">请输入你想要查询的商品</string>
+    <string name="search_image_home">image</string>
+    <string name="test">测试样例</string>
+    <string name="item_price_text">4999</string>
+    <string name="shop_price_sign">￥</string>
+    <string name="HuaBei">支持花呗付款</string>
+    <string name="ShopDetailCollection">收藏</string>
+    <string name="ShopDetailItemTest">七彩虹（Colorful））火神iGame GeForce RTX 3080 Vulcan OC 12G 电竞游戏光追电脑显卡</string>
+    <string name="ShopDetailItemMoreTest">LHR 1800Mhz GDDR6X</string>
+    <string name="ShopDetailBandTest">七彩虹</string>
+    <string name="ShopDetailDateTest">生产周期:n天</string>
+    <string name="ShopDetailUserLocation">无法获取配送地址</string>
+    <string name="ShopDetailService">客服</string>
+    <string name="ShopDetailCart">购物车</string>
+    <string name="ShopDetailItemDetail">商品介绍</string>
+    <string name="ShopDetailBuy">立即购买</string>
+    <string name="ShopDetailAddCart">加入购物车</string>
 </resources>

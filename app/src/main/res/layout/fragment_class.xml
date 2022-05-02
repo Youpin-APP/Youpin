@@ -3,12 +3,38 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".fragments.ClassFragment">
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView
+
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/HomeContainer"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/class_str" />
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        tools:ignore="MissingClass">
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tab_layout_class"
+            android:layout_width="match_parent"
+            android:layout_height="44dp"
+            app:tabIndicatorColor="@color/white"
+            app:tabIndicatorHeight="2dp"
+            app:tabIndicatorFullWidth="false"
+            app:tabIndicatorGravity="bottom"
+            app:tabMaxWidth="80dp"
+            app:tabMinWidth="80dp"
+            app:tabMode="scrollable"
+            app:tabContentStart="-10dp"
+            app:tabGravity="fill"
+            app:tabPaddingBottom="-1dp"
+            app:tabPaddingEnd="-1dp"
+            app:tabPaddingStart="-1dp"
+            app:tabPaddingTop="-1dp"
+            app:tabBackground="@color/purple"
+            app:tabRippleColor="@android:color/transparent"
+            app:tabTextAppearance="@style/HomeTabTextAppearance"
+            app:tabTextColor="@color/white"/>
+    </androidx.viewpager.widget.ViewPager>
 
 </FrameLayout>

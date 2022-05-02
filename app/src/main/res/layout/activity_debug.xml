@@ -26,6 +26,13 @@
         android:layout_width="match_parent"
         android:layout_height="80sp"
         android:text="购物车"/>
+
+    <Button
+        android:id="@+id/openShopDetail"
+        android:layout_width="match_parent"
+        android:layout_height="80sp"
+        android:text="商品详情"/>
+
     <Button
         android:id="@+id/openUser"
         android:layout_width="match_parent"
@@ -37,5 +44,6 @@
         android:layout_width="match_parent"
         android:layout_height="80sp"
         android:text="用户订单"/>
+
 
 </LinearLayout>

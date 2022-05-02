@@ -7,6 +7,7 @@ import android.view.View
 import android.widget.Button
 import com.neu.youpin.cart.CartActivity
 import com.neu.youpin.order.OrderActivity
+import com.neu.youpin.store.ShopDetailActivity
 import com.neu.youpin.store.StoreActivity
 import com.neu.youpin.user.UserActivity
 
@@ -27,6 +28,11 @@ class DebugActivity : AppCompatActivity() {
         val openCart = findViewById<Button>(R.id.openCart)
         openCart.setOnClickListener {
             val intent = Intent(this, CartActivity::class.java)
+            startActivity(intent)
+        }
+        val openShopDetail = findViewById<Button>(R.id.openShopDetail)
+        openShopDetail.setOnClickListener {
+            val intent = Intent(this, ShopDetailActivity::class.java)
             startActivity(intent)
         }
         val openUser = findViewById<Button>(R.id.openUser)
