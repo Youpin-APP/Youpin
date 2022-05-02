@@ -45,5 +45,10 @@
         android:layout_height="80sp"
         android:text="用户订单"/>
 
+    <Button
+        android:id="@+id/openLogin"
+        android:layout_width="match_parent"
+        android:layout_height="80sp"
+        android:text="用户登录"/>
 
 </LinearLayout>
