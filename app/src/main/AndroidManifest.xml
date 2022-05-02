@@ -10,6 +10,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Youpin">
         <activity
+            android:name=".order.OrderActivity"
+            android:exported="false" />
+        <activity
             android:name=".user.UserActivity"
             android:exported="false" />
         <activity

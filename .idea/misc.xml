@@ -20,6 +20,7 @@
         <entry key="..\:/Users/46172/AndroidStudioProjects/Youpin/app/src/main/res/layout-v23/activity_store.xml" value="0.29322916666666665" />
         <entry key="..\:/Users/46172/AndroidStudioProjects/Youpin/app/src/main/res/layout/activity_cart.xml" value="0.1" />
         <entry key="..\:/Users/46172/AndroidStudioProjects/Youpin/app/src/main/res/layout/activity_debug.xml" value="0.1" />
+        <entry key="..\:/Users/46172/AndroidStudioProjects/Youpin/app/src/main/res/layout/activity_order.xml" value="0.2101851851851852" />
         <entry key="..\:/Users/46172/AndroidStudioProjects/Youpin/app/src/main/res/layout/activity_store.xml" value="0.35520833333333335" />
         <entry key="..\:/Users/46172/AndroidStudioProjects/Youpin/app/src/main/res/layout/activity_user.xml" value="0.3333333333333333" />
         <entry key="..\:/Users/46172/AndroidStudioProjects/Youpin/app/src/main/res/layout/cart_checkbox_selector.xml" value="0.23697916666666666" />
@@ -27,6 +28,8 @@
         <entry key="..\:/Users/46172/AndroidStudioProjects/Youpin/app/src/main/res/layout/fragment_mine.xml" value="0.4484375" />
         <entry key="..\:/Users/46172/AndroidStudioProjects/Youpin/app/src/main/res/layout/item_grid.xml" value="0.35520833333333335" />
         <entry key="..\:/Users/46172/AndroidStudioProjects/Youpin/app/src/main/res/layout/item_linear.xml" value="0.35520833333333335" />
+        <entry key="..\:/Users/46172/AndroidStudioProjects/Youpin/app/src/main/res/layout/order_item.xml" value="0.2101851851851852" />
+        <entry key="..\:/Users/46172/AndroidStudioProjects/Youpin/app/src/main/res/layout/order_item_multi.xml" value="0.35520833333333335" />
         <entry key="..\:/Users/46172/AndroidStudioProjects/Youpin/app/src/main/res/layout/search_box.xml" value="0.29322916666666665" />
         <entry key="..\:/Users/46172/AndroidStudioProjects/Youpin/app/src/main/res/layout/searchbox.xml" value="0.29322916666666665" />
         <entry key="..\:/Users/46172/AndroidStudioProjects/Youpin/app/src/main/res/layout/store_item_grid.xml" value="0.19166666666666668" />

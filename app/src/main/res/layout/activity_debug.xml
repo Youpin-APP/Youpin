@@ -32,4 +32,10 @@
         android:layout_height="80sp"
         android:text="用户信息"/>
 
+    <Button
+        android:id="@+id/openOrder"
+        android:layout_width="match_parent"
+        android:layout_height="80sp"
+        android:text="用户订单"/>
+
 </LinearLayout>

@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Button
 import com.neu.youpin.cart.CartActivity
+import com.neu.youpin.order.OrderActivity
 import com.neu.youpin.store.StoreActivity
 import com.neu.youpin.user.UserActivity
 
@@ -31,6 +32,11 @@ class DebugActivity : AppCompatActivity() {
         val openUser = findViewById<Button>(R.id.openUser)
         openUser.setOnClickListener {
             val intent = Intent(this, UserActivity::class.java)
+            startActivity(intent)
+        }
+        val openOrder = findViewById<Button>(R.id.openOrder)
+        openOrder.setOnClickListener {
+            val intent = Intent(this, OrderActivity::class.java)
             startActivity(intent)
         }
     }
