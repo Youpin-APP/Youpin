@@ -51,4 +51,10 @@
         android:layout_height="80sp"
         android:text="用户登录"/>
 
+    <Button
+        android:id="@+id/openCreateOrder"
+        android:layout_width="match_parent"
+        android:layout_height="80sp"
+        android:text="生成用户订单"/>
+
 </LinearLayout>
