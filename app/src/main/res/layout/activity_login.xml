@@ -1,9 +1,115 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".login.LoginActivity">
+    tools:context=".login.LoginActivity"
+    android:orientation="vertical">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+
+    <LinearLayout
+        android:layout_marginTop="40dp"
+        android:layout_width="match_parent"
+        android:layout_height="24dp"
+        android:gravity="center_horizontal">
+        <ImageButton
+            android:id="@+id/loginBackButton"
+            android:layout_marginEnd="300dp"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/icon_back"
+            android:background="#00000000"/>
+        <ImageButton
+            android:id="@+id/loginHelpButton"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/icon_help"
+            android:background="#00000000"/>
+    </LinearLayout>
+
+    <ImageView
+        android:layout_marginTop="50dp"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:src="@drawable/item_img"
+        android:text="@string/home_str"
+        android:scaleType="fitCenter"/>
+    <EditText
+        android:id="@+id/loginUserName"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginTop="80dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"
+        android:hint="@string/login_user_mess"
+        android:maxLength="11"
+        android:inputType="phone"
+        android:textSize="13sp" />
+    <TextView
+        android:id="@+id/loginUserNameEmpty"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:text="@string/login_user_empty"
+        android:textSize="10sp"
+        android:textColor="@color/red"
+        android:visibility="gone"
+        tools:ignore="SmallSp" />
+    <EditText
+        android:id="@+id/loginUserPass"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"
+        android:hint="@string/login_pass_mess"
+        android:inputType="textPassword"
+        android:autofillHints="@string/login_pass_mess"
+        android:textSize="13sp" />
+    <TextView
+        android:id="@+id/loginUserPassEmpty"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:text="@string/login_pass_empty"
+        android:textSize="10sp"
+        android:textColor="@color/red"
+        android:visibility="gone"
+        tools:ignore="SmallSp" />
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp">
+        <TextView
+            android:id="@+id/loginUserSign"
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            android:layout_gravity="start"
+            android:text="@string/login_sign_mess"
+            android:autofillHints="@string/login_sign_mess" />
+        <TextView
+            android:id="@+id/loginUserForget"
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            android:layout_gravity="end"
+            android:text="@string/login_forget_mess"
+            android:autofillHints="@string/login_pass_mess" />
+    </FrameLayout>
+
+    <Button
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"
+        android:layout_marginTop="30dp"
+        android:id="@+id/loginLoginButton"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:text="@string/loginButtonMess"
+        android:background="@drawable/custom_button_login_background"
+        android:gravity="center"
+        android:textColor="@color/white"/>
+</LinearLayout>

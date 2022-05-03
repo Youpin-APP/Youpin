@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="login_user_mess">手机码</string>
+    <string name="login_pass_mess">密码</string>
+    <string name="loginButtonMess">登录</string>
+    <string name="login_forget_mess">忘记密码</string>
+    <string name="login_sign_mess">立即注册</string>
+    <string name="sign_user_mess">请输入账号名称</string>
+    <string name="sign_phone_mess">请输入手机号</string>
+    <string name="sign_phone_ver_mess">请输入短信的验证码</string>
+    <string name="sign_pass_mess">请输入密码</string>
+    <string name="sign_pass_again_mess">请再次输入密码</string>
+    <string name="signButtonMess">注册</string>
+    <string name="login_user_empty">用户名不能为空</string>
+    <string name="login_pass_empty">密码不能为空</string>
+    <string name="login_error">用户名密码不匹配</string>
+    <dimen name="sign_padding_left">30dp</dimen>
+</resources>

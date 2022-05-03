@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".login.SignActivity"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_marginTop="40dp"
+        android:layout_width="match_parent"
+        android:layout_height="24dp"
+        android:gravity="center_horizontal">
+        <ImageButton
+            android:id="@+id/signBackButton"
+            android:layout_marginEnd="300dp"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/icon_back"
+            android:background="#00000000"/>
+        <ImageButton
+            android:id="@+id/signHelpButton"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/icon_help"
+            android:background="#00000000"/>
+    </LinearLayout>
+
+    <EditText
+        android:id="@+id/signUserName"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:paddingStart="@dimen/sign_padding_left"
+        android:layout_marginTop="80dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"
+        android:hint="@string/sign_user_mess"
+        android:inputType="text"
+        android:textSize="13sp"
+        android:background="@drawable/custom_edittext_background"
+        android:singleLine="true"
+        tools:ignore="RtlSymmetry" />
+    <TextView
+        android:id="@+id/signUserNameEmpty"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:text="账号名称不能为空"
+        android:textSize="10sp"
+        android:textColor="@color/red"
+        android:visibility="gone"
+        tools:ignore="SmallSp" />
+    <EditText
+        android:id="@+id/signUserPhone"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:paddingStart="@dimen/sign_padding_left"
+        android:layout_marginTop="20dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"
+        android:hint="@string/sign_phone_mess"
+        android:inputType="phone"
+        android:maxLength="11"
+        android:textSize="13sp"
+        android:background="@drawable/custom_edittext_background"
+        android:singleLine="true"/>
+    <TextView
+        android:id="@+id/signUserPhoneEmpty"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:text="手机号不能为空"
+        android:textSize="10sp"
+        android:textColor="@color/red"
+        android:visibility="gone"
+        tools:ignore="SmallSp" />
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp">
+        <EditText
+            android:id="@+id/signUserPhoneVer"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:paddingStart="@dimen/sign_padding_left"
+            android:hint="@string/sign_phone_ver_mess"
+            android:inputType="number"
+            android:maxLength="6"
+            android:textSize="13sp"
+            android:background="@drawable/custom_edittext_background"
+            tools:ignore="RtlSymmetry,TextFields" />
+        <Button
+            android:id="@+id/signPhoneButton"
+            android:layout_gravity="end"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="#00000000"
+            android:textColor="#007fff"
+            android:text="获取验证码"/>
+    </FrameLayout>
+
+    <TextView
+        android:id="@+id/signUserPhoneVerEmpty"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:text="短信验证码不能为空"
+        android:textSize="10sp"
+        android:textColor="@color/red"
+        android:visibility="gone"
+        tools:ignore="SmallSp" />
+    <EditText
+        android:id="@+id/signUserPass"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:paddingStart="@dimen/sign_padding_left"
+        android:layout_marginTop="20dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"
+        android:hint="@string/sign_pass_mess"
+        android:inputType="textPassword"
+        android:textSize="13sp"
+        android:background="@drawable/custom_edittext_background"
+        android:singleLine="true"
+        tools:ignore="RtlSymmetry" />
+    <TextView
+        android:id="@+id/signUserPassEmpty"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:text="密码不能为空"
+        android:textSize="10sp"
+        android:textColor="@color/red"
+        android:visibility="gone"
+        tools:ignore="SmallSp" />
+    <EditText
+        android:id="@+id/signUserPassAgain"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:paddingStart="@dimen/sign_padding_left"
+        android:layout_marginTop="20dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"
+        android:hint="@string/sign_pass_again_mess"
+        android:inputType="textPassword"
+        android:textSize="13sp"
+        android:background="@drawable/custom_edittext_background"
+        android:singleLine="true"
+        tools:ignore="RtlSymmetry" />
+    <TextView
+        android:id="@+id/signUserPassAgainEmpty"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:text="再次输入密码不能为空"
+        android:textSize="10sp"
+        android:textColor="@color/red"
+        android:visibility="gone"
+        tools:ignore="SmallSp" />
+
+    <Button
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"
+        android:layout_marginTop="30dp"
+        android:id="@+id/signSignButton"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:text="@string/signButtonMess"
+        android:background="@drawable/custom_button_login_background"
+        android:gravity="center"
+        android:textColor="@color/white"/>
+
+
+</LinearLayout>

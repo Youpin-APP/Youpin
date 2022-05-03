@@ -13,6 +13,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Youpin">
         <activity
+            android:name=".login.SignActivity"
+            android:exported="false" />
+        <activity
             android:name=".login.LoginActivity"
             android:exported="false" />
         <activity
