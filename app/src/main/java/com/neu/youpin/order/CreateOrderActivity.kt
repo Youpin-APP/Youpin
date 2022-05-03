@@ -1,12 +1,15 @@
 package com.neu.youpin.order
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.neu.youpin.R
+import com.neu.youpin.location.LocaListActivity
 import com.neu.youpin.orderDetail.OrderDetailInfo
 import com.neu.youpin.orderDetail.OrderDetailListAdapter
+import com.neu.youpin.store.StoreActivity
 import kotlinx.android.synthetic.main.activity_create_order.*
 import java.util.*
 
@@ -22,6 +25,14 @@ class CreateOrderActivity : AppCompatActivity() {
         val adapter = OrderDetailListAdapter(createOrderInfoList)
         recyclerView.adapter = adapter
 
+        CreateOrderBack.setOnClickListener {
+            finish()
+        }
+
+        CreateOrderLoca.setOnClickListener {
+            val intent = Intent(this, LocaListActivity::class.java)
+            startActivity(intent)
+        }
 
         // 监听checkbox的状态变化 以实现互斥
         CreateOrderWechat.setOnCheckedChangeListener { buttonView, isChecked ->
