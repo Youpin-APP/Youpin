@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="100dp"
+    android:background="@drawable/rect_box"
+    android:layout_marginStart="10dp"
+    android:layout_marginEnd="10dp"
+    android:layout_marginBottom="10dp">
+    <ImageView
+        android:id="@+id/orderDetailImg"
+        android:layout_width="85dp"
+        android:layout_height="85dp"
+        android:layout_alignParentStart="true"
+        android:layout_centerVertical="true"
+        android:src="@drawable/item_img"
+        android:layout_marginEnd="15dp"/>
+    <TextView
+        android:id="@+id/orderDetailName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="15sp"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        android:text="furry"
+        android:layout_toEndOf="@id/orderDetailImg"
+        android:layout_alignTop="@id/orderDetailImg"/>
+    <TextView
+        android:id="@+id/orderDetailDescription"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="12sp"
+        android:text="数量: 1 颜色: 蓝色"
+        android:layout_below="@id/orderDetailName"
+        android:layout_toEndOf="@id/orderDetailImg"/>
+
+    <TextView
+        android:id="@+id/orderDetailSinglePriceYuan"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="15sp"
+        android:text="¥"
+        android:textColor="@color/black"
+        android:layout_alignBottom="@id/orderDetailImg"
+        android:layout_toEndOf="@id/orderDetailImg" />
+
+    <TextView
+        android:id="@+id/orderDetailSinglePrice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/orderDetailImg"
+        android:layout_toEndOf="@id/orderDetailSinglePriceYuan"
+        android:text="11415"
+        android:textColor="@color/black"
+        android:textSize="15sp" />
+
+
+</RelativeLayout>

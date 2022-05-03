@@ -9,6 +9,8 @@ import com.neu.youpin.cart.CartActivity
 import com.neu.youpin.login.LoginActivity
 import com.neu.youpin.order.CreateOrderActivity
 import com.neu.youpin.order.OrderActivity
+import com.neu.youpin.orderDetail.OrderDetailActivity
+import com.neu.youpin.orderDetail.OrderDetailInfo
 import com.neu.youpin.store.ShopDetailActivity
 import com.neu.youpin.store.StoreActivity
 import com.neu.youpin.user.UserActivity
@@ -50,6 +52,11 @@ class DebugActivity : AppCompatActivity() {
         val openCreateOrder = findViewById<Button>(R.id.openCreateOrder)
         openCreateOrder.setOnClickListener {
             val intent = Intent(this, CreateOrderActivity::class.java)
+            startActivity(intent)
+        }
+        val openOrderDetail = findViewById<Button>(R.id.openOrderDetail)
+        openOrderDetail.setOnClickListener {
+            val intent = Intent(this, OrderDetailActivity::class.java)
             startActivity(intent)
         }
     }
