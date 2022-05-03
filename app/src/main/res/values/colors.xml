@@ -21,4 +21,5 @@
     <color name="shop_detail_cart_start_color">#ffd318</color>
     <color name="shop_detail_cart_end_color">#ffbd20</color>
     <color name="shop_detail_cart_stroke_color">#fece00</color>
+    <color name="payment_bg">#fff5e3</color>
 </resources>

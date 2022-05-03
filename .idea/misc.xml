@@ -18,11 +18,9 @@
         <entry key="..\:/Users/46172/AndroidStudioProjects/Youpin/app/src/main/res/drawable/user_icon_circle.xml" value="0.227" />
         <entry key="..\:/Users/46172/AndroidStudioProjects/Youpin/app/src/main/res/drawable/user_line_background.xml" value="0.2305" />
         <entry key="..\:/Users/46172/AndroidStudioProjects/Youpin/app/src/main/res/layout-v23/activity_store.xml" value="0.29322916666666665" />
-        <entry key="..\:/Users/46172/AndroidStudioProjects/Youpin/app/src/main/res/layout/activity_cart.xml" value="0.4466666666666667" />
+        <entry key="..\:/Users/46172/AndroidStudioProjects/Youpin/app/src/main/res/layout/activity_cart.xml" value="0.1" />
         <entry key="..\:/Users/46172/AndroidStudioProjects/Youpin/app/src/main/res/layout/activity_debug.xml" value="0.1" />
         <entry key="..\:/Users/46172/AndroidStudioProjects/Youpin/app/src/main/res/layout/activity_order.xml" value="0.2101851851851852" />
-        <entry key="..\:/Users/46172/AndroidStudioProjects/Youpin/app/src/main/res/layout/activity_order_detail.xml" value="0.3287037037037037" />
-        <entry key="..\:/Users/46172/AndroidStudioProjects/Youpin/app/src/main/res/layout/activity_shop_detail.xml" value="0.16203703703703703" />
         <entry key="..\:/Users/46172/AndroidStudioProjects/Youpin/app/src/main/res/layout/activity_store.xml" value="0.35520833333333335" />
         <entry key="..\:/Users/46172/AndroidStudioProjects/Youpin/app/src/main/res/layout/activity_user.xml" value="0.3333333333333333" />
         <entry key="..\:/Users/46172/AndroidStudioProjects/Youpin/app/src/main/res/layout/cart_checkbox_selector.xml" value="0.23697916666666666" />
@@ -30,15 +28,33 @@
         <entry key="..\:/Users/46172/AndroidStudioProjects/Youpin/app/src/main/res/layout/fragment_mine.xml" value="0.4484375" />
         <entry key="..\:/Users/46172/AndroidStudioProjects/Youpin/app/src/main/res/layout/item_grid.xml" value="0.35520833333333335" />
         <entry key="..\:/Users/46172/AndroidStudioProjects/Youpin/app/src/main/res/layout/item_linear.xml" value="0.35520833333333335" />
-        <entry key="..\:/Users/46172/AndroidStudioProjects/Youpin/app/src/main/res/layout/order_detail_item.xml" value="0.35520833333333335" />
         <entry key="..\:/Users/46172/AndroidStudioProjects/Youpin/app/src/main/res/layout/order_item.xml" value="0.2101851851851852" />
-        <entry key="..\:/Users/46172/AndroidStudioProjects/Youpin/app/src/main/res/layout/order_item_img.xml" value="0.1" />
-        <entry key="..\:/Users/46172/AndroidStudioProjects/Youpin/app/src/main/res/layout/order_item_multi.xml" value="0.6666666666666666" />
-        <entry key="..\:/Users/46172/AndroidStudioProjects/Youpin/app/src/main/res/layout/order_item_single.xml" value="0.6666666666666666" />
+        <entry key="..\:/Users/46172/AndroidStudioProjects/Youpin/app/src/main/res/layout/order_item_multi.xml" value="0.35520833333333335" />
         <entry key="..\:/Users/46172/AndroidStudioProjects/Youpin/app/src/main/res/layout/search_box.xml" value="0.29322916666666665" />
         <entry key="..\:/Users/46172/AndroidStudioProjects/Youpin/app/src/main/res/layout/searchbox.xml" value="0.29322916666666665" />
         <entry key="..\:/Users/46172/AndroidStudioProjects/Youpin/app/src/main/res/layout/store_item_grid.xml" value="0.19166666666666668" />
         <entry key="..\:/Users/46172/AndroidStudioProjects/Youpin/app/src/main/res/layout/store_item_linear.xml" value="0.3927083333333333" />
+        <entry key="..\:/hqyz/study/YouPin/app/src/main/res/drawable/cart_add_button.xml" value="0.389" />
+        <entry key="..\:/hqyz/study/YouPin/app/src/main/res/drawable/cart_unchecked.xml" value="0.389" />
+        <entry key="..\:/hqyz/study/YouPin/app/src/main/res/drawable/custom_button_buy_background.xml" value="0.3715" />
+        <entry key="..\:/hqyz/study/YouPin/app/src/main/res/drawable/custom_button_cart_background.xml" value="0.3715" />
+        <entry key="..\:/hqyz/study/YouPin/app/src/main/res/drawable/custom_button_login_background.xml" value="0.3715" />
+        <entry key="..\:/hqyz/study/YouPin/app/src/main/res/drawable/custom_button_pay_background.xml" value="0.389" />
+        <entry key="..\:/hqyz/study/YouPin/app/src/main/res/drawable/custom_checkbox_pay_selector.xml" value="0.389" />
+        <entry key="..\:/hqyz/study/YouPin/app/src/main/res/drawable/custom_edittext_background.xml" value="0.547" />
+        <entry key="..\:/hqyz/study/YouPin/app/src/main/res/drawable/custom_edittext_error_background.xml" value="0.3715" />
+        <entry key="..\:/hqyz/study/YouPin/app/src/main/res/layout/activity_cart.xml" value="0.33152173913043476" />
+        <entry key="..\:/hqyz/study/YouPin/app/src/main/res/layout/activity_create_order.xml" value="0.5" />
+        <entry key="..\:/hqyz/study/YouPin/app/src/main/res/layout/activity_debug.xml" value="0.2929824561403509" />
+        <entry key="..\:/hqyz/study/YouPin/app/src/main/res/layout/activity_login.xml" value="0.25" />
+        <entry key="..\:/hqyz/study/YouPin/app/src/main/res/layout/activity_order.xml" value="0.5280797101449275" />
+        <entry key="..\:/hqyz/study/YouPin/app/src/main/res/layout/activity_order_detail.xml" value="0.5280797101449275" />
+        <entry key="..\:/hqyz/study/YouPin/app/src/main/res/layout/activity_shop_detail.xml" value="0.31567028985507245" />
+        <entry key="..\:/hqyz/study/YouPin/app/src/main/res/layout/activity_sign.xml" value="0.5280797101449275" />
+        <entry key="..\:/hqyz/study/YouPin/app/src/main/res/layout/cart_item.xml" value="0.5280797101449275" />
+        <entry key="..\:/hqyz/study/YouPin/app/src/main/res/layout/fragment_home.xml" value="0.31567028985507245" />
+        <entry key="..\:/hqyz/study/YouPin/app/src/main/res/layout/order_item_img.xml" value="0.5280797101449275" />
+        <entry key="..\:/hqyz/study/YouPin/app/src/main/res/layout/order_item_single.xml" value="0.5280797101449275" />
       </map>
     </option>
   </component>
