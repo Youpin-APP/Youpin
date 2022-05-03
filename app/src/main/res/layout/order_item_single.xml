@@ -14,8 +14,8 @@
         android:layout_marginTop="10dp"/>
     <ImageView
         android:id="@+id/orderItemImg"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
         android:src="@drawable/item_img"
         android:layout_below="@+id/orderItemState"
         android:layout_marginEnd="20dp"/>
@@ -31,13 +31,14 @@
         android:textStyle="bold"
         android:textColor="@color/black"/>
     <TextView
-        android:layout_width="80dp"
-        android:layout_height="80dp"
+        android:id="@+id/orderItemTotalPrice"
+        android:layout_width="60dp"
+        android:layout_height="100dp"
         android:text="合计\n11415元"
         android:textAlignment="center"
         android:layout_alignTop="@id/orderItemImg"
         android:layout_alignParentEnd="true"
         android:gravity="center"
-        android:background="#80FFFFFF"/>
+        android:background="#D0FFFFFF"/>
 
 </RelativeLayout>

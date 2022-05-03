@@ -13,6 +13,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Youpin">
         <activity
+            android:name=".orderDetail.OrderDetailActivity"
+            android:exported="false" />
+        <activity
             android:name=".order.CreateOrderActivity"
             android:exported="false" />
         <activity
