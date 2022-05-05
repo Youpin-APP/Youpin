@@ -125,12 +125,11 @@ class LocaUpdateActivity : AppCompatActivity() {
     }
 
     private fun showLocationDialog(){
-        builderForDialog!!.setListener(object: LocationDialog.PriorityListener{
+        locaDialog = builderForDialog!!.setListener(object: LocationDialog.PriorityListener{
             override fun setActivityText(userLocation: String){
                 LocaUpdateAddZone.text = userLocation
             }
-        })
-        locaDialog = builderForDialog!!.createDialog()
+        }).createDialog()
         locaDialog!!.show()
     }
 

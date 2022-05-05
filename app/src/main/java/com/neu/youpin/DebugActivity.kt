@@ -11,6 +11,7 @@ import com.neu.youpin.order.CreateOrderActivity
 import com.neu.youpin.order.OrderActivity
 import com.neu.youpin.orderDetail.OrderDetailActivity
 import com.neu.youpin.orderDetail.OrderDetailInfo
+import com.neu.youpin.sale.SaleActivity
 import com.neu.youpin.store.ShopDetailActivity
 import com.neu.youpin.store.StoreActivity
 import com.neu.youpin.user.UserActivity
@@ -19,6 +20,11 @@ class DebugActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_debug)
+        val openSale = findViewById<Button>(R.id.openSale)
+        openSale.setOnClickListener(View.OnClickListener {
+            val intent = Intent(this, SaleActivity::class.java)
+            startActivity(intent)
+        })
         val openStore = findViewById<Button>(R.id.openStore)
         openStore.setOnClickListener(View.OnClickListener {
             val intent = Intent(this, StoreActivity::class.java)
