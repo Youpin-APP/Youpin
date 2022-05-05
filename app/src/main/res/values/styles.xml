@@ -4,4 +4,7 @@
         <item name="textAllCaps">false</item>
         <item name="android:textSize">18sp</item>
     </style>
+    <style name="CustomDialog" parent="android:Theme.Holo.Dialog.NoActionBar">
+        <item name="android:windowBackground">@drawable/loca_dialog_bg</item>
+    </style>
 </resources>

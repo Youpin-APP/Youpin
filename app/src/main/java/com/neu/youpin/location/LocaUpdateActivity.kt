@@ -3,9 +3,7 @@ package com.neu.youpin.location
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.View
-import android.widget.EditText
 import androidx.core.widget.doOnTextChanged
 import com.neu.youpin.R
 import kotlinx.android.synthetic.main.activity_loca_update.*
@@ -20,10 +18,17 @@ class LocaUpdateActivity : AppCompatActivity() {
     private val NUM_3 = 3
     private val NUM_7 = 8
 
+//    private var builderForCustom: LocaDialog.Builder? = null
+//    private var mDialog: LocaDialog? = null
+    private var builderForDialog: LocationDialog.Builder? = null
+    private var locaDialog: LocationDialog? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_loca_update)
+
+//        builderForCustom = LocaDialog.Builder(this)
+        builderForDialog = LocationDialog.Builder(this)
 
         LocaUpdateButtonBack.setOnClickListener {
             finish()
@@ -32,6 +37,20 @@ class LocaUpdateActivity : AppCompatActivity() {
         LocaUpdateButtonClear.setOnClickListener {
             LocaUpdateAddTele.setText("")
             LocaUpdateButtonClear.visibility = View.INVISIBLE
+        }
+
+        LocaUpdateAddZone.setOnClickListener{
+//            showTwoButtonDialog("", "这是自定义弹出框","确定", "取消", {
+//                // 操作
+//                Toast.makeText(this, mDialog!!.mess, Toast.LENGTH_SHORT).show()
+//                LocaUpdateAddZone.text = mDialog!!.mess
+//                mDialog!!.dismiss()
+//            }, {
+//                // 操作
+//                Toast.makeText(this,"取消",Toast.LENGTH_SHORT).show()
+//                mDialog!!.dismiss()
+//            })
+            showLocationDialog()
         }
 
         val isEdit = intent.getBooleanExtra("isEdit", false)
@@ -105,4 +124,24 @@ class LocaUpdateActivity : AppCompatActivity() {
         LocaUpdateAddTele.setText(tempText)
     }
 
+    private fun showLocationDialog(){
+        builderForDialog!!.setListener(object: LocationDialog.PriorityListener{
+            override fun setActivityText(userLocation: String){
+                LocaUpdateAddZone.text = userLocation
+            }
+        })
+        locaDialog = builderForDialog!!.createDialog()
+        locaDialog!!.show()
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * Dispatch onResume() to fragments.  Note that for better inter-operation
+     * with older versions of the platform, at the point of this call the
+     * fragments attached to the activity are *not* resumed.
+     */
+    override fun onResume() {
+        super.onResume()
+    }
 }

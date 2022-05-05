@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/LocaDialogLayout"
+    android:layout_width="match_parent"
+    android:layout_height="36dp"
+    android:orientation="horizontal">
+
+    <CheckBox
+        android:layout_marginStart="20dp"
+        android:layout_width="18dp"
+        android:layout_height="18dp"
+        android:layout_marginEnd="10dp"
+        android:background="@drawable/custom_checkbox_pay_selector"
+        android:button="@null" />
+
+    <TextView
+        android:id="@+id/LocaDialogText"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:text="xx省"
+        android:textSize="18sp"
+        android:textColor="@color/black"
+        android:gravity="center"
+        />
+</LinearLayout>

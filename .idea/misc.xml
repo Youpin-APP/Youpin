@@ -45,11 +45,13 @@
         <entry key="..\:/hqyz/study/YouPin/app/src/main/res/drawable/custom_edittext_background.xml" value="0.547" />
         <entry key="..\:/hqyz/study/YouPin/app/src/main/res/drawable/custom_edittext_error_background.xml" value="0.3715" />
         <entry key="..\:/hqyz/study/YouPin/app/src/main/res/drawable/custom_edittext_transparent_background.xml" value="0.389" />
+        <entry key="..\:/hqyz/study/YouPin/app/src/main/res/drawable/loca_dialog_bg.xml" value="0.3965" />
         <entry key="..\:/hqyz/study/YouPin/app/src/main/res/layout/activity_cart.xml" value="0.33152173913043476" />
         <entry key="..\:/hqyz/study/YouPin/app/src/main/res/layout/activity_create_order.xml" value="0.5" />
         <entry key="..\:/hqyz/study/YouPin/app/src/main/res/layout/activity_debug.xml" value="0.2929824561403509" />
         <entry key="..\:/hqyz/study/YouPin/app/src/main/res/layout/activity_loca_list.xml" value="0.5280797101449275" />
         <entry key="..\:/hqyz/study/YouPin/app/src/main/res/layout/activity_loca_update.xml" value="0.5" />
+        <entry key="..\:/hqyz/study/YouPin/app/src/main/res/layout/activity_location.xml" value="0.31302083333333336" />
         <entry key="..\:/hqyz/study/YouPin/app/src/main/res/layout/activity_login.xml" value="0.25" />
         <entry key="..\:/hqyz/study/YouPin/app/src/main/res/layout/activity_order.xml" value="0.5280797101449275" />
         <entry key="..\:/hqyz/study/YouPin/app/src/main/res/layout/activity_order_detail.xml" value="0.5280797101449275" />
@@ -57,6 +59,9 @@
         <entry key="..\:/hqyz/study/YouPin/app/src/main/res/layout/activity_sign.xml" value="0.5280797101449275" />
         <entry key="..\:/hqyz/study/YouPin/app/src/main/res/layout/activity_user.xml" value="0.5280797101449275" />
         <entry key="..\:/hqyz/study/YouPin/app/src/main/res/layout/cart_item.xml" value="0.5280797101449275" />
+        <entry key="..\:/hqyz/study/YouPin/app/src/main/res/layout/dialog_loca.xml" value="0.5430253623188406" />
+        <entry key="..\:/hqyz/study/YouPin/app/src/main/res/layout/dialog_location.xml" value="0.14189189189189189" />
+        <entry key="..\:/hqyz/study/YouPin/app/src/main/res/layout/dialog_location_item.xml" value="0.5430253623188406" />
         <entry key="..\:/hqyz/study/YouPin/app/src/main/res/layout/fragment_home.xml" value="0.31567028985507245" />
         <entry key="..\:/hqyz/study/YouPin/app/src/main/res/layout/loca_list_item.xml" value="0.5280797101449275" />
         <entry key="..\:/hqyz/study/YouPin/app/src/main/res/layout/order_detail_item.xml" value="0.5280797101449275" />
