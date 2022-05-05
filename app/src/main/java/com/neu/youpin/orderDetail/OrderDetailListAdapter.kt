@@ -7,7 +7,6 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.neu.youpin.R
-import com.neu.youpin.order.OrderImgListAdapter
 import java.util.*
 
 class OrderDetailListAdapter(private var infoList: Vector<OrderDetailInfo>) :

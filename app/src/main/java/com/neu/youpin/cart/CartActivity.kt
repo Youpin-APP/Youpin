@@ -104,14 +104,19 @@ class CartActivity : AppCompatActivity() , OnItemClickListener{
             R.id.cartItemPlus -> {
                 cartItemList[pos].count++
                 adapter.notifyItemChanged(pos)
-                totalPrice += cartItemList[pos].price
-                cartTotalPrice.text = "合计: "+totalPrice.toString()+"元"
+                if(cartItemList[pos].selected){
+                    totalPrice += cartItemList[pos].price
+                    cartTotalPrice.text = "合计: "+totalPrice.toString()+"元"
+                }
+
             }
             R.id.cartItemSub -> {
                 cartItemList[pos].count--
                 adapter.notifyItemChanged(pos)
-                totalPrice -= cartItemList[pos].price
-                cartTotalPrice.text = "合计: "+totalPrice.toString()+"元"
+                if(cartItemList[pos].selected){
+                    totalPrice -= cartItemList[pos].price
+                    cartTotalPrice.text = "合计: "+totalPrice.toString()+"元"
+                }
             }
             R.id.cartItemCheckBox -> {
                 Log.d("checkItem","")
