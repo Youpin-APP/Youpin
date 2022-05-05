@@ -112,4 +112,5 @@
         android:background="@drawable/custom_button_login_background"
         android:gravity="center"
         android:textColor="@color/white"/>
+
 </LinearLayout>

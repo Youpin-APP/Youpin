@@ -13,6 +13,12 @@ import androidx.core.widget.addTextChangedListener
 import androidx.core.widget.doOnTextChanged
 import com.neu.youpin.R
 import kotlinx.android.synthetic.main.activity_login.*
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
+import retrofit2.http.GET
 
 class LoginActivity : AppCompatActivity() {
     private val loginSuccess: String = "登录成功"
@@ -66,7 +72,31 @@ class LoginActivity : AppCompatActivity() {
     }
     // 用于登录使用
     private fun isUserPassCorrect():Boolean{
-        return true
+        val retrofit = Retrofit.Builder()
+            .baseUrl("http://172.22.26.17:8080")
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+        val appService = retrofit.create(AppService::class.java)
+        appService.getAppData().enqueue(object : Callback<List<App>> {
+            override fun onResponse(call: Call<List<App>>,
+                                    response: Response<List<App>>
+            ) {
+                val list = response.body()
+                if (list != null) {
+                    for (app in list) {
+                        Log.d("LoginActivity", "id is ${app.id}")
+                        Log.d("LoginActivity", "name is ${app.name}")
+                        Log.d("LoginActivity", "version is ${app.version}")
+                    }
+                }
+            }
+            override fun onFailure(call: Call<List<App>>, t: Throwable) {
+                t.printStackTrace()
+                Log.d("LoginActivity", "network failed")
+            }
+        })
+
+        return false
     }
 
     /**
@@ -83,4 +113,11 @@ class LoginActivity : AppCompatActivity() {
 //        loginUserName.setBackgroundColor(Color.parseColor("#ff0000"))
 //        loginUserName.setBackgroundResource(R.drawable.custom_edittext_error_background)
     }
+}
+
+class App(val id: String, val name: String, val version: String)
+
+interface AppService {
+    @GET("get_data.json")
+    fun getAppData(): Call<List<App>>
 }

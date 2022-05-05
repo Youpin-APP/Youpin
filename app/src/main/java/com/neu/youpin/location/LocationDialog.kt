@@ -2,6 +2,7 @@ package com.neu.youpin.location
 
 import android.app.Dialog
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,6 +11,16 @@ import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.neu.youpin.R
+import com.neu.youpin.login.App
+import com.neu.youpin.login.AppService
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
+import retrofit2.http.GET
+import retrofit2.http.Path
+import retrofit2.http.Query
 
 class LocationDialog: Dialog {
     constructor(context: Context) : super(context) {}
@@ -22,21 +33,31 @@ class LocationDialog: Dialog {
         /**
          * 回调函数，用于在Dialog的监听事件触发后刷新Activity的UI显示
          */
-        fun setActivityText(userLocation: String)
+        fun setActivityText(userLocation: String, did: Int)
     }
 
     class Builder(context: Context) {
+        private val url: String = "http://hqyz.cf:8080/addr/"
         private var title: String? = null
         private var callBackListener: PriorityListener? = null
 
-        private val locaList = ArrayList<LocaList>()
+        private var locaList: List<LocaList>? = null
 
         private var pid: Int = 1
+        private var pname: String = ""
         private var cid: Int = 2
-        private var zid: Int = 3
+        private var cname: String = ""
+        private var did: Int = 3
+        private var dname: String = ""
 
         private val layout: View
         private val dialog: LocationDialog = LocationDialog(context, R.style.CustomDialog)
+
+        private val retrofit = Retrofit.Builder()
+            .baseUrl(url)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+        private val locaService = retrofit.create(LocaService::class.java)
 
         // 计算启动了几次 以此来推断当前显示窗口应该为什么
         private var locaCount: Int = 0
@@ -77,13 +98,8 @@ class LocationDialog: Dialog {
         fun createDialog(): LocationDialog {
             locaCount = 0
 
-            // 设置recyclerView
-            initLocaList()
-            val layoutManager = LinearLayoutManager(layout.context) //线性布局布局管理器
-            val recyclerView:RecyclerView = layout.findViewById(R.id.LocaDialogList)
-            recyclerView.layoutManager = layoutManager
-            val adapter = LocaListAdapter(locaList, this)
-            recyclerView.adapter = adapter
+            // 初始化省地区列表，设置recyclerView
+            initProvinceLocaList()
 
             (layout.findViewById<View>(R.id.LocaDialogTitle) as TextView).text = "请选择省"
 
@@ -94,54 +110,89 @@ class LocationDialog: Dialog {
         }
 
 
-        fun updateDialog(id: Int) {
+        fun updateDialog(id: Int, name: String) {
             when(locaCount){
                 0 -> {
                     pid = id
+                    pname = name
                     (layout.findViewById<View>(R.id.LocaDialogTitle) as TextView).text = "请选择市"
-                    initLocaList()
+                    initCityLocaList(pid)
                     updateLocaList()
                 }
                 1 -> {
                     cid = id
+                    cname = name
                     (layout.findViewById<View>(R.id.LocaDialogTitle) as TextView).text = "请选择区"
-                    initLocaList()
+                    initDistrictLocaList(cid)
                     updateLocaList()
                 }
                 2 -> {
-                    zid = id
-                    callBackListener?.setActivityText(zid.toString())
+                    did = id
+                    dname = name
+                    callBackListener?.setActivityText("$pname $cname $dname", did)
                     dialog.dismiss()
                 }
             }
             locaCount ++;
         }
 
-        private fun initLocaList(){
-            locaList.clear()
-            locaList.add(LocaList("和平区",210102, 2101))
-            locaList.add(LocaList("沈河区",210103, 2101))
-            locaList.add(LocaList("大东区",210104, 2101))
-            locaList.add(LocaList("皇姑区",210105, 2101))
-            locaList.add(LocaList("铁西区",210106, 2101))
-            locaList.add(LocaList("苏家屯",210111, 2101))
-            locaList.add(LocaList("浑南区",210112, 2101))
-            locaList.add(LocaList("沈北新区",210113, 2101))
-            locaList.add(LocaList("于洪区",210114, 2101))
+        private fun initProvinceLocaList(){
+            locaService.getProvinceList().enqueue(object : Callback<List<LocaList>> {
+                override fun onResponse(call: Call<List<LocaList>>,
+                                        response: Response<List<LocaList>>
+                ) {
+                    locaList = response.body()
+                    updateLocaList()
+                }
+                override fun onFailure(call: Call<List<LocaList>>, t: Throwable) {
+                    t.printStackTrace()
+                    Log.d("LoginActivity", "network failed")
+                }
+            })
+        }
+
+        private fun initCityLocaList(pid: Int){
+            locaService.getCityList(pid).enqueue(object : Callback<List<LocaList>> {
+                override fun onResponse(call: Call<List<LocaList>>,
+                                        response: Response<List<LocaList>>
+                ) {
+                    locaList = response.body()
+                    updateLocaList()
+                }
+                override fun onFailure(call: Call<List<LocaList>>, t: Throwable) {
+                    t.printStackTrace()
+                    Log.d("LoginActivity", "network failed")
+                }
+            })
+        }
+
+        private fun initDistrictLocaList(did: Int){
+            locaService.getDistrictList(did).enqueue(object : Callback<List<LocaList>> {
+                override fun onResponse(call: Call<List<LocaList>>,
+                                        response: Response<List<LocaList>>
+                ) {
+                    locaList = response.body()
+                    updateLocaList()
+                }
+                override fun onFailure(call: Call<List<LocaList>>, t: Throwable) {
+                    t.printStackTrace()
+                    Log.d("LoginActivity", "network failed")
+                }
+            })
         }
 
         private fun updateLocaList(){
             val layoutManager = LinearLayoutManager(layout.context) //线性布局布局管理器
             val recyclerView:RecyclerView = layout.findViewById(R.id.LocaDialogList)
             recyclerView.layoutManager = layoutManager
-            val adapter = LocaListAdapter(locaList, this)
+            val adapter = locaList?.let { LocaListAdapter(it, this) }
             recyclerView.adapter = adapter
         }
     }
 }
 
 // 省份名字 pid 主键 fid 外键
-data class LocaList(var name:String, var pid:Int, var fid: Int)
+data class LocaList(var name:String, var id:Int)
 
 class LocaListAdapter(private val locaList: List<LocaList>, private var builderForDialog: LocationDialog.Builder) : RecyclerView.Adapter<LocaListAdapter.ViewHolder>() {
     //自定义嵌套内部类 ViewHolder 来减少 findViewById() 的使用， 继承RecyclerView的ViewHolder
@@ -166,10 +217,26 @@ class LocaListAdapter(private val locaList: List<LocaList>, private var builderF
         val location = locaList[position] //获取当前位置对应的loca
         holder.locaDialogText.text = location.name
         holder.locaDialogLayout.setOnClickListener {
-            builderForDialog.updateDialog(location.pid)
+            builderForDialog.updateDialog(location.id, location.name)
         }
     }
 
     //获取列表中的项目个数，将其定义为数组的个数
     override fun getItemCount() = locaList.size
 }
+
+interface LocaService {
+    @GET("getProvinceList")
+    fun getProvinceList(): Call<List<LocaList>>
+    @GET("getCityList")
+    fun getCityList(@Query("pid") id: Int): Call<List<LocaList>>
+    @GET("getDistrictList")
+    fun getDistrictList(@Query("cid") id: Int): Call<List<LocaList>>
+}
+
+//                    if (locaList != null) {
+//                        for (loca in locaList!!) {
+//                            Log.d("LocaActivity", "id is ${loca.id}")
+//                            Log.d("LocaActivity", "name is ${loca.name}")
+//                        }
+//                    }

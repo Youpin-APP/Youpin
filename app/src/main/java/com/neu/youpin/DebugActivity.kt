@@ -65,5 +65,10 @@ class DebugActivity : AppCompatActivity() {
             val intent = Intent(this, OrderDetailActivity::class.java)
             startActivity(intent)
         }
+        val openLogin = findViewById<Button>(R.id.openLogin)
+        openLogin.setOnClickListener {
+            val intent = Intent(this, LoginActivity::class.java)
+            startActivity(intent)
+        }
     }
 }

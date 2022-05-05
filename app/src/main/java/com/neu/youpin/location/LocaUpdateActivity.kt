@@ -18,6 +18,8 @@ class LocaUpdateActivity : AppCompatActivity() {
     private val NUM_3 = 3
     private val NUM_7 = 8
 
+    private var did:Int = 0
+
 //    private var builderForCustom: LocaDialog.Builder? = null
 //    private var mDialog: LocaDialog? = null
     private var builderForDialog: LocationDialog.Builder? = null
@@ -126,8 +128,9 @@ class LocaUpdateActivity : AppCompatActivity() {
 
     private fun showLocationDialog(){
         locaDialog = builderForDialog!!.setListener(object: LocationDialog.PriorityListener{
-            override fun setActivityText(userLocation: String){
+            override fun setActivityText(userLocation: String, id: Int){
                 LocaUpdateAddZone.text = userLocation
+                did = id
             }
         }).createDialog()
         locaDialog!!.show()
