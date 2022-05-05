@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/content"
+    android:layout_width="280dp"
+    android:layout_height="400dp"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/SaleDialoTitle"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:gravity="center"
+        android:text="请选择分类"
+        android:textSize="20sp"
+        android:textColor="@color/black"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/SaleDialoList"
+        android:background="@color/white"
+        android:layout_width="280dp"
+        android:layout_height="400dp"
+        android:layout_weight="1"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginBottom="10dp">
+        <EditText
+            android:id="@+id/SaleDialogText"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"/>
+        <Button
+            android:id="@+id/SaleDialogConfirm"
+            android:layout_marginEnd="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_weight="4"
+            android:layout_gravity="center"
+            android:background="@drawable/custom_button_loca_background"
+            android:text="确认"
+            android:textColor="@color/purple_font"/>
+    </LinearLayout>
+
+</LinearLayout>

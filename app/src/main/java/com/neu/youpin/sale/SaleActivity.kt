@@ -11,6 +11,8 @@ class SaleActivity : AppCompatActivity() {
     private var builderForDialog: SelectClassDialog.Builder? = null
     private var locaDialog: SelectClassDialog? = null
 
+    //class id 为-1时代表需要新建！！！
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sale)

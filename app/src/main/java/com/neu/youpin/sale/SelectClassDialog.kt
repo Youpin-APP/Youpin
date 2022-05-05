@@ -5,6 +5,7 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -37,7 +38,7 @@ class SelectClassDialog: Dialog {
         init {
             //这里传入自定义的style，直接影响此Dialog的显示效果。style具体实现见style.xml
             val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-            layout = inflater.inflate(R.layout.dialog_location, null)
+            layout = inflater.inflate(R.layout.dialog_class, null)
             dialog.addContentView(layout, ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT))
 
         }
@@ -60,12 +61,16 @@ class SelectClassDialog: Dialog {
             // 设置recyclerView
             initLocaList()
             val layoutManager = LinearLayoutManager(layout.context) //线性布局布局管理器
-            val recyclerView:RecyclerView = layout.findViewById(R.id.LocaDialogList)
+            val recyclerView:RecyclerView = layout.findViewById(R.id.SaleDialoList)
             recyclerView.layoutManager = layoutManager
             val adapter = LocaListAdapter(classList, this)
             recyclerView.adapter = adapter
 
-            if(title != null) (layout.findViewById<View>(R.id.LocaDialogTitle) as TextView).text = title
+            if(title != null) (layout.findViewById<View>(R.id.SaleDialoTitle) as TextView).text = title
+
+            (layout.findViewById<View>(R.id.SaleDialogConfirm) as Button).setOnClickListener {
+                updateDialog((layout.findViewById<View>(R.id.SaleDialogText) as TextView).text.toString(), -1)
+            }
 
             dialog.setContentView(layout)
             dialog.setCancelable(true)     //用户可以点击手机Back键取消对话框显示
