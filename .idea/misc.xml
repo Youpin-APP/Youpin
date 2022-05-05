@@ -65,10 +65,13 @@
         <entry key="..\:/hqyz/study/YouPin/app/src/main/res/layout/dialog_location.xml" value="0.5" />
         <entry key="..\:/hqyz/study/YouPin/app/src/main/res/layout/dialog_location_item.xml" value="0.5430253623188406" />
         <entry key="..\:/hqyz/study/YouPin/app/src/main/res/layout/fragment_home.xml" value="0.31567028985507245" />
+        <entry key="..\:/hqyz/study/YouPin/app/src/main/res/layout/fragment_home_class.xml" value="0.3383152173913043" />
+        <entry key="..\:/hqyz/study/YouPin/app/src/main/res/layout/fragment_mine.xml" value="0.3383152173913043" />
         <entry key="..\:/hqyz/study/YouPin/app/src/main/res/layout/loca_list_item.xml" value="0.5280797101449275" />
         <entry key="..\:/hqyz/study/YouPin/app/src/main/res/layout/order_detail_item.xml" value="0.5280797101449275" />
         <entry key="..\:/hqyz/study/YouPin/app/src/main/res/layout/order_item_img.xml" value="0.5280797101449275" />
         <entry key="..\:/hqyz/study/YouPin/app/src/main/res/layout/order_item_single.xml" value="0.5280797101449275" />
+        <entry key="..\:/hqyz/study/YouPin/app/src/main/res/menu/bottom_nav_menu.xml" value="0.31302083333333336" />
       </map>
     </option>
   </component>

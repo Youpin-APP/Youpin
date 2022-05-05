@@ -43,7 +43,6 @@ class HomeFragment : Fragment() {
     private var NowFragment: String = "HomeFragment"
     private var root: View? = null
     private var rootActivity:HomePageActivity? = null
-    private var tabLayout: TabLayout? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -71,13 +70,6 @@ class HomeFragment : Fragment() {
             param2 = homeSearchBox?.text.toString()
         }
 
-        tabLayout = root?.findViewById(R.id.tab_layout)
-
-        val tabItemList = arrayOf("热门", "女装", "男装", "美妆", "内衣配饰",
-            "个护", "饮食", "家纺", "生鲜直供", "鞋靴", "餐厨", "电器")
-
-        for(element in tabItemList)
-            tabLayout?.addTab(tabLayout?.newTab()!!.setText(element));
 
         var banner: Banner<DataBean, BannerImageAdapter<DataBean>>? = root?.findViewById(R.id.banner)
 

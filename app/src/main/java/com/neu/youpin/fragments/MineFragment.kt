@@ -6,7 +6,13 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.tabs.TabLayout
+import com.neu.youpin.HomePageActivity
 import com.neu.youpin.R
+import com.neu.youpin.store.ShopItem
+import com.neu.youpin.user.UserItemListAdapter
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -24,6 +30,10 @@ class MineFragment : Fragment() {
     private var param2: String? = null
 
     private var NowFragment: String = "MineFragment"
+    private var root: View? = null
+    private var rootActivity: HomePageActivity? = null
+
+    private val shopItemList = ArrayList<ShopItem>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,9 +49,27 @@ class MineFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        Log.d(NowFragment,"create View!")
+        root = inflater.inflate(R.layout.fragment_mine, container, false)
+        if (activity != null) {
+            rootActivity = activity as HomePageActivity
+        }
+        initItem()
+        val layoutManager : RecyclerView.LayoutManager = object : GridLayoutManager(rootActivity,2) {
+            override fun canScrollVertically(): Boolean {
+                return false
+            }
+        }
+        val recyclerView = root?.findViewById<RecyclerView>(R.id.userItemList)
+        recyclerView?.layoutManager = layoutManager
+        val adapter = UserItemListAdapter(shopItemList)
+        recyclerView?.adapter = adapter
+        return root
+    }
 
-        return inflater.inflate(R.layout.fragment_mine, container, false)
+    private fun initItem() {
+        repeat(10) {
+            shopItemList.add(ShopItem("furry", R.drawable.item_img,"11415元"))
+        }
     }
 
     companion object {

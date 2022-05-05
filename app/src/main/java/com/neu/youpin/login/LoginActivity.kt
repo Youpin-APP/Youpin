@@ -18,12 +18,14 @@ import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import retrofit2.http.GET
+import retrofit2.http.*
 
 class LoginActivity : AppCompatActivity() {
     private val loginSuccess: String = "登录成功"
     private val loginError: String = "用户名密码不匹配"
     private val passEmpty: String = "密码不能为空"
+
+    private val url: String = "http://hqyz.cf:8080/"
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
@@ -57,46 +59,47 @@ class LoginActivity : AppCompatActivity() {
                     loginUserPassEmpty.text = passEmpty
                     loginUserPassEmpty.visibility = View.VISIBLE
                 }else{
-                    // 判断用户名密码是否匹配 匹配则提示用户登录成功并自动返回用户界面 否则发出警告
-                    if (isUserPassCorrect()){
-                        Toast.makeText(this,loginSuccess, Toast.LENGTH_SHORT).show()
-                        finish()
-                    }else{
-                        loginUserPassEmpty.text = loginError
-                        loginUserPassEmpty.visibility = View.VISIBLE
-                    }
+                    isUserPassCorrect()
                 }
             }
 
         }
     }
+
+    private fun isLogin(success: Boolean){
+        if (success){
+            Toast.makeText(this,loginSuccess, Toast.LENGTH_SHORT).show()
+            finish()
+        }else{
+            loginUserPassEmpty.text = loginError
+            loginUserPassEmpty.visibility = View.VISIBLE
+        }
+    }
+
     // 用于登录使用
-    private fun isUserPassCorrect():Boolean{
+    private fun isUserPassCorrect(){
+        Toast.makeText(this,"开始尝试登录", Toast.LENGTH_SHORT).show()
         val retrofit = Retrofit.Builder()
-            .baseUrl("http://172.22.26.17:8080")
+            .baseUrl(url)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
-        val appService = retrofit.create(AppService::class.java)
-        appService.getAppData().enqueue(object : Callback<List<App>> {
-            override fun onResponse(call: Call<List<App>>,
-                                    response: Response<List<App>>
+        val appService = retrofit.create(LoginService::class.java)
+        appService.loginPost(loginUserName.text.toString(),loginUserPass.text.toString()).enqueue(object : Callback<LoginToken> {
+            override fun onResponse(call: Call<LoginToken>,
+                                    response: Response<LoginToken>
             ) {
                 val list = response.body()
                 if (list != null) {
-                    for (app in list) {
-                        Log.d("LoginActivity", "id is ${app.id}")
-                        Log.d("LoginActivity", "name is ${app.name}")
-                        Log.d("LoginActivity", "version is ${app.version}")
-                    }
-                }
+                    Log.d("LoginActivity", "success is ${list.success}")
+                    Log.d("LoginActivity", "name is ${list.token}")
+                    isLogin(list.success)
+                }else isLogin(false)
             }
-            override fun onFailure(call: Call<List<App>>, t: Throwable) {
+            override fun onFailure(call: Call<LoginToken>, t: Throwable) {
                 t.printStackTrace()
                 Log.d("LoginActivity", "network failed")
             }
         })
-
-        return false
     }
 
     /**
@@ -115,9 +118,10 @@ class LoginActivity : AppCompatActivity() {
     }
 }
 
-class App(val id: String, val name: String, val version: String)
+class LoginToken(val success: Boolean, val token: String)
 
-interface AppService {
-    @GET("get_data.json")
-    fun getAppData(): Call<List<App>>
+interface LoginService {
+    @FormUrlEncoded
+    @POST("user/login")
+    fun loginPost(@Field("uid") uid: String, @Field("pw") pw: String): Call<LoginToken>
 }

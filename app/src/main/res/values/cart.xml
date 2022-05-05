@@ -8,4 +8,5 @@
     <string name="editCart">编辑</string>
     <string name="cartCheckoutName">结算</string>
     <string name="cartDeleteName">删除</string>
+    <dimen name="mine_photo_size">28dp</dimen>
 </resources>

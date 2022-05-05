@@ -45,31 +45,31 @@
             tools:ignore="ImageContrastCheck" />
     </LinearLayout>
 
-    <com.google.android.material.tabs.TabLayout
-        android:layout_marginTop="55dp"
-        android:id="@+id/tab_layout"
-        android:layout_width="match_parent"
-        android:layout_height="44dp"
-        app:tabIndicatorColor="@color/white"
-        app:tabIndicatorHeight="2dp"
-        app:tabIndicatorFullWidth="false"
-        app:tabIndicatorGravity="bottom"
-        app:tabMaxWidth="80dp"
-        app:tabMinWidth="80dp"
-        app:tabMode="scrollable"
-        app:tabContentStart="-10dp"
-        app:tabGravity="fill"
-        app:tabPaddingBottom="-1dp"
-        app:tabPaddingEnd="-1dp"
-        app:tabPaddingStart="-1dp"
-        app:tabPaddingTop="-1dp"
-        app:tabBackground="@color/purple"
-        app:tabRippleColor="@android:color/transparent"
-        app:tabTextAppearance="@style/HomeTabTextAppearance"
-        app:tabTextColor="@color/white"/>
+<!--    <com.google.android.material.tabs.TabLayout-->
+<!--        android:layout_marginTop="55dp"-->
+<!--        android:id="@+id/tab_layout"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="44dp"-->
+<!--        app:tabIndicatorColor="@color/white"-->
+<!--        app:tabIndicatorHeight="2dp"-->
+<!--        app:tabIndicatorFullWidth="false"-->
+<!--        app:tabIndicatorGravity="bottom"-->
+<!--        app:tabMaxWidth="80dp"-->
+<!--        app:tabMinWidth="80dp"-->
+<!--        app:tabMode="scrollable"-->
+<!--        app:tabContentStart="-10dp"-->
+<!--        app:tabGravity="fill"-->
+<!--        app:tabPaddingBottom="-1dp"-->
+<!--        app:tabPaddingEnd="-1dp"-->
+<!--        app:tabPaddingStart="-1dp"-->
+<!--        app:tabPaddingTop="-1dp"-->
+<!--        app:tabBackground="@color/purple"-->
+<!--        app:tabRippleColor="@android:color/transparent"-->
+<!--        app:tabTextAppearance="@style/HomeTabTextAppearance"-->
+<!--        app:tabTextColor="@color/white"/>-->
 
     <com.youth.banner.Banner
-        android:layout_marginTop="110dp"
+        android:layout_marginTop="60dp"
         android:id="@+id/banner"
         android:layout_width="match_parent"
         android:layout_height="150dp" />
