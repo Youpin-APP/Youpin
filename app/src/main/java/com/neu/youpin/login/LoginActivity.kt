@@ -27,6 +27,7 @@ class LoginActivity : AppCompatActivity() {
     private val loginError: String = "用户名密码不匹配"
     private val passEmpty: String = "密码不能为空"
     private val networkError: String = "网络连接错误"
+    private val phoneError: String = "手机号码不正确"
     private val loginService = ServiceCreator.create<LoginService>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -60,7 +61,12 @@ class LoginActivity : AppCompatActivity() {
                     loginUserPassEmpty.text = passEmpty
                     loginUserPassEmpty.visibility = View.VISIBLE
                 }else{
-                    isUserPassCorrect()
+                    if(regexPhone(loginUserName.text.toString())){
+                        isUserPassCorrect()
+                    }else{
+                        loginUserPassEmpty.text = phoneError
+                        loginUserPassEmpty.visibility = View.VISIBLE
+                    }
                 }
             }
 
@@ -71,7 +77,8 @@ class LoginActivity : AppCompatActivity() {
         if (list.success){
             Toast.makeText(this,loginSuccess, Toast.LENGTH_SHORT).show()
             UserApplication.getInstance().setToken(list.token)
-            UserApplication.getInstance().setName(loginUserName.text.toString())
+            UserApplication.getInstance().setName(list.name)
+            UserApplication.getInstance().setId(list.uid)
             finish()
         }else{
             loginUserPassEmpty.text = loginError
@@ -121,7 +128,7 @@ class LoginActivity : AppCompatActivity() {
     }
 }
 
-class LoginToken(val success: Boolean, val token: String)
+class LoginToken(val success: Boolean, val token: String, val name: String, val uid: String)
 
 interface LoginService {
     @FormUrlEncoded

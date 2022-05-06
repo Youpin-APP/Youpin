@@ -31,7 +31,7 @@ class SignActivity : AppCompatActivity() {
     private val signSuccess: String = "注册成功"
     private val signError: String = "注册失败"
 
-    val signService = ServiceCreator.create<SignService>()
+    private val signService = ServiceCreator.create<SignService>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,9 +48,13 @@ class SignActivity : AppCompatActivity() {
         }
 
         signSignButton.setOnClickListener {
-            if(isAllFull() && regexPhone(signUserPhone.text.toString()) && isPassSame()){
-//                Toast.makeText(this,signSuccess, Toast.LENGTH_SHORT).show()
-                signByRetrofit()
+            if(isAllFull() && isPassSame()){
+                if(regexPhone(signUserPhone.text.toString())){
+                    signByRetrofit()
+                }else{
+                    signUserPhoneEmpty.visibility = View.VISIBLE
+                    signUserPhoneEmpty.text = "手机号输入不符合规范"
+                }
             }
         }
 
@@ -123,20 +127,6 @@ class SignActivity : AppCompatActivity() {
         }
     }
 
-    private fun regexPhone(phone: String): Boolean {
-        val mainRegex = "^((13[0-9])|(14[5|7])|(15([0-3]|[5-9]))|(18[0,1,2,3,5-9])|(177))\\d{8}$"
-        val p = Pattern.compile(mainRegex)
-        val m = p.matcher(phone)
-        return if(m.matches()){
-            true
-        }else{
-            signUserPhoneEmpty.visibility = View.VISIBLE
-            signUserPhoneEmpty.text = "手机号输入不符合规范"
-            false
-        }
-    }
-
-
     /**
      * {@inheritDoc}
      *
@@ -154,4 +144,10 @@ interface SignService {
     @FormUrlEncoded
     @POST("user/register")
     fun loginPost(@Field("uid") uid: String, @Field("pw") pw: String, @Field("name") name: String): Call<SignToken>
+}
+fun regexPhone(phone: String): Boolean {
+    val mainRegex = "^((13[0-9])|(14[5|7])|(15([0-3]|[5-9]))|(18[0,1,2,3,5-9])|(177))\\d{8}$"
+    val p = Pattern.compile(mainRegex)
+    val m = p.matcher(phone)
+    return m.matches()
 }

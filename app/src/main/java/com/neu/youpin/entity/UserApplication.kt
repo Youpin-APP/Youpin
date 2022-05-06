@@ -3,7 +3,7 @@ package com.neu.youpin.entity
 import android.app.Application
 
 public class UserApplication: Application(){
-    private var _id = 0
+    private var _uid : String? = null
     private var _name: String? = null
     private var _token: String? = null
     private var _isLogin: Boolean = false
@@ -19,12 +19,12 @@ public class UserApplication: Application(){
         instance = this
     }
 
-    fun getId(): Int {
-        return _id
+    fun getId(): String? {
+        return _uid
     }
 
-    fun setId(id: Int) {
-        this._id = id
+    fun setId(uid: String) {
+        this._uid = uid
     }
 
     fun getName(): String? {
@@ -49,7 +49,7 @@ public class UserApplication: Application(){
         this._isLogin = false
         this._token = null
         this._name = null
-        this._id = 0
+        this._uid = null
     }
 
     fun isLogin(): Boolean{

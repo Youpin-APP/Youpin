@@ -22,7 +22,7 @@ class ShopDetailActivity : AppCompatActivity() {
     private val imagesList = ArrayList<String>()
 
     var imageUrls = listOf(
-        "http://hqyz.cf:8080/pic/fc916569-2ff8-4841-b582-922e70139945.jpg",
+//        "http://hqyz.cf:8080/pic/7ef1640f-e1b4-4a24-8801-b4d7261d62ad.jpg",
         "https://hqyzcyp.xyz/imgs/2022/04/5a3997b18924a1ef.png",
         "https://hqyzcyp.xyz/imgs/2022/04/500bea1125066f33.png",
         "https://hqyzcyp.xyz/imgs/2022/04/b2a37428f2cb8fdb.png",
