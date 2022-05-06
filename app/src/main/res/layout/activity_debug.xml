@@ -22,11 +22,6 @@
         android:layout_width="match_parent"
         android:layout_height="80sp"
         android:text="首页"/>
-    <Button
-        android:id="@+id/openCart"
-        android:layout_width="match_parent"
-        android:layout_height="80sp"
-        android:text="购物车"/>
 
     <Button
         android:id="@+id/openShopDetail"
@@ -35,22 +30,10 @@
         android:text="商品详情"/>
 
     <Button
-        android:id="@+id/openUser"
-        android:layout_width="match_parent"
-        android:layout_height="80sp"
-        android:text="用户信息"/>
-
-    <Button
         android:id="@+id/openOrder"
         android:layout_width="match_parent"
         android:layout_height="80sp"
         android:text="用户订单"/>
-
-    <Button
-        android:id="@+id/openLogin"
-        android:layout_width="match_parent"
-        android:layout_height="80sp"
-        android:text="用户登录"/>
 
     <Button
         android:id="@+id/openCreateOrder"

@@ -1,18 +1,24 @@
 package com.neu.youpin.fragments
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
+import android.widget.TextView
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.tabs.TabLayout
 import com.neu.youpin.HomePageActivity
 import com.neu.youpin.R
+import com.neu.youpin.entity.UserApplication
+import com.neu.youpin.login.LoginActivity
 import com.neu.youpin.store.ShopItem
 import com.neu.youpin.user.UserItemListAdapter
+import kotlinx.android.synthetic.main.fragment_mine.*
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -54,6 +60,12 @@ class MineFragment : Fragment() {
             rootActivity = activity as HomePageActivity
         }
         initItem()
+
+        val mineUserName: TextView? = root?.findViewById(R.id.MineUserName)
+        if(UserApplication.getInstance().isLogin()){
+            mineUserName?.text = UserApplication.getInstance().getName()
+        }else mineUserName?.text = "登录 | 注册"
+
         val layoutManager : RecyclerView.LayoutManager = object : GridLayoutManager(rootActivity,2) {
             override fun canScrollVertically(): Boolean {
                 return false
@@ -63,6 +75,14 @@ class MineFragment : Fragment() {
         recyclerView?.layoutManager = layoutManager
         val adapter = UserItemListAdapter(shopItemList)
         recyclerView?.adapter = adapter
+
+        //跳转到login界面
+        val mineButtonLogin: LinearLayout? = root?.findViewById(R.id.MineButtonLogin)
+        mineButtonLogin?.setOnClickListener {
+            val intent = Intent(rootActivity, LoginActivity::class.java)
+            startActivity(intent)
+        }
+
         return root
     }
 
@@ -70,6 +90,20 @@ class MineFragment : Fragment() {
         repeat(10) {
             shopItemList.add(ShopItem("furry", R.drawable.item_img,"11415元"))
         }
+    }
+
+    /**
+     * Called when the fragment is visible to the user and actively running.
+     * This is generally
+     * tied to [Activity.onResume] of the containing
+     * Activity's lifecycle.
+     */
+    override fun onResume() {
+        super.onResume()
+        val mineUserName: TextView? = root?.findViewById(R.id.MineUserName)
+        if(UserApplication.getInstance().isLogin()){
+            mineUserName?.text = UserApplication.getInstance().getName()
+        }else mineUserName?.text = "登录 | 注册"
     }
 
     companion object {

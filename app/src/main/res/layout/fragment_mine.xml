@@ -13,66 +13,39 @@ android:fillViewport="true">
     android:orientation="vertical"
     android:background="@color/background">
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="right"
-        tools:ignore="RtlHardcoded"
-        android:background="#00000000">
-        <Button
-            android:layout_width="25dp"
-            android:layout_height="25dp"
-            android:background="@drawable/icon_user_setting"/>
-    </LinearLayout>
-    <LinearLayout
+        android:layout_marginTop="25dp"
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        android:gravity="center_vertical"
         android:orientation="horizontal">
-        <com.neu.youpin.user.UserIconView
-            android:id="@+id/userIcon"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:scaleType="centerCrop"
-            android:src="@drawable/item_img"
-            android:layout_marginStart="10dp"
-            android:layout_marginEnd="10dp"/>
         <LinearLayout
-            android:layout_width="match_parent"
+            android:id="@+id/MineButtonLogin"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
+            android:layout_weight="1"
             android:gravity="center_vertical">
+            <com.neu.youpin.user.UserIconView
+                android:id="@+id/MineUserIcon"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/item_img"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"/>
             <TextView
-                android:id="@+id/userLogin"
+                android:id="@+id/MineUserName"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:text="登陆"
+                android:text="登录 | 注册"
                 android:textSize="20sp"
                 android:gravity="center_vertical"
-                android:textColor="@color/black"/>
-            <View
-                android:layout_width="2dp"
-                android:layout_marginStart="10dp"
-                android:layout_marginEnd="10dp"
-                android:layout_height="20sp"
-                android:background="@color/black" />
-            <TextView
-                android:id="@+id/userRegister"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:gravity="center_vertical"
-                android:text="注册"
-                android:textSize="20sp"
                 android:textColor="@color/black"/>
         </LinearLayout>
-        <TextView
-            android:id="@+id/userName"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:visibility="gone"
-            android:gravity="center_vertical"
-            android:text="用户名"
-            android:textSize="20sp"
-            android:textColor="@color/black"/>
+        <Button
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/icon_user_setting" />
     </LinearLayout>
 
     <LinearLayout
