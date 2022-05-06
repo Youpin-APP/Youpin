@@ -76,7 +76,7 @@ class SignActivity : AppCompatActivity() {
     }
 
     private fun signByRetrofit(){
-        signService.loginPost(signUserPhone.text.toString(),signUserPass.text.toString()).enqueue(object :
+        signService.loginPost(signUserPhone.text.toString(),signUserPass.text.toString(),signUserName.text.toString()).enqueue(object :
             Callback<SignToken> {
             override fun onResponse(call: Call<SignToken>,
                                     response: Response<SignToken>
@@ -153,5 +153,5 @@ class SignToken(val status: Boolean)
 interface SignService {
     @FormUrlEncoded
     @POST("user/register")
-    fun loginPost(@Field("uid") uid: String, @Field("pw") pw: String): Call<SignToken>
+    fun loginPost(@Field("uid") uid: String, @Field("pw") pw: String, @Field("name") name: String): Call<SignToken>
 }

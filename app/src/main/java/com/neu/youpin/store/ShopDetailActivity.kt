@@ -1,9 +1,5 @@
 package com.neu.youpin.store
 
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
-import android.graphics.Point
-import android.graphics.drawable.Drawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -14,17 +10,11 @@ import android.widget.*
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.bumptech.glide.load.resource.bitmap.RoundedCorners
-import com.bumptech.glide.request.RequestOptions
-import com.bumptech.glide.request.target.SimpleTarget
-import com.bumptech.glide.request.transition.Transition
 import com.neu.youpin.R
-import com.neu.youpin.fragments.HomeFragment
 import com.youth.banner.Banner
 import com.youth.banner.adapter.BannerImageAdapter
 import com.youth.banner.holder.BannerImageHolder
 import com.youth.banner.indicator.CircleIndicator
-import com.youth.banner.listener.OnBannerListener
 import kotlinx.android.synthetic.main.activity_shop_detail.*
 
 class ShopDetailActivity : AppCompatActivity() {
@@ -32,6 +22,7 @@ class ShopDetailActivity : AppCompatActivity() {
     private val imagesList = ArrayList<String>()
 
     var imageUrls = listOf(
+        "http://hqyz.cf:8080/pic/fc916569-2ff8-4841-b582-922e70139945.jpg",
         "https://hqyzcyp.xyz/imgs/2022/04/5a3997b18924a1ef.png",
         "https://hqyzcyp.xyz/imgs/2022/04/500bea1125066f33.png",
         "https://hqyzcyp.xyz/imgs/2022/04/b2a37428f2cb8fdb.png",
