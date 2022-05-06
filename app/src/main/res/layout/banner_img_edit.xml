@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/bannerImg"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:adjustViewBounds="true"
+        android:scaleType="fitXY"
+        android:src="@drawable/item_img" />
+    <RadioButton
+        android:id="@+id/bannerImgSelect"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/bannerImg"
+        android:layout_alignStart="@+id/bannerImg"/>
+    <LinearLayout
+        android:layout_width="200dp"
+        android:layout_height="40dp"
+        android:layout_alignBottom="@+id/bannerImg"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="20dp">
+        <Button
+            android:id="@+id/detailImgMoveLeft"
+            android:layout_marginStart="10dp"
+            android:layout_width="80dp"
+            android:layout_height="40dp"
+            android:layout_weight="1"
+            android:layout_gravity="center"
+            android:background="@drawable/custom_button_loca_background"
+            android:text="左移"
+            android:textColor="@color/purple_font"/>
+
+        <Button
+            android:id="@+id/detailImgMoveRight"
+            android:layout_marginStart="10dp"
+            android:layout_width="80dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:background="@drawable/custom_button_loca_background"
+            android:text="右移"
+            android:textColor="@color/purple_font" />
+    </LinearLayout>
+</RelativeLayout>

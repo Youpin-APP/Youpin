@@ -10,58 +10,75 @@
     <Button
         android:id="@+id/openSale"
         android:layout_width="match_parent"
-        android:layout_height="80sp"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         android:text="上货页面"/>
     <Button
         android:id="@+id/openStore"
         android:layout_width="match_parent"
-        android:layout_height="80sp"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         android:text="商品列表"/>
     <Button
         android:id="@+id/openHomePage"
         android:layout_width="match_parent"
-        android:layout_height="80sp"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         android:text="首页"/>
     <Button
         android:id="@+id/openCart"
         android:layout_width="match_parent"
-        android:layout_height="80sp"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         android:text="购物车"/>
 
     <Button
         android:id="@+id/openShopDetail"
         android:layout_width="match_parent"
-        android:layout_height="80sp"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         android:text="商品详情"/>
 
     <Button
         android:id="@+id/openUser"
         android:layout_width="match_parent"
-        android:layout_height="80sp"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         android:text="用户信息"/>
 
     <Button
         android:id="@+id/openOrder"
         android:layout_width="match_parent"
-        android:layout_height="80sp"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         android:text="用户订单"/>
 
     <Button
         android:id="@+id/openLogin"
         android:layout_width="match_parent"
-        android:layout_height="80sp"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         android:text="用户登录"/>
 
     <Button
         android:id="@+id/openCreateOrder"
         android:layout_width="match_parent"
-        android:layout_height="80sp"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         android:text="生成用户订单"/>
 
     <Button
         android:id="@+id/openOrderDetail"
         android:layout_width="match_parent"
-        android:layout_height="80sp"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         android:text="打开订单详情"/>
+
+    <Button
+        android:id="@+id/openSaleUpload"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:text="打开图片编辑"/>
 
 </LinearLayout>

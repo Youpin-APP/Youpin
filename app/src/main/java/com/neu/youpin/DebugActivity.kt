@@ -12,6 +12,7 @@ import com.neu.youpin.order.OrderActivity
 import com.neu.youpin.orderDetail.OrderDetailActivity
 import com.neu.youpin.orderDetail.OrderDetailInfo
 import com.neu.youpin.sale.SaleActivity
+import com.neu.youpin.saleUpload.SaleUploadActivity
 import com.neu.youpin.store.ShopDetailActivity
 import com.neu.youpin.store.StoreActivity
 import com.neu.youpin.user.UserActivity
@@ -68,6 +69,11 @@ class DebugActivity : AppCompatActivity() {
         val openLogin = findViewById<Button>(R.id.openLogin)
         openLogin.setOnClickListener {
             val intent = Intent(this, LoginActivity::class.java)
+            startActivity(intent)
+        }
+        val openSaleUpload = findViewById<Button>(R.id.openSaleUpload)
+        openSaleUpload.setOnClickListener {
+            val intent = Intent(this, SaleUploadActivity::class.java)
             startActivity(intent)
         }
     }
