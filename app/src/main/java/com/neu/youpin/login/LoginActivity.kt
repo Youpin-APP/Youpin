@@ -12,6 +12,7 @@ import android.widget.Toast
 import androidx.core.widget.addTextChangedListener
 import androidx.core.widget.doOnTextChanged
 import com.neu.youpin.R
+import com.neu.youpin.entity.ServiceCreator
 import com.neu.youpin.entity.UserApplication
 import kotlinx.android.synthetic.main.activity_login.*
 import retrofit2.Call
@@ -26,13 +27,11 @@ class LoginActivity : AppCompatActivity() {
     private val loginError: String = "用户名密码不匹配"
     private val passEmpty: String = "密码不能为空"
     private val networkError: String = "网络连接错误"
+    private val loginService = ServiceCreator.create<LoginService>()
 
-    private val url: String = "http://hqyz.cf:8080/"
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
-
-//        loginUserNameEmpty
 
         loginBackButton.setOnClickListener {
             finish()
@@ -88,13 +87,7 @@ class LoginActivity : AppCompatActivity() {
 
     // 用于登录使用
     private fun isUserPassCorrect(){
-//        Toast.makeText(this,"开始尝试登录", Toast.LENGTH_SHORT).show()
-        val retrofit = Retrofit.Builder()
-            .baseUrl(url)
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
-        val appService = retrofit.create(LoginService::class.java)
-        appService.loginPost(loginUserName.text.toString(),loginUserPass.text.toString()).enqueue(object : Callback<LoginToken> {
+        loginService.loginPost(loginUserName.text.toString(),loginUserPass.text.toString()).enqueue(object : Callback<LoginToken> {
             override fun onResponse(call: Call<LoginToken>,
                                     response: Response<LoginToken>
             ) {

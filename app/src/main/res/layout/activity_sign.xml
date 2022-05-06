@@ -63,6 +63,7 @@
         android:layout_marginEnd="30dp"
         android:hint="@string/sign_phone_mess"
         android:inputType="phone"
+        android:digits="1234567890"
         android:maxLength="11"
         android:textSize="13sp"
         android:background="@drawable/custom_edittext_background"
@@ -77,43 +78,43 @@
         android:textColor="@color/red"
         android:visibility="gone"
         tools:ignore="SmallSp" />
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginStart="30dp"
-        android:layout_marginEnd="30dp">
-        <EditText
-            android:id="@+id/signUserPhoneVer"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:paddingStart="@dimen/sign_padding_left"
-            android:hint="@string/sign_phone_ver_mess"
-            android:inputType="number"
-            android:maxLength="6"
-            android:textSize="13sp"
-            android:background="@drawable/custom_edittext_background"
-            tools:ignore="RtlSymmetry,TextFields" />
-        <Button
-            android:id="@+id/signPhoneButton"
-            android:layout_gravity="end"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="#00000000"
-            android:textColor="#007fff"
-            android:text="获取验证码"/>
-    </FrameLayout>
+<!--    <FrameLayout-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="40dp"-->
+<!--        android:layout_marginTop="20dp"-->
+<!--        android:layout_marginStart="30dp"-->
+<!--        android:layout_marginEnd="30dp">-->
+<!--        <EditText-->
+<!--            android:id="@+id/signUserPhoneVer"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="40dp"-->
+<!--            android:paddingStart="@dimen/sign_padding_left"-->
+<!--            android:hint="@string/sign_phone_ver_mess"-->
+<!--            android:inputType="number"-->
+<!--            android:maxLength="6"-->
+<!--            android:textSize="13sp"-->
+<!--            android:background="@drawable/custom_edittext_background"-->
+<!--            tools:ignore="RtlSymmetry,TextFields" />-->
+<!--        <Button-->
+<!--            android:id="@+id/signPhoneButton"-->
+<!--            android:layout_gravity="end"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:background="#00000000"-->
+<!--            android:textColor="#007fff"-->
+<!--            android:text="获取验证码"/>-->
+<!--    </FrameLayout>-->
 
-    <TextView
-        android:id="@+id/signUserPhoneVerEmpty"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="30dp"
-        android:text="短信验证码不能为空"
-        android:textSize="10sp"
-        android:textColor="@color/red"
-        android:visibility="gone"
-        tools:ignore="SmallSp" />
+<!--    <TextView-->
+<!--        android:id="@+id/signUserPhoneVerEmpty"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginStart="30dp"-->
+<!--        android:text="短信验证码不能为空"-->
+<!--        android:textSize="10sp"-->
+<!--        android:textColor="@color/red"-->
+<!--        android:visibility="gone"-->
+<!--        tools:ignore="SmallSp" />-->
     <EditText
         android:id="@+id/signUserPass"
         android:layout_width="match_parent"
