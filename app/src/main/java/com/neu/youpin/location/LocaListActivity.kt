@@ -48,17 +48,18 @@ class LocaListActivity : AppCompatActivity() {
     }
 
     private fun initUserLocaList(){
-        userLocaList.add(Loca("汤神", "13611415114","辽宁省","沈阳市","浑南区","东北大学", true))
-        repeat(5){
-            userLocaList.add(Loca("汤神", "13611415114","辽宁省","沈阳市","浑南区","东北大学", false))
-        }
+//        userLocaList.add(Loca("汤神", "13611415114","辽宁省","沈阳市","浑南区","东北大学", true))
+//        repeat(5){
+//            userLocaList.add(Loca("汤神", "13611415114","辽宁省","沈阳市","浑南区","东北大学", false))
+//        }
     }
 
 }
 
 @Parcelize
-data class Loca(var name:String, var tele:String, var province: String, var city:String,
-                var zone:String, var detailAdd:String, var isDefault:Boolean):Parcelable{}
+data class Loca(var aid: Int, var name:String, var tel:String, var pname: String, var pid: Int,
+                var cname:String, var cid: Int, var dname:String, var did: Int,var detail: String,
+                var success: Boolean, var default: Int):Parcelable{}
 
 class ListAdapter(private val locaList: List<Loca>) : RecyclerView.Adapter<ListAdapter.ViewHolder>() {
     //自定义嵌套内部类 ViewHolder 来减少 findViewById() 的使用， 继承RecyclerView的ViewHolder
@@ -84,11 +85,11 @@ class ListAdapter(private val locaList: List<Loca>) : RecyclerView.Adapter<ListA
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val location = locaList[position] //获取当前位置对应的loca
         holder.listName.text = location.name
-        holder.listPhone.text = location.tele.substring(0,3).plus("****").plus(location.tele.substring(4,11))
-        if (location.isDefault) holder.listDefault.visibility = View.VISIBLE
+        holder.listPhone.text = location.tel.substring(0,3).plus("****").plus(location.tel.substring(4,11))
+        if (location.default == 1) holder.listDefault.visibility = View.VISIBLE
         else holder.listDefault.visibility = View.INVISIBLE
-        holder.listDetail.text = location.province.plus(" ").plus(location.city)
-            .plus(" ").plus(location.zone).plus(location.detailAdd)
+        holder.listDetail.text = location.pname.plus(" ").plus(location.cname)
+            .plus(" ").plus(location.dname).plus(location.detail)
         holder.listEdit.setOnClickListener {
             val locaIntent = Intent(holder.context, LocaUpdateActivity::class.java).apply {
                 putExtra("loca", location)

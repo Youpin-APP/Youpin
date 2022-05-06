@@ -3,10 +3,23 @@ package com.neu.youpin.location
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
+import android.widget.Toast
 import androidx.core.widget.doOnTextChanged
 import com.neu.youpin.R
+import com.neu.youpin.entity.ServiceCreator
+import com.neu.youpin.entity.UserApplication
+import com.neu.youpin.login.SignToken
 import kotlinx.android.synthetic.main.activity_loca_update.*
+import kotlinx.android.synthetic.main.activity_login.*
+import kotlinx.android.synthetic.main.activity_sign.*
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import retrofit2.http.Field
+import retrofit2.http.FormUrlEncoded
+import retrofit2.http.POST
 import java.lang.StringBuilder
 import java.util.regex.Pattern
 
@@ -20,10 +33,17 @@ class LocaUpdateActivity : AppCompatActivity() {
 
     private var did:Int = 0
 
-//    private var builderForCustom: LocaDialog.Builder? = null
-//    private var mDialog: LocaDialog? = null
+    private val greyColor: Int = Color.parseColor("#9e9e9e")
+
+
+    private val locaUpdateService = ServiceCreator.create<LocaUpdateService>()
+
     private var builderForDialog: LocationDialog.Builder? = null
     private var locaDialog: LocationDialog? = null
+
+    private var isEdit:Boolean = false
+
+    private var location:Loca? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,39 +62,33 @@ class LocaUpdateActivity : AppCompatActivity() {
         }
 
         LocaUpdateAddZone.setOnClickListener{
-//            showTwoButtonDialog("", "这是自定义弹出框","确定", "取消", {
-//                // 操作
-//                Toast.makeText(this, mDialog!!.mess, Toast.LENGTH_SHORT).show()
-//                LocaUpdateAddZone.text = mDialog!!.mess
-//                mDialog!!.dismiss()
-//            }, {
-//                // 操作
-//                Toast.makeText(this,"取消",Toast.LENGTH_SHORT).show()
-//                mDialog!!.dismiss()
-//            })
             showLocationDialog()
         }
 
-        val isEdit = intent.getBooleanExtra("isEdit", false)
+        LocaUpdateSave.setOnClickListener {
+            addByRetrofit()
+        }
+
+        isEdit = intent.getBooleanExtra("isEdit", false)
 
         if (isEdit){
             LocaUpdateTitle.text = "修改收货地址"
-            val location = intent.getParcelableExtra<Loca>("loca")
+            location = intent.getParcelableExtra<Loca>("loca")
             LocaUpdateAddName.setText(location?.name)
-            LocaUpdateAddTele.setText(location?.tele?.substring(0,3).plus(" ")
-                .plus(location?.tele?.substring(3,7).plus(" ").plus(location?.tele?.substring(7,11))))
-            LocaUpdateAddZone.text = location?.province?.plus(" ")
-                .plus(location?.city).plus(" ").plus(location?.zone)
-            LocaUpdateAddDetail.setText(location?.detailAdd)
-            LocaUpdateAddDefault.isChecked = location?.isDefault == true
+            LocaUpdateAddTele.setText(location?.tel?.substring(0,3).plus(" ")
+                .plus(location?.tel?.substring(3,7).plus(" ").plus(location?.tel?.substring(7,11))))
+            LocaUpdateAddZone.text = location?.pname?.plus(" ")
+                .plus(location?.cname).plus(" ").plus(location?.dname)
+            LocaUpdateAddDetail.setText(location?.detail)
+            LocaUpdateAddDefault.isChecked = location?.default == 1
             LocaUpdateSave.isClickable = true
             LocaUpdateSave.setTextColor(Color.BLACK)
         }else{
 //            LocaUpdateAddTele.setText(LocaUpdateAddTele.text.toString().replace("\\s".toRegex(), ""))
             LocaUpdateTitle.text = "添加收货地址"
-            isSaveAble = arrayOf(false, false, false, false)
+            isSaveAble = arrayOf(false, true, false, false)
             LocaUpdateSave.isClickable = false
-            LocaUpdateSave.setTextColor(Color.parseColor("#9e9e9e"))
+            LocaUpdateSave.setTextColor(greyColor)
         }
 
         // 设置号码输入格式为 xxx xxxx xxxx
@@ -96,14 +110,118 @@ class LocaUpdateActivity : AppCompatActivity() {
                     if(section >= 0 && section <= LocaUpdateAddTele.text.toString().length) LocaUpdateAddTele.setSelection(section)
                 }
             }
-//            Log.d("start",start.toString())
-//            Log.d("before",before.toString())
-//            Log.d("count",count.toString())
-            if(LocaUpdateAddTele.text.toString().isEmpty()) LocaUpdateButtonClear.visibility = View.INVISIBLE
-            else LocaUpdateButtonClear.visibility = View.VISIBLE
-//            if(start== 12 && count==1){
-//                isSaveAble[1] = true
-//            }else if ()
+            val length = LocaUpdateAddTele.text.length
+            if(length == 0){
+                LocaUpdateButtonClear.visibility = View.INVISIBLE
+            }
+            else{
+                LocaUpdateButtonClear.visibility = View.VISIBLE
+            }
+            if(length == 13){
+                isSaveAble[1] = true
+                judgeSaveAble()
+            }else if(LocaUpdateSave.isClickable){
+                isSaveAble[1] = false
+                LocaUpdateSave.isClickable = false
+                LocaUpdateSave.setTextColor(greyColor)
+            }
+        }
+
+        LocaUpdateAddName.doOnTextChanged { _, _, _, _,->
+            if(LocaUpdateAddName.text.isEmpty()){
+                isSaveAble[0] = false
+                if(LocaUpdateSave.isClickable){
+                    LocaUpdateSave.isClickable = false
+                    LocaUpdateSave.setTextColor(greyColor)
+                }
+            }else {
+                isSaveAble[0] = true
+                judgeSaveAble()
+            }
+        }
+
+        LocaUpdateAddDetail.doOnTextChanged { _, _, _, _, ->
+            if(LocaUpdateAddDetail.text.isEmpty()){
+                isSaveAble[3] = false
+                if(LocaUpdateSave.isClickable){
+                    LocaUpdateSave.isClickable = false
+                    LocaUpdateSave.setTextColor(greyColor)
+                }
+            }else {
+                isSaveAble[3] = true
+                judgeSaveAble()
+            }
+        }
+    }
+
+
+    private fun toastNetworkError(){
+        Toast.makeText(this,"网络错误",Toast.LENGTH_SHORT).show()
+    }
+
+    private fun isAdd(success: Boolean){
+        if(success){
+            Toast.makeText(this, "添加新地址成功", Toast.LENGTH_SHORT).show()
+            finish()
+        }else{
+            Toast.makeText(this,"添加新地址失败",Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private fun isDefault():Int{
+
+    }
+
+    private fun addByRetrofit(){
+//        Toast.makeText(this,test.toString(),Toast.LENGTH_SHORT).show()
+        UserApplication.getInstance().getId()?.let {
+            if(isEdit){
+//                locaUpdateService.updateAddr(, did ,LocaUpdateAddDetail.text.toString(), LocaUpdateAddName.text.toString(),
+//                    LocaUpdateAddTele.text.toString().replace(" ",""),
+//                    if(LocaUpdateAddDefault.isSelected) 1 else 0 ).enqueue(object :
+//                    Callback<LocaUpdateMap> {
+//                    override fun onResponse(call: Call<LocaUpdateMap>,
+//                                            response: Response<LocaUpdateMap>
+//                    ) {
+//                        val list = response.body()
+//                        if (list != null) {
+//                            isAdd(list.success)
+//                        }else toastNetworkError()
+//                    }
+//
+//                    override fun onFailure(call: Call<LocaUpdateMap>, t: Throwable) {
+//                        t.printStackTrace()
+//                        Log.d("SignActivity", "network failed")
+//                    }
+//                })
+            }else{
+                locaUpdateService.addAddr(it, did ,LocaUpdateAddDetail.text.toString(), LocaUpdateAddName.text.toString(),
+                    LocaUpdateAddTele.text.toString().replace(" ",""),
+                    if(LocaUpdateAddDefault.isSelected) 1 else 0 ).enqueue(object :
+                    Callback<LocaUpdateMap> {
+                    override fun onResponse(call: Call<LocaUpdateMap>,
+                                            response: Response<LocaUpdateMap>
+                    ) {
+                        val list = response.body()
+                        if (list != null) {
+                            isAdd(list.success)
+                        }else toastNetworkError()
+                    }
+
+                    override fun onFailure(call: Call<LocaUpdateMap>, t: Throwable) {
+                        t.printStackTrace()
+                        Log.d("SignActivity", "network failed")
+                    }
+                })
+            }
+        }
+    }
+
+    private fun judgeSaveAble(){
+        if(!LocaUpdateSave.isClickable && isSaveAble[0] && isSaveAble[1]&&
+            isSaveAble[2] && isSaveAble[3]){
+            LocaUpdateSave.isClickable = true
+            LocaUpdateSave.setTextColor(Color.BLACK)
         }
     }
 
@@ -131,6 +249,8 @@ class LocaUpdateActivity : AppCompatActivity() {
             override fun setActivityText(userLocation: String, id: Int){
                 LocaUpdateAddZone.text = userLocation
                 did = id
+                isSaveAble[2] = true
+                judgeSaveAble()
             }
         }).createDialog()
         locaDialog!!.show()
@@ -146,4 +266,20 @@ class LocaUpdateActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
     }
+}
+
+class LocaUpdateMap(val success: Boolean)
+
+interface LocaUpdateService {
+    @FormUrlEncoded
+    @POST("user/addAddr")
+    fun addAddr(@Field("uid") uid: String, @Field("did") did: Int,
+                  @Field("addrDetail") addrDetail: String,@Field("name") name: String,
+                  @Field("tel") tel: String, @Field("isDefault") isDefault: Int): Call<LocaUpdateMap>
+
+    @FormUrlEncoded
+    @POST("user/updateAddr")
+    fun updateAddr(@Field("aid") aid: Int, @Field("did") did: Int,
+                @Field("addrDetail") addrDetail: String,@Field("name") name: String,
+                @Field("tel") tel: String, @Field("isDefault") isDefault: Int): Call<LocaUpdateMap>
 }
