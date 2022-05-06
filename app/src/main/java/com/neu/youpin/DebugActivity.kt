@@ -36,19 +36,9 @@ class DebugActivity : AppCompatActivity() {
             val intent = Intent(this, HomePageActivity::class.java)
             startActivity(intent)
         }
-        val openCart = findViewById<Button>(R.id.openCart)
-        openCart.setOnClickListener {
-            val intent = Intent(this, CartActivity::class.java)
-            startActivity(intent)
-        }
         val openShopDetail = findViewById<Button>(R.id.openShopDetail)
         openShopDetail.setOnClickListener {
             val intent = Intent(this, ShopDetailActivity::class.java)
-            startActivity(intent)
-        }
-        val openUser = findViewById<Button>(R.id.openUser)
-        openUser.setOnClickListener {
-            val intent = Intent(this, UserActivity::class.java)
             startActivity(intent)
         }
         val openOrder = findViewById<Button>(R.id.openOrder)
