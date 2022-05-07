@@ -22,6 +22,7 @@ import com.neu.youpin.Interface.OnItemClickListener
 import com.neu.youpin.R
 import com.neu.youpin.entity.ServiceCreator
 import kotlinx.android.synthetic.main.activity_store.*
+import kotlinx.android.synthetic.main.fragment_home.*
 import okhttp3.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -85,7 +86,23 @@ class SaleUploadActivity : AppCompatActivity(), OnItemClickListener {
             startActivityForResult(intent, fromAlbum)
         }
         deleteBannerImg.setOnClickListener {
+            val list = ArrayList<Int>()
+            for (index in bannerImgItemList.indices) {
+                if(bannerImgItemList[index].selected){
+                    list.add(index);
+                }
+            }
+            Log.d("delBanner", list.toString())
+            imgService.delGoodsBannerPic(gid, list).enqueue(object : Callback<ResponseBody> {
+                override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+                    updateItem()
+                }
 
+                override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                    t.printStackTrace()
+                    Log.d("LoginActivity", "network failed")
+                }
+            })
         }
         addDetailImg.setOnClickListener {
             val intent = Intent(Intent.ACTION_OPEN_DOCUMENT)
@@ -95,7 +112,23 @@ class SaleUploadActivity : AppCompatActivity(), OnItemClickListener {
             startActivityForResult(intent, fromAlbum)
         }
         deleteDetailImg.setOnClickListener {
+            val list = ArrayList<Int>()
+            for (index in detailImgItemList.indices) {
+                if(detailImgItemList[index].selected){
+                    list.add(index);
+                }
+            }
+            Log.d("delDetail", list.toString())
+            imgService.delGoodsDetailPic(gid, list).enqueue(object : Callback<ResponseBody> {
+                override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+                    updateItem()
+                }
 
+                override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                    t.printStackTrace()
+                    Log.d("LoginActivity", "network failed")
+                }
+            })
         }
     }
 
@@ -336,6 +369,14 @@ class SaleUploadActivity : AppCompatActivity(), OnItemClickListener {
         @FormUrlEncoded
         @POST("goodsEdit/moveDetailPicDown")
         fun moveDetailPicDown(@Field("gid") gid: Int, @Field("pid") pid: Int): Call<ResponseBody>
+
+        @FormUrlEncoded
+        @POST("goodsEdit/delGoodsBannerPic")
+        fun delGoodsBannerPic(@Field("gid") gid: Int, @Field("pid") pid: List<Int>): Call<ResponseBody>
+
+        @FormUrlEncoded
+        @POST("goodsEdit/delGoodsDetailPic")
+        fun delGoodsDetailPic(@Field("gid") gid: Int, @Field("pid") pid: List<Int>): Call<ResponseBody>
 
     }
 

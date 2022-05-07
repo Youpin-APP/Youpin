@@ -15,11 +15,21 @@ import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.SimpleItemAnimator
+import com.google.gson.Gson
+import com.google.gson.JsonArray
+import com.google.gson.JsonObject
 import com.neu.youpin.HomePageActivity
+import com.neu.youpin.Interface.OnItemClickListener
 import com.neu.youpin.R
 import com.neu.youpin.cart.CartItem
 import com.neu.youpin.cart.CartListAdapter
-import com.neu.youpin.cart.OnItemClickListener
+import com.neu.youpin.entity.ServiceCreator
+import okhttp3.ResponseBody
+import retrofit2.Call
+import retrofit2.Response
+import retrofit2.http.Field
+import retrofit2.http.FormUrlEncoded
+import retrofit2.http.POST
 import java.util.*
 
 // TODO: Rename parameter arguments, choose names that match
@@ -32,7 +42,7 @@ private const val ARG_PARAM2 = "param2"
  * Use the [ShoppingFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class ShoppingFragment : Fragment() , OnItemClickListener {
+class ShoppingFragment : Fragment() , OnItemClickListener, com.neu.youpin.cart.OnItemClickListener {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
@@ -42,8 +52,10 @@ class ShoppingFragment : Fragment() , OnItemClickListener {
     private val cartItemList = Vector<CartItem>()
     private lateinit var adapter : CartListAdapter
     private var isEditing = false
-    private var totalPrice = 0
+    private var totalPrice = 0f
     private lateinit var cartTotalPrice : TextView
+    private val cartService = ServiceCreator.create<CartService>()
+    private val uid = "11415"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -80,21 +92,21 @@ class ShoppingFragment : Fragment() , OnItemClickListener {
 
         cartItemSelectAll?.setOnClickListener {
             Log.d("selectAll", "click" + cartItemSelectAll.isChecked)
-            totalPrice = 0
+            totalPrice = 0f
             if(cartItemSelectAll.isChecked) {
                 for (cartItem in cartItemList) {
-                    cartItem.selected = true
+                    cartItem.selected = 1
                     totalPrice += cartItem.price * cartItem.count
                 }
                 adapter.notifyItemRangeChanged(0,adapter.itemCount)
             }
             else {
                 for (cartItem in cartItemList) {
-                    cartItem.selected = false
+                    cartItem.selected = 0
                 }
                 adapter.notifyItemRangeChanged(0,adapter.itemCount)
             }
-            cartTotalPrice.text = "合计: "+totalPrice.toString()+"元"
+            updateTotalPrice()
         }
         editCart?.setOnClickListener {
             isEditing = !isEditing
@@ -109,13 +121,16 @@ class ShoppingFragment : Fragment() , OnItemClickListener {
         }
         cartCheckout?.setOnClickListener {
             if(isEditing){
-                cartItemList.removeIf { it.selected }
+                cartItemList.removeIf { it.selected == 1 }
                 adapter.notifyDataSetChanged()
-                totalPrice = 0
+                totalPrice = 0f
                 for (cartItem in cartItemList) {
                     totalPrice += cartItem.price * cartItem.count
                 }
-                cartTotalPrice.text = "合计: "+totalPrice.toString()+"元"
+                updateTotalPrice()
+            }
+            else {
+
             }
         }
 
@@ -123,45 +138,93 @@ class ShoppingFragment : Fragment() , OnItemClickListener {
     }
 
     private fun initItem() {
-        repeat(10) {
-            cartItemList.add(
-                CartItem("furry", R.drawable.item_img,11415,
-                20,"蓝白")
-            )
-        }
+        cartService.getList(uid).enqueue(object : retrofit2.Callback<ResponseBody> {
+            override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+                cartItemList.clear()
+                val jsonStr = String(response.body()!!.bytes())
+                val obj = Gson().fromJson(jsonStr, JsonArray::class.java)
+                val bannerArray = obj.asJsonArray
+                for (jsonElement in bannerArray) {
+                    val cartObj = jsonElement.asJsonObject
+                    cartItemList.add(CartItem(cartObj.get("name").asString,
+                        "http://hqyz.cf:8080/pic/" + cartObj.get("pic").asString,
+                        cartObj.get("price").asFloat,cartObj.get("count").asInt,
+                        cartObj.get("type").asString,cartObj.get("selected").asInt,
+                        cartObj.get("gid").asInt,cartObj.get("caid").asInt))
+                    val recyclerViewBanner = view!!.findViewById<RecyclerView>(R.id.cartItemList)
+                    recyclerViewBanner.adapter!!.notifyDataSetChanged()
+                    updateTotalPrice()
+                }
+            }
+
+            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                t.printStackTrace()
+                Log.d("LoginActivity", "network failed")
+            }
+        })
     }
 
     @SuppressLint("SetTextI18n")
     override fun onItemClick(pos: Int, id : Int) {
         when(id) {
             R.id.cartItemPlus -> {
-                cartItemList[pos].count++
-                adapter.notifyItemChanged(pos)
-                if(cartItemList[pos].selected){
-                    totalPrice += cartItemList[pos].price
-                    cartTotalPrice.text = "合计: "+totalPrice.toString()+"元"
-                }
+                cartService.itemAddOne(cartItemList[pos].caid).enqueue(object : retrofit2.Callback<ResponseBody> {
+                    override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+                        val jsonStr = String(response.body()!!.bytes())
+                        val obj = Gson().fromJson(jsonStr, JsonObject::class.java)
+                        if(obj.get("success").asBoolean) {
+                            cartItemList[pos].count = obj.get("count").asInt
+                            adapter.notifyItemChanged(pos)
+                            updateTotalPrice()
+                        }
+                    }
 
+                    override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                        t.printStackTrace()
+                        Log.d("LoginActivity", "network failed")
+                    }
+                })
             }
             R.id.cartItemSub -> {
-                cartItemList[pos].count--
-                adapter.notifyItemChanged(pos)
-                if(cartItemList[pos].selected){
-                    totalPrice -= cartItemList[pos].price
-                    cartTotalPrice.text = "合计: "+totalPrice.toString()+"元"
+                cartService.itemMinusOne(cartItemList[pos].caid).enqueue(object : retrofit2.Callback<ResponseBody> {
+                override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+                    val jsonStr = String(response.body()!!.bytes())
+                    val obj = Gson().fromJson(jsonStr, JsonObject::class.java)
+                    if(obj.get("success").asBoolean) {
+                        cartItemList[pos].count = obj.get("count").asInt
+                        adapter.notifyItemChanged(pos)
+                        updateTotalPrice()
+                    }
                 }
+
+                override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                    t.printStackTrace()
+                    Log.d("LoginActivity", "network failed")
+                }
+            })
             }
             R.id.cartItemCheckBox -> {
                 Log.d("checkItem","")
-                cartItemList[pos].selected = !cartItemList[pos].selected
+                cartItemList[pos].selected = 1-cartItemList[pos].selected
+                cartService.selectItem(cartItemList[pos].caid, cartItemList[pos].selected).enqueue(
+                    object : retrofit2.Callback<ResponseBody> {
+                    override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+
+                    }
+
+                    override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                        t.printStackTrace()
+                        Log.d("LoginActivity", "network failed")
+                    }
+                })
                 val cartItemSelectAll = view?.findViewById<CheckBox>(R.id.selectAllCart)
-                if(!cartItemList[pos].selected && cartItemSelectAll!!.isChecked) {
+                if(cartItemList[pos].selected == 0 && cartItemSelectAll!!.isChecked) {
                     cartItemSelectAll.isChecked = false
                 }
-                if(cartItemList[pos].selected) {
+                if(cartItemList[pos].selected == 1) {
                     var selectAll = true
                     for (cartItem in cartItemList) {
-                        if(!cartItem.selected) {
+                        if(cartItem.selected == 0) {
                             selectAll = false
                             break
                         }
@@ -170,14 +233,19 @@ class ShoppingFragment : Fragment() , OnItemClickListener {
                         cartItemSelectAll?.isChecked = true
                     }
                 }
-                if(cartItemList[pos].selected) {
-                    totalPrice += cartItemList[pos].price * cartItemList[pos].count
-                }
-                else {
-                    totalPrice -= cartItemList[pos].price * cartItemList[pos].count
-                }
-                cartTotalPrice.text = "合计: "+totalPrice.toString()+"元"
+                updateTotalPrice()
             }
+        }
+    }
+
+    fun updateTotalPrice() {
+        totalPrice = 0f
+        for (cartItem in cartItemList) {
+            if(cartItem.selected == 1) {
+                totalPrice += cartItem.price * cartItem.count
+            }
+            cartTotalPrice.text = "合计: "+String.format("%.2f", totalPrice)+"元"
+
         }
     }
 
@@ -201,4 +269,26 @@ class ShoppingFragment : Fragment() , OnItemClickListener {
                 }
             }
     }
+}
+
+interface CartService {
+    @FormUrlEncoded
+    @POST("cart/getList")
+    fun getList(@Field("uid") uid : String): Call<ResponseBody>
+
+    @FormUrlEncoded
+    @POST("cart/cartItemAddOne")
+    fun itemAddOne(@Field("caid") caid : Int): Call<ResponseBody>
+
+    @FormUrlEncoded
+    @POST("cart/cartItemMinusOne")
+    fun itemMinusOne(@Field("caid") caid : Int): Call<ResponseBody>
+
+    @FormUrlEncoded
+    @POST("cart/cartItemDelete")
+    fun itemDelete(@Field("caids") caids : List<Int>): Call<ResponseBody>
+
+    @FormUrlEncoded
+    @POST("cart/selectItem")
+    fun selectItem(@Field("caid") caid : Int, @Field("selected") selected : Int): Call<ResponseBody>
 }

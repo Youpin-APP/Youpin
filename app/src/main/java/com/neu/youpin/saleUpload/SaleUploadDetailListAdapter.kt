@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.CheckBox
 import android.widget.ImageView
 import android.widget.RadioButton
 import androidx.recyclerview.widget.RecyclerView
@@ -24,7 +25,7 @@ class SaleUploadDetailListAdapter(
 
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val detailImg: ImageView = view.findViewById(R.id.detailImg)
-        val selectButton: Button = view.findViewById(R.id.detailImgSelect)
+        val selectButton: CheckBox = view.findViewById(R.id.detailImgSelect)
         val moveUpButton: Button = view.findViewById(R.id.detailImgMoveUp)
         val moveDownButton: Button = view.findViewById(R.id.detailImgMoveDown)
     }
@@ -42,6 +43,9 @@ class SaleUploadDetailListAdapter(
                 .load(imgList[position].picUrl)
                 .into(holder.detailImg)
         }
+
+        holder.selectButton.isChecked = imgList[position].selected
+
         holder.selectButton.setOnClickListener {
             if (listener != null) {
                 listener.onItemClick(position, holder.selectButton.id)
@@ -59,7 +63,7 @@ class SaleUploadDetailListAdapter(
         }
     }
 
-    public fun setOnItemClickListener(listener: OnItemClickListener) {
+    fun setOnItemClickListener(listener: OnItemClickListener) {
         this.listener = listener
     }
 

@@ -6,7 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.neu.youpin.R
+import com.neu.youpin.fragments.ShoppingFragment
 import java.util.*
 
 
@@ -38,12 +40,16 @@ class CartListAdapter(private var itemList: Vector<CartItem>) :
     @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val cartItem = itemList[position]
-        holder.cartItemImg.setImageResource(cartItem.pic)
+//        holder.cartItemImg.setImageResource(cartItem.pic)
         holder.cartItemPrice.text = cartItem.price.toString() + "元"
         holder.cartItemName.text = cartItem.name
         holder.cartItemCount.text = cartItem.count.toString()
         holder.cartItemType.text = cartItem.type
-        holder.cartItemCheckBox.isChecked = itemList[position].selected
+        holder.cartItemCheckBox.isChecked = itemList[position].selected == 1
+        Glide.with(holder.cartItemImg.context)
+            .load(cartItem.pic)
+            .into(holder.cartItemImg)
+
         if (position != itemList.size - 1) {
             val lp: RecyclerView.LayoutParams =
                 holder.cartItemBox.layoutParams as (RecyclerView.LayoutParams)
@@ -78,7 +84,7 @@ class CartListAdapter(private var itemList: Vector<CartItem>) :
 
     }
 
-    fun setOnItemClickListener(onItemClickListener: OnItemClickListener) {
+    fun setOnItemClickListener(onItemClickListener: ShoppingFragment) {
         listener = onItemClickListener
     }
 

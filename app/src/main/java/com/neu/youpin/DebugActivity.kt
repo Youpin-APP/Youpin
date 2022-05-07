@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
-import com.neu.youpin.cart.CartActivity
 import com.neu.youpin.login.LoginActivity
 import com.neu.youpin.order.CreateOrderActivity
 import com.neu.youpin.order.OrderActivity
