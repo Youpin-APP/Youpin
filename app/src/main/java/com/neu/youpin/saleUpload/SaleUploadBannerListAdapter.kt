@@ -8,7 +8,6 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.CheckBox
 import android.widget.ImageView
-import android.widget.RadioButton
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.neu.youpin.Interface.OnItemClickListener
@@ -36,14 +35,13 @@ class SaleUploadBannerListAdapter(
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        Log.d("banner", "imgList[position].picUrl")
         if (!imgList[position].loaded) {
             imgList[position].loaded = true
-            Log.d("banner", "imgList[position].picUrl")
             Glide.with(context)
                 .load(imgList[position].picUrl)
                 .into(holder.bannerImg)
         }
+        holder.selectButton.isChecked = imgList[position].selected
         holder.selectButton.setOnClickListener {
             if (listener != null) {
                 listener.onItemClick(position, holder.selectButton.id)
@@ -61,7 +59,7 @@ class SaleUploadBannerListAdapter(
         }
     }
 
-    public fun setOnItemClickListener(listener: OnItemClickListener) {
+    fun setOnItemClickListener(listener: OnItemClickListener) {
         this.listener = listener
     }
 

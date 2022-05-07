@@ -32,6 +32,10 @@ class SaleActivity : AppCompatActivity() {
             SaleGoodPrimary.setText(gid.toString())
         }
 
+        SaleButtonBack.setOnClickListener {
+            finish()
+        }
+
         SaleGoodTid1.setOnClickListener {
             locaDialog = builderForDialog!!.setListener(object: SelectClassDialog.SaleListener{
                 override fun setActivityText(className: String, classId: Int){
@@ -68,7 +72,7 @@ class SaleActivity : AppCompatActivity() {
         SaleButtonEditImg.setOnClickListener {
             if(gid>=0){
                 val saleUploadIntent = Intent(this, SaleUploadActivity::class.java).apply {
-                    putExtra("gid", gid)
+                    putExtra("gid", SaleGoodPrimary.text.toString().toInt())
                 }
                 this.startActivity(saleUploadIntent)
             }else Toast.makeText(this,"请先选择商品再编辑图片",Toast.LENGTH_SHORT).show()
