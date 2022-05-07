@@ -74,6 +74,7 @@ class LocaUpdateActivity : AppCompatActivity() {
         if (isEdit){
             LocaUpdateTitle.text = "修改收货地址"
             location = intent.getParcelableExtra<Loca>("loca")
+            did = location!!.did
             LocaUpdateAddName.setText(location?.name)
             LocaUpdateAddTele.setText(location?.tel?.substring(0,3).plus(" ")
                 .plus(location?.tel?.substring(3,7).plus(" ").plus(location?.tel?.substring(7,11))))
@@ -86,6 +87,9 @@ class LocaUpdateActivity : AppCompatActivity() {
         }else{
 //            LocaUpdateAddTele.setText(LocaUpdateAddTele.text.toString().replace("\\s".toRegex(), ""))
             LocaUpdateTitle.text = "添加收货地址"
+            val tel = UserApplication.getInstance().getId()
+            LocaUpdateAddTele.setText(tel?.substring(0,3).plus(" ")
+                .plus(tel?.substring(3,7).plus(" ").plus(tel?.substring(7,11))))
             isSaveAble = arrayOf(false, true, false, false)
             LocaUpdateSave.isClickable = false
             LocaUpdateSave.setTextColor(greyColor)
@@ -168,50 +172,60 @@ class LocaUpdateActivity : AppCompatActivity() {
         }
     }
 
+    private fun isUpdate(success: Boolean){
+        if(success){
+            Toast.makeText(this, "修改地址成功", Toast.LENGTH_SHORT).show()
+            finish()
+        }else{
+            Toast.makeText(this,"修改地址失败",Toast.LENGTH_SHORT).show()
+        }
+    }
+
     private fun isDefault():Int{
-        return if(LocaUpdateAddDefault.isSelected) 1 else 0
+        return if(LocaUpdateAddDefault.isChecked) 1 else 0
     }
 
     private fun addByRetrofit(){
-        Toast.makeText(this,isDefault().toString(),Toast.LENGTH_SHORT).show()
-        UserApplication.getInstance().getId()?.let {
-            if(isEdit){
-//                locaUpdateService.updateAddr(, did ,LocaUpdateAddDetail.text.toString(), LocaUpdateAddName.text.toString(),
-//                    LocaUpdateAddTele.text.toString().replace(" ",""),
-//                    if(LocaUpdateAddDefault.isSelected) 1 else 0 ).enqueue(object :
-//                    Callback<LocaUpdateMap> {
-//                    override fun onResponse(call: Call<LocaUpdateMap>,
-//                                            response: Response<LocaUpdateMap>
-//                    ) {
-//                        val list = response.body()
-//                        if (list != null) {
-//                            isAdd(list.success)
-//                        }else toastNetworkError()
-//                    }
-//
-//                    override fun onFailure(call: Call<LocaUpdateMap>, t: Throwable) {
-//                        t.printStackTrace()
-//                        Log.d("SignActivity", "network failed")
-//                    }
-//                })
-            }else{
-                locaUpdateService.addAddr(it, did ,LocaUpdateAddDetail.text.toString(), LocaUpdateAddName.text.toString(),
-                    LocaUpdateAddTele.text.toString().replace(" ",""), isDefault() ).enqueue(object :
-                    Callback<LocaUpdateMap> {
-                    override fun onResponse(call: Call<LocaUpdateMap>,
-                                            response: Response<LocaUpdateMap>
+        LocaUpdateSave.isClickable = false
+        if(isEdit){
+            locaUpdateService.updateAddr(location!!.aid, did ,LocaUpdateAddDetail.text.toString(), LocaUpdateAddName.text.toString(),
+                LocaUpdateAddTele.text.toString().replace(" ",""), isDefault() ).enqueue(object :
+                Callback<LocaUpdateMap> {
+                    override fun onResponse(call: Call<LocaUpdateMap>, response: Response<LocaUpdateMap>
                     ) {
                         val list = response.body()
                         if (list != null) {
-                            isAdd(list.success)
+                            isUpdate(list.success)
                         }else toastNetworkError()
+                        LocaUpdateSave.isClickable = true
                     }
-
                     override fun onFailure(call: Call<LocaUpdateMap>, t: Throwable) {
                         t.printStackTrace()
-                        Log.d("SignActivity", "network failed")
+                        Log.d("LocaUpdateActivity", "network failed")
+                        LocaUpdateSave.isClickable = true
                     }
-                })
+                }
+            )
+        }else{
+            UserApplication.getInstance().getId()?.let {
+                locaUpdateService.addAddr(it, did ,LocaUpdateAddDetail.text.toString(), LocaUpdateAddName.text.toString(),
+                    LocaUpdateAddTele.text.toString().replace(" ",""), isDefault() ).enqueue(object :
+                    Callback<LocaUpdateMap> {
+                        override fun onResponse(call: Call<LocaUpdateMap>, response: Response<LocaUpdateMap>
+                        ) {
+                            val list = response.body()
+                            if (list != null) {
+                                isAdd(list.success)
+                            }else toastNetworkError()
+                            LocaUpdateSave.isClickable = true
+                        }
+                        override fun onFailure(call: Call<LocaUpdateMap>, t: Throwable) {
+                            t.printStackTrace()
+                            Log.d("LocaUpdateActivity", "network failed")
+                            LocaUpdateSave.isClickable = true
+                        }
+                    }
+                )
             }
         }
     }

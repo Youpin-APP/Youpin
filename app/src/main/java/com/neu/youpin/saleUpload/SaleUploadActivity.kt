@@ -17,7 +17,7 @@ class SaleUploadActivity : AppCompatActivity() {
         setContentView(R.layout.activity_sale_upload)
         initItem()
         val layoutManager = LinearLayoutManager(this)
-        val recyclerView = findViewById<RecyclerView>(R.id.itemList)
+        val recyclerView = findViewById<RecyclerView>(R.id.StoreItemList)
         recyclerView.layoutManager = layoutManager
         val adapter = SaleUploadDetailListAdapter(detailImgItemList)
         recyclerView.adapter = adapter

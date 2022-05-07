@@ -6,28 +6,47 @@
     android:layout_height="match_parent"
     tools:context=".store.StoreActivity"
     android:orientation="vertical">
-    <LinearLayout
+
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:orientation="horizontal">
-        <EditText
-            android:id="@+id/searchBox"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:inputType="text"
-            android:background="@drawable/search_box"
-            android:drawableStart="@drawable/search_img"
-            android:hint="测试文字"/>
+        android:layout_height="55dp"
+        android:background="@color/grey_bg_color">
         <ImageButton
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:background="@drawable/search_box_button"
-            android:foreground="@drawable/search_img"/>
-    </LinearLayout>
+            android:layout_marginStart="5dp"
+            android:id="@+id/StoreButtonBack"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/icon_back"
+            android:background="#00000000"
+            android:layout_gravity="center|start"/>
+        <EditText
+            android:layout_marginStart="30dp"
+            android:id="@+id/StoreSearchBox"
+            android:backgroundTint="@color/white"
+            android:layout_marginEnd="15dp"
+            android:layout_gravity="center"
+            android:paddingStart="35dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/custom_edittext_background"
+            android:hint="@string/home_search_box"
+            android:padding="8dp"
+            android:textColorHint="#546E7A"
+            android:textSize="16sp"
+            tools:ignore="RtlSymmetry" />
+        <ImageButton
+            android:layout_marginStart="42dp"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/icon_search_gray_999_3x"
+            android:background="#00000000"
+            android:layout_gravity="center|start"/>
+    </FrameLayout>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/itemList"
+        android:id="@+id/StoreItemList"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 

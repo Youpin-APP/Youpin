@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    //自定义删除按钮的宽度
+    <declare-styleable name="LeftDeleteView">
+        <attr name="deleteBtnWidth" format="float"/>
+    </declare-styleable>
+</resources>

@@ -20,7 +20,6 @@ import com.neu.youpin.R
 import com.neu.youpin.cart.CartItem
 import com.neu.youpin.cart.CartListAdapter
 import com.neu.youpin.cart.OnItemClickListener
-import kotlinx.android.synthetic.main.fragment_shopping.*
 import java.util.*
 
 // TODO: Rename parameter arguments, choose names that match

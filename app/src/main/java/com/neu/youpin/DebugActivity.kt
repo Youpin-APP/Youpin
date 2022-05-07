@@ -26,11 +26,6 @@ class DebugActivity : AppCompatActivity() {
             val intent = Intent(this, SaleActivity::class.java)
             startActivity(intent)
         })
-        val openStore = findViewById<Button>(R.id.openStore)
-        openStore.setOnClickListener(View.OnClickListener {
-            val intent = Intent(this, StoreActivity::class.java)
-            startActivity(intent)
-        })
         val openHomePage = findViewById<Button>(R.id.openHomePage)
         openHomePage.setOnClickListener {
             val intent = Intent(this, HomePageActivity::class.java)

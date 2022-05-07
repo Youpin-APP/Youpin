@@ -24,4 +24,5 @@
     <color name="shop_detail_cart_stroke_color">#fece00</color>
     <color name="payment_bg">#fff5e3</color>
     <color name="purple_font">#744b83</color>
+    <color name="delete_red">#ee6473</color>
 </resources>

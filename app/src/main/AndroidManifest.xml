@@ -16,6 +16,9 @@
         android:theme="@style/Theme.Youpin"
         tools:targetApi="n">
         <activity
+            android:name=".saleUpload.SaleUploadActivity"
+            android:exported="false" />
+        <activity
             android:name=".sale.SaleActivity"
             android:exported="false" />
         <activity
