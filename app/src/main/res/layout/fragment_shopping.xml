@@ -54,6 +54,17 @@ android:background="@color/background">
 
 </androidx.recyclerview.widget.RecyclerView>
 
+    <TextView
+        android:id="@+id/ShopNotLogin"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_centerInParent="true"
+        android:gravity="center"
+        android:text="还未登录，\n请先登录再使用购物车功能"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        android:visibility="visible" />
+
     <RelativeLayout
         android:id="@+id/cartBottomBar"
         android:layout_width="match_parent"

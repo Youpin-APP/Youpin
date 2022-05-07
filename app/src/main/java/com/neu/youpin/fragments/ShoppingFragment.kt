@@ -1,6 +1,7 @@
 package com.neu.youpin.fragments
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
@@ -24,6 +25,10 @@ import com.neu.youpin.R
 import com.neu.youpin.cart.CartItem
 import com.neu.youpin.cart.CartListAdapter
 import com.neu.youpin.entity.ServiceCreator
+import com.neu.youpin.entity.UserApplication
+import com.neu.youpin.location.LocaListActivity
+import com.neu.youpin.login.LoginActivity
+import kotlinx.android.synthetic.main.fragment_shopping.*
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Response
@@ -55,7 +60,7 @@ class ShoppingFragment : Fragment() , OnItemClickListener, com.neu.youpin.cart.O
     private var totalPrice = 0f
     private lateinit var cartTotalPrice : TextView
     private val cartService = ServiceCreator.create<CartService>()
-    private val uid = "11415"
+    private var uid = "11415"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -89,6 +94,13 @@ class ShoppingFragment : Fragment() , OnItemClickListener, com.neu.youpin.cart.O
         val cartItemSelectAll = root?.findViewById<CheckBox>(R.id.selectAllCart)
         val editCart = root?.findViewById<Button>(R.id.editCart)
         val cartCheckout = root?.findViewById<Button>(R.id.cartCheckoutButton)
+
+        val shopNotLogin = root?.findViewById<TextView>(R.id.ShopNotLogin)
+
+        shopNotLogin?.setOnClickListener {
+            val loginIntent = Intent(rootActivity, LoginActivity::class.java)
+            startActivity(loginIntent)
+        }
 
         cartItemSelectAll?.setOnClickListener {
             Log.d("selectAll", "click" + cartItemSelectAll.isChecked)
@@ -135,6 +147,21 @@ class ShoppingFragment : Fragment() , OnItemClickListener, com.neu.youpin.cart.O
         }
 
         return root
+    }
+
+    /**
+     * Called when the fragment is visible to the user and actively running.
+     * This is generally
+     * tied to [Activity.onResume] of the containing
+     * Activity's lifecycle.
+     */
+    override fun onResume() {
+        super.onResume()
+        val shopNotLogin = root?.findViewById<TextView>(R.id.ShopNotLogin)
+        if(UserApplication.getInstance().isLogin()){
+            shopNotLogin?.visibility = View.GONE
+            uid = UserApplication.getInstance().getId().toString()
+        }else shopNotLogin?.visibility = View.VISIBLE
     }
 
     private fun initItem() {
