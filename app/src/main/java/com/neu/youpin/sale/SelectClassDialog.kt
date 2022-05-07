@@ -82,7 +82,7 @@ class SelectClassDialog: Dialog {
          */
         fun createDialog(): SelectClassDialog {
             // 设置recyclerView
-            initLocaList()
+            initClassList()
 
 
             if(title != null) (layout.findViewById<View>(R.id.SaleDialoTitle) as TextView).text = title
@@ -120,13 +120,9 @@ class SelectClassDialog: Dialog {
         }
 
         private fun addByRetrofit(){
-            var tName = arrayOf("", null, null, null)
-            when(classType){
-                1 -> tName[1] = (layout.findViewById<View>(R.id.SaleDialogText) as TextView).text.toString()
-                2 -> tName[2] = (layout.findViewById<View>(R.id.SaleDialogText) as TextView).text.toString()
-                3 -> tName[3] = (layout.findViewById<View>(R.id.SaleDialogText) as TextView).text.toString()
-            }
-            selectClassService.addGoodsType(this.gid, tName[1], tName[2], tName[3]).enqueue(object : Callback<SelectClassMap> {
+            var tName = arrayOf("", "", "")
+            tName[classType] = (layout.findViewById<View>(R.id.SaleDialogText) as TextView).text.toString()
+            selectClassService.addGoodsType(this.gid, tName[0], tName[1], tName[2]).enqueue(object : Callback<SelectClassMap> {
                 override fun onResponse(call: Call<SelectClassMap>,
                                         response: Response<SelectClassMap>
                 ) {
@@ -143,7 +139,7 @@ class SelectClassDialog: Dialog {
             })
         }
 
-        private fun initLocaList(){
+        private fun initClassList(){
             selectClassService.getTypeList(this.gid).enqueue(object : Callback<T3List> {
                 override fun onResponse(call: Call<T3List>,
                                         response: Response<T3List>
@@ -180,8 +176,8 @@ interface SelectClassService {
 
     @FormUrlEncoded
     @POST("/goodsEdit/addGoodsType")
-    fun addGoodsType(@Field("gid") gid: Int, @Field("tname1") tname1: String?,
-                     @Field("tname2") tname2: String?, @Field("tname3") tname3: String?): Call<SelectClassMap>
+    fun addGoodsType(@Field("gid") gid: Int, @Field("tname1") tname1: String,
+                     @Field("tname2") tname2: String, @Field("tname3") tname3: String): Call<SelectClassMap>
 }
 
 class LocaListAdapter(private val classList: List<TList>, private var builderForDialog: SelectClassDialog.Builder) : RecyclerView.Adapter<LocaListAdapter.ViewHolder>() {
