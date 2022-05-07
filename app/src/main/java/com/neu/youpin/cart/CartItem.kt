@@ -1,5 +1,10 @@
 package com.neu.youpin.cart
 
+import android.os.Parcelable
+import kotlinx.android.parcel.Parcelize
 
+
+@Parcelize
 data class CartItem(val name: String, val pic: String, val price: Float, var count: Int,
-                    var type: String, var selected : Int, val gid : Int, val caid : Int) {}
+                    var type: String, var selected : Int, val gid : Int, val caid : Int):
+    Parcelable {}
