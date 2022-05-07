@@ -1,5 +1,7 @@
 package com.neu.youpin.fragments
 
+import android.app.AlertDialog
+import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -79,8 +81,23 @@ class MineFragment : Fragment() {
         //跳转到login界面
         val mineButtonLogin: LinearLayout? = root?.findViewById(R.id.MineButtonLogin)
         mineButtonLogin?.setOnClickListener {
-            val intent = Intent(rootActivity, LoginActivity::class.java)
-            startActivity(intent)
+            if(UserApplication.getInstance().isLogin()){
+                val dialog = AlertDialog.Builder(rootActivity)
+                dialog.setTitle("您是否要退出登录")
+//                    .setMessage("飘渺峰还珠楼")
+                    .setPositiveButton("确认"){ dialogInterface: DialogInterface, i: Int ->
+                        UserApplication.getInstance().clearLoginToken()
+                        mineUserName?.text = "登录 | 注册"
+                    }
+                    .setNegativeButton("取消"){ dialogInterface: DialogInterface, i: Int ->
+                    }
+                    .setCancelable(true)
+                    .create()
+                    .show()
+            }else{
+                val intent = Intent(rootActivity, LoginActivity::class.java)
+                startActivity(intent)
+            }
         }
 
         return root

@@ -66,6 +66,13 @@ public class UserApplication: Application(){
         editor.apply()
     }
 
+    fun clearLoginToken(){
+        clearToken()
+        val editor = getSharedPreferences("data", Context.MODE_PRIVATE).edit()
+        editor.clear()
+        editor.apply()
+    }
+
     // 退出登陆时调用
     fun clearToken(){
         this._isLogin = false
