@@ -1,30 +1,82 @@
 package com.neu.youpin.store
 
 import android.os.Bundle
-import android.widget.TextView
+import android.util.Log
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isVisible
+import androidx.core.widget.doOnTextChanged
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.neu.youpin.R
+import com.neu.youpin.entity.ServiceCreator
+import kotlinx.android.synthetic.main.activity_store.*
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import retrofit2.http.*
 
 
 class StoreActivity : AppCompatActivity() {
-    private val shopItemList = ArrayList<ShopItem>()
+    private var shopItemList:List<StoreMap>? = null
+    private var shopItemName: String = ""
+    private val storeService = ServiceCreator.create<StoreService>()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_store)
-        initItem()
+
+        shopItemName = intent.getStringExtra("gName").toString()
+        StoreSearchBox.setText(shopItemName)
+
+        initItem(shopItemName)
+
+        StoreButtonBack.setOnClickListener {
+            finish()
+        }
+
+        StoreButtonSearch.setOnClickListener {
+            initItem(StoreSearchBox.text.toString())
+        }
+
+        StoreSearchBox.doOnTextChanged { text, start, before, count ->
+            if(StoreSearchBox.text.toString().isEmpty()){
+                StoreButtonClear.visibility = View.GONE
+            }else StoreButtonClear.visibility = View.VISIBLE
+        }
+
+        StoreButtonClear.setOnClickListener {
+            StoreSearchBox.setText("")
+        }
+    }
+
+    private fun initRecycleView(){
         val layoutManager = LinearLayoutManager(this)
         val recyclerView = findViewById<RecyclerView>(R.id.StoreItemList)
         recyclerView.layoutManager = layoutManager
-        val adapter = StoreListAdapter(shopItemList)
+        val adapter = shopItemList?.let { StoreListAdapter(it) }
         recyclerView.adapter = adapter
-
     }
 
-    private fun initItem() {
-        repeat(10) {
-            shopItemList.add(ShopItem("furry", R.drawable.item_img,"11415元"))
-        }
+    private fun initItem(gName: String) {
+        storeService.search(gName).enqueue(object : Callback<List<StoreMap>> {
+            override fun onResponse(call: Call<List<StoreMap>>,
+                                    response: Response<List<StoreMap>>
+            ) {
+                shopItemList = response.body()
+                initRecycleView()
+            }
+            override fun onFailure(call: Call<List<StoreMap>>, t: Throwable) {
+                t.printStackTrace()
+                Log.d("LoginActivity", "network failed")
+            }
+        })
     }
+}
+
+class StoreMap(val name: String, val id: Int, val price: Float, val picUrl: String)
+
+interface StoreService {
+    @GET("store/search")
+    fun search(@Query("name") name: String): Call<List<StoreMap>>
 }

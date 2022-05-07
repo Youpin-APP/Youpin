@@ -33,7 +33,7 @@
             android:text="@string/test_itemPrice"
             android:textSize="20sp"
             android:textStyle="bold"
-            android:textColor="#ED5F00"/>
+            android:textColor="@color/price_color"/>
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="12dp"

@@ -6,9 +6,11 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.neu.youpin.R
 
-class StoreListAdapter(private val itemList:List<ShopItem>) : RecyclerView.Adapter<StoreListAdapter.ViewHolder>() {
+class StoreListAdapter(private val itemList: List<StoreMap>) : RecyclerView.Adapter<StoreListAdapter.ViewHolder>() {
+    val picUrlHeader = "http://hqyz.cf:8080/pic/"
     inner class ViewHolder(view: View):RecyclerView.ViewHolder(view) {
         val thumbnailImage : ImageView = view.findViewById(R.id.thumbnailImage)
         val itemPrice : TextView = view.findViewById(R.id.itemPrice)
@@ -21,9 +23,13 @@ class StoreListAdapter(private val itemList:List<ShopItem>) : RecyclerView.Adapt
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        val price:Float = 5999.0F
         val shopItem = itemList[position]
-        holder.thumbnailImage.setImageResource(shopItem.pic)
-        holder.itemPrice.text = shopItem.price
+        Glide.with(holder.itemView)
+            .load(picUrlHeader.plus(shopItem.picUrl))
+            .centerInside()
+            .into(holder.thumbnailImage)
+        holder.itemPrice.text = shopItem.price.toString().plus("元")
         holder.itemName.text = shopItem.name
     }
 
