@@ -27,7 +27,9 @@ import com.neu.youpin.cart.CartListAdapter
 import com.neu.youpin.entity.ServiceCreator
 import com.neu.youpin.entity.UserApplication
 import com.neu.youpin.login.LoginActivity
+import com.neu.youpin.order.CreateOrderActivity
 import com.neu.youpin.orderDetail.OrderDetailActivity
+import kotlinx.android.synthetic.main.activity_create_order.*
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Response
@@ -183,8 +185,15 @@ class ShoppingFragment : Fragment() , OnItemClickListener, com.neu.youpin.cart.O
                         override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
                             val jsonStr = String(response.body()!!.bytes())
                             val obj = Gson().fromJson(jsonStr, JsonObject::class.java)
-                            val intent = Intent(context, OrderDetailActivity::class.java)
-                            intent.putExtra("oid",obj.get("oid").asInt)
+                            val intent = Intent(context, CreateOrderActivity::class.java)
+                            val carts = ArrayList<CartItem>()
+                            for (cartItem in cartItemList) {
+                                if(cartItem.selected == 1) {
+                                    carts.add(cartItem)
+                                }
+                            }
+                            intent.putExtra("cartSelectList", carts)
+                            intent.putExtra("totalPrice",totalPrice)
                             startActivity(intent)
                         }
                         override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
