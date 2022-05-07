@@ -26,9 +26,8 @@ import com.neu.youpin.cart.CartItem
 import com.neu.youpin.cart.CartListAdapter
 import com.neu.youpin.entity.ServiceCreator
 import com.neu.youpin.entity.UserApplication
-import com.neu.youpin.location.LocaListActivity
 import com.neu.youpin.login.LoginActivity
-import kotlinx.android.synthetic.main.fragment_shopping.*
+import com.neu.youpin.orderDetail.OrderDetailActivity
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Response
@@ -36,6 +35,7 @@ import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
 import retrofit2.http.POST
 import java.util.*
+import kotlin.collections.ArrayList
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -60,7 +60,7 @@ class ShoppingFragment : Fragment() , OnItemClickListener, com.neu.youpin.cart.O
     private var totalPrice = 0f
     private lateinit var cartTotalPrice : TextView
     private val cartService = ServiceCreator.create<CartService>()
-    private var uid = "11415"
+    private var uid = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -80,6 +80,17 @@ class ShoppingFragment : Fragment() , OnItemClickListener, com.neu.youpin.cart.O
         if (activity != null) {
             rootActivity = activity as HomePageActivity
         }
+        val shopNotLogin = root?.findViewById<TextView>(R.id.ShopNotLogin)
+
+        if(UserApplication.getInstance().isLogin()){
+            shopNotLogin?.visibility = View.GONE
+            uid = UserApplication.getInstance().getId().toString()
+        }else shopNotLogin?.visibility = View.VISIBLE
+
+        shopNotLogin?.setOnClickListener {
+            val loginIntent = Intent(rootActivity, LoginActivity::class.java)
+            startActivity(loginIntent)
+        }
 
         initItem()
         val layoutManager = LinearLayoutManager(rootActivity)
@@ -95,19 +106,23 @@ class ShoppingFragment : Fragment() , OnItemClickListener, com.neu.youpin.cart.O
         val editCart = root?.findViewById<Button>(R.id.editCart)
         val cartCheckout = root?.findViewById<Button>(R.id.cartCheckoutButton)
 
-        val shopNotLogin = root?.findViewById<TextView>(R.id.ShopNotLogin)
-
-        shopNotLogin?.setOnClickListener {
-            val loginIntent = Intent(rootActivity, LoginActivity::class.java)
-            startActivity(loginIntent)
-        }
-
         cartItemSelectAll?.setOnClickListener {
             Log.d("selectAll", "click" + cartItemSelectAll.isChecked)
             totalPrice = 0f
             if(cartItemSelectAll.isChecked) {
                 for (cartItem in cartItemList) {
                     cartItem.selected = 1
+                    cartService.selectItem(cartItem.caid, cartItem.selected).enqueue(
+                        object : retrofit2.Callback<ResponseBody> {
+                            override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+
+                            }
+
+                            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                                t.printStackTrace()
+                                Log.d("LoginActivity", "network failed")
+                            }
+                        })
                     totalPrice += cartItem.price * cartItem.count
                 }
                 adapter.notifyItemRangeChanged(0,adapter.itemCount)
@@ -115,6 +130,17 @@ class ShoppingFragment : Fragment() , OnItemClickListener, com.neu.youpin.cart.O
             else {
                 for (cartItem in cartItemList) {
                     cartItem.selected = 0
+                    cartService.selectItem(cartItem.caid, cartItem.selected).enqueue(
+                        object : retrofit2.Callback<ResponseBody> {
+                            override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+
+                            }
+
+                            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                                t.printStackTrace()
+                                Log.d("LoginActivity", "network failed")
+                            }
+                        })
                 }
                 adapter.notifyItemRangeChanged(0,adapter.itemCount)
             }
@@ -133,16 +159,39 @@ class ShoppingFragment : Fragment() , OnItemClickListener, com.neu.youpin.cart.O
         }
         cartCheckout?.setOnClickListener {
             if(isEditing){
-                cartItemList.removeIf { it.selected == 1 }
-                adapter.notifyDataSetChanged()
-                totalPrice = 0f
+                val list : ArrayList<Int> = ArrayList()
                 for (cartItem in cartItemList) {
-                    totalPrice += cartItem.price * cartItem.count
+                    if(cartItem.selected == 1){
+                        list.add(cartItem.caid)
+                    }
                 }
-                updateTotalPrice()
+                cartService.itemDelete(list).enqueue(
+                    object : retrofit2.Callback<ResponseBody> {
+                        override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+                            initItem()
+                        }
+                        override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                            t.printStackTrace()
+                            Log.d("LoginActivity", "network failed")
+                        }
+                    })
+
             }
             else {
-
+                cartService.checkout(uid).enqueue(
+                    object : retrofit2.Callback<ResponseBody> {
+                        override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+                            val jsonStr = String(response.body()!!.bytes())
+                            val obj = Gson().fromJson(jsonStr, JsonObject::class.java)
+                            val intent = Intent(context, OrderDetailActivity::class.java)
+                            intent.putExtra("oid",obj.get("oid").asInt)
+                            startActivity(intent)
+                        }
+                        override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                            t.printStackTrace()
+                            Log.d("LoginActivity", "network failed")
+                        }
+                    })
             }
         }
 
@@ -162,6 +211,7 @@ class ShoppingFragment : Fragment() , OnItemClickListener, com.neu.youpin.cart.O
             shopNotLogin?.visibility = View.GONE
             uid = UserApplication.getInstance().getId().toString()
         }else shopNotLogin?.visibility = View.VISIBLE
+        initItem()
     }
 
     private fun initItem() {
@@ -318,4 +368,8 @@ interface CartService {
     @FormUrlEncoded
     @POST("cart/selectItem")
     fun selectItem(@Field("caid") caid : Int, @Field("selected") selected : Int): Call<ResponseBody>
+
+    @FormUrlEncoded
+    @POST("order/checkout")
+    fun checkout(@Field("uid") uid:String): Call<ResponseBody>
 }
