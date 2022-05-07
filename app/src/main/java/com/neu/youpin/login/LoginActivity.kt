@@ -76,9 +76,7 @@ class LoginActivity : AppCompatActivity() {
     private fun isLogin(list: LoginToken){
         if (list.success){
             Toast.makeText(this,loginSuccess, Toast.LENGTH_SHORT).show()
-            UserApplication.getInstance().setToken(list.token)
-            UserApplication.getInstance().setName(list.name)
-            UserApplication.getInstance().setId(list.uid)
+            UserApplication.getInstance().setLoginToken(list)
             finish()
         }else{
             loginUserPassEmpty.text = loginError

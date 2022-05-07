@@ -169,11 +169,11 @@ class LocaUpdateActivity : AppCompatActivity() {
     }
 
     private fun isDefault():Int{
-
+        return if(LocaUpdateAddDefault.isSelected) 1 else 0
     }
 
     private fun addByRetrofit(){
-//        Toast.makeText(this,test.toString(),Toast.LENGTH_SHORT).show()
+        Toast.makeText(this,isDefault().toString(),Toast.LENGTH_SHORT).show()
         UserApplication.getInstance().getId()?.let {
             if(isEdit){
 //                locaUpdateService.updateAddr(, did ,LocaUpdateAddDetail.text.toString(), LocaUpdateAddName.text.toString(),
@@ -196,8 +196,7 @@ class LocaUpdateActivity : AppCompatActivity() {
 //                })
             }else{
                 locaUpdateService.addAddr(it, did ,LocaUpdateAddDetail.text.toString(), LocaUpdateAddName.text.toString(),
-                    LocaUpdateAddTele.text.toString().replace(" ",""),
-                    if(LocaUpdateAddDefault.isSelected) 1 else 0 ).enqueue(object :
+                    LocaUpdateAddTele.text.toString().replace(" ",""), isDefault() ).enqueue(object :
                     Callback<LocaUpdateMap> {
                     override fun onResponse(call: Call<LocaUpdateMap>,
                                             response: Response<LocaUpdateMap>

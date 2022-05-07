@@ -1,6 +1,8 @@
 package com.neu.youpin.entity
 
 import android.app.Application
+import android.content.Context
+import com.neu.youpin.login.LoginToken
 
 public class UserApplication: Application(){
     private var _uid : String? = null
@@ -17,6 +19,14 @@ public class UserApplication: Application(){
     override fun onCreate() {
         super.onCreate()
         instance = this
+        val prefs = getSharedPreferences("data", Context.MODE_PRIVATE)
+        val isRemember = prefs.getBoolean("isRemember", false)
+        if (isRemember){
+            this._uid = prefs.getString("uid", this._uid)
+            this._name = prefs.getString("name", this._name)
+            this._token = prefs.getString("token", this._token)
+            this._isLogin = true
+        }
     }
 
     fun getId(): String? {
@@ -41,7 +51,19 @@ public class UserApplication: Application(){
 
     fun setToken(token: String?) {
         this._token = token
+    }
+
+    fun setLoginToken(loginToken: LoginToken){
+        this._uid = loginToken.uid
+        this._name = loginToken.name
+        this._token = loginToken.token
         this._isLogin = true
+        val editor = getSharedPreferences("data", Context.MODE_PRIVATE).edit()
+        editor.putString("uid", this._uid)
+        editor.putString("name", this._name)
+        editor.putString("token", this._token)
+        editor.putBoolean("isRemember", true)
+        editor.apply()
     }
 
     // 退出登陆时调用
