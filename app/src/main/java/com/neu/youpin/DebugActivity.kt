@@ -31,11 +31,6 @@ class DebugActivity : AppCompatActivity() {
             val intent = Intent(this, HomePageActivity::class.java)
             startActivity(intent)
         }
-        val openShopDetail = findViewById<Button>(R.id.openShopDetail)
-        openShopDetail.setOnClickListener {
-            val intent = Intent(this, ShopDetailActivity::class.java)
-            startActivity(intent)
-        }
         val openOrder = findViewById<Button>(R.id.openOrder)
         openOrder.setOnClickListener {
             val intent = Intent(this, OrderActivity::class.java)
@@ -49,11 +44,6 @@ class DebugActivity : AppCompatActivity() {
         val openOrderDetail = findViewById<Button>(R.id.openOrderDetail)
         openOrderDetail.setOnClickListener {
             val intent = Intent(this, OrderDetailActivity::class.java)
-            startActivity(intent)
-        }
-        val openSaleUpload = findViewById<Button>(R.id.openSaleUpload)
-        openSaleUpload.setOnClickListener {
-            val intent = Intent(this, SaleUploadActivity::class.java)
             startActivity(intent)
         }
     }

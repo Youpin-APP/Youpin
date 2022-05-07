@@ -48,7 +48,6 @@ class StoreActivity : AppCompatActivity() {
             }else StoreButtonClear.visibility = View.VISIBLE
         }
 
-//        StoreSearchBox.setOnEditorActionListener { textView, i, keyEvent ->  }
         StoreSearchBox.setOnEditorActionListener { textView, actionId, keyEvent ->
             if (actionId == EditorInfo.IME_ACTION_SEARCH) {
                 StoreSearchBox.setText(shopItemName)
@@ -86,7 +85,7 @@ class StoreActivity : AppCompatActivity() {
     }
 }
 
-class StoreMap(val name: String, val id: Int, val price: Float, val picUrl: String)
+data class StoreMap(val name: String, val id: Int, val price: Float, val picUrl: String)
 
 interface StoreService {
     @GET("store/search")

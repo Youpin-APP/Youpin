@@ -413,5 +413,15 @@
             android:text="删除"
             android:textColor="@color/purple_font"/>
     </LinearLayout>
-
+    <Button
+        android:id="@+id/SaleButtonEditImg"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_width="90dp"
+        android:layout_height="40dp"
+        android:layout_gravity="start"
+        android:background="@drawable/custom_button_loca_background"
+        android:text="编辑图片"
+        android:textColor="@color/purple_font"/>
 </LinearLayout>

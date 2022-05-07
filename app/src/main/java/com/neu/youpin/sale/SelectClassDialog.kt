@@ -6,10 +6,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.LinearLayout
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.neu.youpin.R
@@ -84,11 +81,12 @@ class SelectClassDialog: Dialog {
             // 设置recyclerView
             initClassList()
 
+            (layout.findViewById<View>(R.id.SaleDialogText) as EditText).setText("")
 
             if(title != null) (layout.findViewById<View>(R.id.SaleDialoTitle) as TextView).text = title
 
             (layout.findViewById<View>(R.id.SaleDialogConfirm) as Button).setOnClickListener {
-                if((layout.findViewById<View>(R.id.SaleDialogText) as TextView).text.isEmpty()){
+                if((layout.findViewById<View>(R.id.SaleDialogText) as EditText).text.isEmpty()){
                     Toast.makeText(mContext,"新建分类为空！！",Toast.LENGTH_SHORT).show()
                 }else addByRetrofit()
             }
@@ -120,7 +118,7 @@ class SelectClassDialog: Dialog {
         private fun addByRetrofit(){
             (layout.findViewById<View>(R.id.SaleDialogConfirm) as Button).isClickable = false
             var tName = arrayOf("", "", "")
-            tName[classType] = (layout.findViewById<View>(R.id.SaleDialogText) as TextView).text.toString()
+            tName[classType] = (layout.findViewById<View>(R.id.SaleDialogText) as EditText).text.toString()
             selectClassService.addGoodsType(this.gid, tName[0], tName[1], tName[2]).enqueue(object : Callback<SelectClassMap> {
                 override fun onResponse(call: Call<SelectClassMap>,
                                         response: Response<SelectClassMap>

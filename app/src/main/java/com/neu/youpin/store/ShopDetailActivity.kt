@@ -16,10 +16,14 @@ import com.youth.banner.adapter.BannerImageAdapter
 import com.youth.banner.holder.BannerImageHolder
 import com.youth.banner.indicator.CircleIndicator
 import kotlinx.android.synthetic.main.activity_shop_detail.*
+import retrofit2.Call
+import retrofit2.http.GET
+import retrofit2.http.Query
 
 class ShopDetailActivity : AppCompatActivity() {
 
     private val imagesList = ArrayList<String>()
+    private var gid: Int = 0
 
     var imageUrls = listOf(
 //        "http://hqyz.cf:8080/pic/7ef1640f-e1b4-4a24-8801-b4d7261d62ad.jpg",
@@ -33,6 +37,23 @@ class ShopDetailActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_shop_detail)
 
+        gid = intent.getIntExtra("gid", 0)
+        initByRetrofit()
+
+        // 设置按钮点击事件
+        // 返回按钮，触发结束当前activity
+        ShopDetailBack.setOnClickListener {
+            finish()
+        }
+    }
+    private fun sOut(position: Int){
+        Toast.makeText(this,"第" + position + "张图片",Toast.LENGTH_SHORT).show()
+    }
+    private fun initByRetrofit(){
+
+    }
+
+    private fun init(){
         // 设置商品缩略图
         val banner: Banner<String, BannerImageAdapter<String>> = findViewById(R.id.ShopDetailBanner)
         banner.apply {
@@ -52,34 +73,27 @@ class ShopDetailActivity : AppCompatActivity() {
             isAutoLoop(false)
             stop()
         }
-
         // 设置商品详情页
-        initImagesList()
         val layoutManager = LinearLayoutManager(this) //线性布局布局管理器
         val recyclerView:RecyclerView = findViewById(R.id.ShopDetailRecyclerView)
         recyclerView.layoutManager = layoutManager
         val adapter = ListAdapter(imagesList)
         recyclerView.adapter = adapter
+    }
+}
 
-        // 设置按钮点击事件
-        // 返回按钮，触发结束当前activity
-        ShopDetailBack.setOnClickListener {
-            finish()
-        }
-    }
-    private fun sOut(position: Int){
-        Toast.makeText(this,"第" + position + "张图片",Toast.LENGTH_SHORT).show()
-    }
-    private fun initImagesList(){
-        imagesList.add("https://hqyzcyp.xyz/imgs/2022/04/0b177d93eb6b2f38.jpg")
-        imagesList.add("https://hqyzcyp.xyz/imgs/2022/05/5617101d04c918d3.jpg")
-        imagesList.add("https://hqyzcyp.xyz/imgs/2022/05/ba230524e2edb019.jpg")
-        imagesList.add("https://hqyzcyp.xyz/imgs/2022/05/f45fc358818cef4c.jpg")
-        imagesList.add("https://hqyzcyp.xyz/imgs/2022/05/5ac0b37f84c0fa75.jpg")
-        imagesList.add("https://hqyzcyp.xyz/imgs/2022/05/7a8afea8faa06488.jpg")
-        imagesList.add("https://hqyzcyp.xyz/imgs/2022/05/42c91f33d7c832d7.jpg")
-        imagesList.add("https://hqyzcyp.xyz/imgs/2022/05/da16b0448bc6f635.jpg")
-    }
+data class PicDetail(val url:String, val id:Int)
+
+data class ShopContent(val name:String,)
+
+// 分类 tname 名字 tid 主键
+data class TList(var name:String, var id:Int)
+
+data class ShopDetailMap(val name: String, val id: Int, val price: Float, val picUrl: String)
+
+interface ShopDetailService {
+    @GET("/goods/getInfo")
+    fun getInfo(@Query("name") name: String): Call<List<StoreMap>>
 }
 
 class ListAdapter(private val imagesList: List<String>) : RecyclerView.Adapter<ListAdapter.ViewHolder>() {

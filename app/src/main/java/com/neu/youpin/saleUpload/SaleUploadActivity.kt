@@ -48,11 +48,11 @@ class SaleUploadActivity : AppCompatActivity(), OnItemClickListener {
             StrictMode.setThreadPolicy(policy)
         }
         gid = intent.getIntExtra("gid", -1)
-        if (gid == -1) {
-//            toast("gid参数异常")
-//            finish();
-            gid = 2
-        }
+//        if (gid == -1) {
+////            toast("gid参数异常")
+////            finish();
+//            gid = 2
+//        }
         updateItem()
         val layoutManagerDetail = LinearLayoutManager(this)
 

@@ -20,13 +20,6 @@
         android:layout_weight="1"
         android:text="首页"/>
 
-    <Button
-        android:id="@+id/openShopDetail"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:text="商品详情"/>
-
 
     <Button
         android:id="@+id/openOrder"
@@ -48,12 +41,5 @@
         android:layout_height="0dp"
         android:layout_weight="1"
         android:text="打开订单详情"/>
-
-    <Button
-        android:id="@+id/openSaleUpload"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:text="打开图片编辑"/>
 
 </LinearLayout>

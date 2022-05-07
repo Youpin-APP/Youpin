@@ -1,9 +1,13 @@
 package com.neu.youpin.sale
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Toast
 import com.neu.youpin.R
 import com.neu.youpin.location.LocationDialog
+import com.neu.youpin.saleUpload.SaleUploadActivity
+import com.neu.youpin.store.ShopDetailActivity
 import kotlinx.android.synthetic.main.activity_loca_update.*
 import kotlinx.android.synthetic.main.activity_sale.*
 
@@ -23,6 +27,10 @@ class SaleActivity : AppCompatActivity() {
         setContentView(R.layout.activity_sale)
 
         builderForDialog = SelectClassDialog.Builder(this)
+
+        if(gid >= 0){
+            SaleGoodPrimary.setText(gid.toString())
+        }
 
         SaleGoodTid1.setOnClickListener {
             locaDialog = builderForDialog!!.setListener(object: SelectClassDialog.SaleListener{
@@ -55,6 +63,15 @@ class SaleActivity : AppCompatActivity() {
                 }
             }).setTitle("商品三级细分类").setType(2, gid).createDialog()
             locaDialog!!.show()
+        }
+
+        SaleButtonEditImg.setOnClickListener {
+            if(gid>=0){
+                val saleUploadIntent = Intent(this, SaleUploadActivity::class.java).apply {
+                    putExtra("gid", gid)
+                }
+                this.startActivity(saleUploadIntent)
+            }else Toast.makeText(this,"请先选择商品再编辑图片",Toast.LENGTH_SHORT).show()
         }
     }
 }
