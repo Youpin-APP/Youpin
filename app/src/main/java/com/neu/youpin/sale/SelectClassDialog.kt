@@ -93,8 +93,6 @@ class SelectClassDialog: Dialog {
                 }else addByRetrofit()
             }
 
-
-
             dialog.setContentView(layout)
             dialog.setCancelable(true)     //用户可以点击手机Back键取消对话框显示
             dialog.setCanceledOnTouchOutside(true)        //用户不能通过点击对话框之外的地方取消对话框显示
@@ -120,6 +118,7 @@ class SelectClassDialog: Dialog {
         }
 
         private fun addByRetrofit(){
+            (layout.findViewById<View>(R.id.SaleDialogConfirm) as Button).isClickable = false
             var tName = arrayOf("", "", "")
             tName[classType] = (layout.findViewById<View>(R.id.SaleDialogText) as TextView).text.toString()
             selectClassService.addGoodsType(this.gid, tName[0], tName[1], tName[2]).enqueue(object : Callback<SelectClassMap> {
@@ -130,11 +129,13 @@ class SelectClassDialog: Dialog {
                     if (list != null && list.success) {
                         updateDialog((layout.findViewById<View>(R.id.SaleDialogText) as TextView).text.toString(), list.tid1)
                     }else addError()
+                    (layout.findViewById<View>(R.id.SaleDialogConfirm) as Button).isClickable = true
                     initRecycleView()
                 }
                 override fun onFailure(call: Call<SelectClassMap>, t: Throwable) {
                     t.printStackTrace()
                     Log.d("LoginActivity", "network failed")
+                    (layout.findViewById<View>(R.id.SaleDialogConfirm) as Button).isClickable = true
                 }
             })
         }
