@@ -17,6 +17,7 @@
         <EditText
             android:id="@+id/HomeSearchBox"
             android:backgroundTint="@color/white"
+            android:singleLine="true"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -25,6 +26,7 @@
             android:layout_marginTop="10dp"
             android:background="@drawable/custom_edittext_background"
             android:gravity="center"
+            android:imeOptions="actionSearch"
             android:hint="@string/home_search_box"
             android:padding="8dp"
             android:textColorHint="#546E7A"

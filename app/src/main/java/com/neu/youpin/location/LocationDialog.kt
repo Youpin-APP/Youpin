@@ -11,6 +11,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.neu.youpin.R
+import com.neu.youpin.entity.ServiceCreator
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -50,11 +51,7 @@ class LocationDialog: Dialog {
         private val layout: View
         private val dialog: LocationDialog = LocationDialog(context, R.style.CustomDialog)
 
-        private val retrofit = Retrofit.Builder()
-            .baseUrl(url)
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
-        private val locaService = retrofit.create(LocaService::class.java)
+        private val locaService = ServiceCreator.create<LocaService>()
 
         // 计算启动了几次 以此来推断当前显示窗口应该为什么
         private var locaCount: Int = 0

@@ -7,26 +7,21 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.EditorInfo
 import android.widget.EditText
 import android.widget.ImageButton
-import android.widget.TextView
-import android.widget.Toast
-import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
-import com.google.android.material.tabs.TabLayout
 import com.neu.youpin.HomePageActivity
 import com.neu.youpin.R
-import com.neu.youpin.location.LocaUpdateActivity
 import com.neu.youpin.store.StoreActivity
 import com.youth.banner.Banner
-import com.youth.banner.adapter.BannerAdapter
 import com.youth.banner.adapter.BannerImageAdapter
 import com.youth.banner.holder.BannerImageHolder
 import com.youth.banner.indicator.CircleIndicator
 import com.youth.banner.listener.OnBannerListener
-import java.text.FieldPosition
+import kotlinx.android.synthetic.main.activity_store.*
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -74,6 +69,17 @@ class HomeFragment : Fragment() {
                 putExtra("gName", homeSearchBox?.text.toString())
             }
             rootActivity?.startActivity(locaIntent)
+        }
+
+        homeSearchBox?.setOnEditorActionListener { textView, actionId, keyEvent ->
+            if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                val locaIntent = Intent(rootActivity, StoreActivity::class.java).apply {
+                    putExtra("gName", homeSearchBox.text.toString())
+                }
+                rootActivity?.startActivity(locaIntent)
+                return@setOnEditorActionListener true
+            }
+            return@setOnEditorActionListener false
         }
 
 

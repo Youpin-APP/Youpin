@@ -2,7 +2,10 @@ package com.neu.youpin.store
 
 import android.os.Bundle
 import android.util.Log
+import android.view.KeyEvent
 import android.view.View
+import android.view.inputmethod.EditorInfo
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.core.widget.doOnTextChanged
@@ -45,6 +48,15 @@ class StoreActivity : AppCompatActivity() {
             }else StoreButtonClear.visibility = View.VISIBLE
         }
 
+//        StoreSearchBox.setOnEditorActionListener { textView, i, keyEvent ->  }
+        StoreSearchBox.setOnEditorActionListener { textView, actionId, keyEvent ->
+            if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                StoreSearchBox.setText(shopItemName)
+                return@setOnEditorActionListener true
+            }
+            return@setOnEditorActionListener false
+        }
+
         StoreButtonClear.setOnClickListener {
             StoreSearchBox.setText("")
         }
@@ -54,7 +66,7 @@ class StoreActivity : AppCompatActivity() {
         val layoutManager = LinearLayoutManager(this)
         val recyclerView = findViewById<RecyclerView>(R.id.StoreItemList)
         recyclerView.layoutManager = layoutManager
-        val adapter = shopItemList?.let { StoreListAdapter(it) }
+        val adapter = shopItemList?.let { StoreListAdapter(it, this) }
         recyclerView.adapter = adapter
     }
 

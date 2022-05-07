@@ -33,6 +33,7 @@
             android:background="@drawable/custom_edittext_background"
             android:singleLine="true"
             android:hint="@string/home_search_box"
+            android:imeOptions="actionSearch"
             android:padding="8dp"
             android:textColorHint="#546E7A"
             android:textSize="14sp"
