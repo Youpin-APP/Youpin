@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.neu.youpin.R
 import com.neu.youpin.entity.ServiceCreator
+import com.neu.youpin.sale.SelectClassService
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -35,7 +36,6 @@ class LocationDialog: Dialog {
     }
 
     class Builder(context: Context) {
-        private val url: String = "http://hqyz.cf:8080/addr/"
         private var title: String? = null
         private var callBackListener: PriorityListener? = null
 
@@ -220,11 +220,11 @@ class LocaListAdapter(private val locaList: List<LocaList>, private var builderF
 }
 
 interface LocaService {
-    @GET("getProvinceList")
+    @GET("/addr/getProvinceList")
     fun getProvinceList(): Call<List<LocaList>>
-    @GET("getCityList")
+    @GET("/addr/getCityList")
     fun getCityList(@Query("pid") id: Int): Call<List<LocaList>>
-    @GET("getDistrictList")
+    @GET("/addr/getDistrictList")
     fun getDistrictList(@Query("cid") id: Int): Call<List<LocaList>>
 }
 

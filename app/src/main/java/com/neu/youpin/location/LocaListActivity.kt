@@ -10,10 +10,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageButton
-import android.widget.RelativeLayout
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.neu.youpin.R
@@ -85,9 +82,14 @@ class LocaListActivity : AppCompatActivity() {
         val layoutManager = LinearLayoutManager(this) //线性布局布局管理器
         val recyclerView:RecyclerView = findViewById(R.id.LocaListList)
         recyclerView.layoutManager = layoutManager
-        val adapter = userLocaList?.let { ListAdapter(this, it, recyclerView, object :OnDeleteListener{
+        val adapter = userLocaList?.let { ListAdapter(this, it, recyclerView, object :OnItemListener{
             override fun onDelete(position: Int) {
                 delByRetrofit(position)
+            }
+
+            override fun onClick(position: Int) {
+                userLocaList?.get(position)?.aid?.let { it -> UserApplication.getInstance().setAid(it) }
+                finish()
             }
         }) }
         recyclerView.adapter = adapter
@@ -153,13 +155,18 @@ interface LocaListService {
     @FormUrlEncoded
     @POST("/user/delAddr")
     fun delAddr(@Field("aid") aid: Int): Call<LocaUpdateMap>
+
+    @FormUrlEncoded
+    @POST("/user/getAddr")
+    fun getAddr(@Field("aid") aid: Int): Call<Loca>
 }
 
-interface OnDeleteListener{
+interface OnItemListener{
     fun onDelete(position: Int)
+    fun onClick(position: Int)
 }
 
-class ListAdapter(context: Context, private val locaList: List<Loca>, recyclerView: RecyclerView, onDeleteListener: OnDeleteListener) : RecyclerView.Adapter<ListAdapter.ViewHolder>() {
+class ListAdapter(context: Context, private val locaList: List<Loca>, recyclerView: RecyclerView, onListener: OnItemListener) : RecyclerView.Adapter<ListAdapter.ViewHolder>() {
     //自定义嵌套内部类 ViewHolder 来减少 findViewById() 的使用， 继承RecyclerView的ViewHolder
     //通过图片的id获取对应的视图，以便后续操作
 
@@ -167,7 +174,7 @@ class ListAdapter(context: Context, private val locaList: List<Loca>, recyclerVi
 
     private val mRecyclerView = recyclerView
 
-    private val deleteListener = onDeleteListener
+    private val onItemListener = onListener
 
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val listName: TextView = view.findViewById(R.id.LocaItemAddName)
@@ -176,6 +183,7 @@ class ListAdapter(context: Context, private val locaList: List<Loca>, recyclerVi
         val listDetail: TextView = view.findViewById(R.id.LocaItemAddDetail)
         val listEdit: ImageButton = view.findViewById(R.id.LocaItemButtonEdit)
         val listDelete: RelativeLayout = view.findViewById(R.id.LocaItemButtonDelete)
+        val locaListLayout: LinearLayout = view.findViewById(R.id.LocaListLayout)
     }
 
     //设置初始的布局
@@ -206,7 +214,10 @@ class ListAdapter(context: Context, private val locaList: List<Loca>, recyclerVi
             mContext.startActivity(locaIntent)
         }
         holder.listDelete.setOnClickListener {
-            deleteListener.onDelete(position)
+            onItemListener.onDelete(position)
+        }
+        holder.locaListLayout.setOnClickListener {
+            onItemListener.onClick(position)
         }
     }
 

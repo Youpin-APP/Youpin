@@ -9,6 +9,7 @@ public class UserApplication: Application(){
     private var _name: String? = null
     private var _token: String? = null
     private var _isLogin: Boolean = false
+    private var _aid: Int = -1
 
     companion object{
         private var instance: UserApplication? = null
@@ -25,6 +26,7 @@ public class UserApplication: Application(){
             this._uid = prefs.getString("uid", this._uid)
             this._name = prefs.getString("name", this._name)
             this._token = prefs.getString("token", this._token)
+            this._aid = prefs.getInt("aid", this._aid)
             this._isLogin = true
         }
     }
@@ -35,6 +37,17 @@ public class UserApplication: Application(){
 
     fun setId(uid: String) {
         this._uid = uid
+    }
+
+    fun getAid(): Int {
+        return _aid
+    }
+
+    fun setAid(aid: Int) {
+        this._aid = aid
+        val editor = getSharedPreferences("data", Context.MODE_PRIVATE).edit()
+        editor.putInt("aid", this._aid)
+        editor.apply()
     }
 
     fun getName(): String? {
@@ -62,6 +75,7 @@ public class UserApplication: Application(){
         editor.putString("uid", this._uid)
         editor.putString("name", this._name)
         editor.putString("token", this._token)
+        editor.putInt("aid", this._aid)
         editor.putBoolean("isRemember", true)
         editor.apply()
     }
@@ -79,6 +93,7 @@ public class UserApplication: Application(){
         this._token = null
         this._name = null
         this._uid = null
+        this._aid = -1
     }
 
     fun isLogin(): Boolean{

@@ -131,6 +131,7 @@
         android:layout_height="10dp"
         android:background="@color/grey_bg_color"/>
     <TextView
+        android:id="@+id/ShopDetailMainTitle"
         android:layout_marginStart="15dp"
         android:layout_marginEnd="15dp"
         android:layout_width="match_parent"
@@ -138,6 +139,7 @@
         android:text="@string/ShopDetailItemTest"
         android:textColor="@color/black"/>
     <TextView
+        android:id="@+id/ShopDetailSecondTitle"
         android:layout_marginStart="15dp"
         android:layout_marginEnd="15dp"
         android:layout_width="match_parent"
@@ -149,6 +151,7 @@
         android:layout_height="10dp"
         android:background="@color/grey_bg_color"/>
     <RelativeLayout
+        android:id="@+id/ShopDetailLocaLayout"
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:orientation="horizontal"
@@ -161,6 +164,7 @@
             android:src="@drawable/icon_manufacturer_location_2"
             android:layout_alignBottom="@+id/ShopDetailUserLocation"
             android:layout_toStartOf="@+id/ShopDetailUserLocation"/>
+
         <TextView
             android:id="@+id/ShopDetailUserLocation"
             android:layout_width="300dp"
@@ -221,7 +225,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:gravity="center">
+            android:gravity="center"
+            android:visibility="invisible">
             <ImageButton
                 android:id="@+id/ShopDetailService"
                 android:layout_width="24dp"
@@ -242,7 +247,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:gravity="center">
+            android:gravity="center"
+            android:visibility="invisible">
             <ImageButton
                 android:id="@+id/ShopDetailCart"
                 android:layout_marginEnd="0dp"

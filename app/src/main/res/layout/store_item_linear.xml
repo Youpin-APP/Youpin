@@ -11,6 +11,7 @@
         android:layout_height="140dp"
         android:src="@drawable/item_img"/>
     <LinearLayout
+        android:layout_marginStart="20dp"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:orientation="vertical"
@@ -39,7 +40,8 @@
             android:layout_height="12dp"
             android:orientation="horizontal"
             android:gravity="start"
-            android:layout_marginTop="40dp">
+            android:layout_marginTop="40dp"
+            android:visibility="gone">
             <TextView
                 android:id="@+id/itemSellingCount"
                 android:layout_width="wrap_content"
@@ -79,5 +81,6 @@
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:src="@drawable/cart"
-        android:layout_marginEnd="15dp"/>
+        android:layout_marginEnd="15dp"
+        android:visibility="gone"/>
 </LinearLayout>
