@@ -97,7 +97,7 @@
                 android:layout_alignBaseline="@id/ShopDetailItemSign"
                 android:layout_alignParentBottom="true"
                 android:layout_marginStart="30dp"
-                android:text="@string/item_price_text"
+                android:text=""
                 android:textColor="@color/white"
                 android:textSize="20sp" />
 
@@ -136,7 +136,7 @@
         android:layout_marginEnd="15dp"
         android:layout_width="match_parent"
         android:layout_height="45dp"
-        android:text="@string/ShopDetailItemTest"
+        android:text=""
         android:textColor="@color/black"/>
     <TextView
         android:id="@+id/ShopDetailSecondTitle"
@@ -144,7 +144,7 @@
         android:layout_marginEnd="15dp"
         android:layout_width="match_parent"
         android:layout_height="25dp"
-        android:text="@string/ShopDetailItemMoreTest"
+        android:text=""
         android:textColor="@color/grey_color"/>
     <ImageView
         android:layout_width="match_parent"

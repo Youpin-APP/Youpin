@@ -176,15 +176,16 @@
                     android:textColor="@color/price_color"
                     android:text="￥ "
                     android:textSize="16sp"/>
+
                 <TextView
                     android:id="@+id/CreateOrderPrice"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
                     android:layout_centerInParent="true"
-                    android:textColor="@color/price_color"
                     android:text="1258.00"
-                    android:textSize="18sp"/>
+                    android:textColor="@color/price_color"
+                    android:textSize="18sp" />
             </RelativeLayout>
         </FrameLayout>
     </LinearLayout>
