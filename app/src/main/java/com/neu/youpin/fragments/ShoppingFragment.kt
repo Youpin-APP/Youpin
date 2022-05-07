@@ -186,14 +186,7 @@ class ShoppingFragment : Fragment() , OnItemClickListener, com.neu.youpin.cart.O
                             val jsonStr = String(response.body()!!.bytes())
                             val obj = Gson().fromJson(jsonStr, JsonObject::class.java)
                             val intent = Intent(context, CreateOrderActivity::class.java)
-                            val carts = ArrayList<CartItem>()
-                            for (cartItem in cartItemList) {
-                                if(cartItem.selected == 1) {
-                                    carts.add(cartItem)
-                                }
-                            }
-                            intent.putExtra("cartSelectList", carts)
-                            intent.putExtra("totalPrice",totalPrice)
+                            intent.putExtra("oid", obj.get("oid").asInt)
                             startActivity(intent)
                         }
                         override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
