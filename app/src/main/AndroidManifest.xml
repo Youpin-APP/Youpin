@@ -4,6 +4,10 @@
     package="com.neu.youpin">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"
+        tools:ignore="ProtectedPermissions" />
 
     <application
         android:name=".entity.UserApplication"
@@ -14,7 +18,11 @@
         android:supportsRtl="true"
         android:networkSecurityConfig="@xml/network_config"
         android:theme="@style/Theme.Youpin"
-        tools:targetApi="n">
+        tools:targetApi="n"
+        android:requestLegacyExternalStorage="true">
+        <activity
+            android:name=".saleUpload.SaleUploadActivity"
+            android:exported="false" />
         <activity
             android:name=".saleUpload.SaleUploadActivity"
             android:exported="false" />
