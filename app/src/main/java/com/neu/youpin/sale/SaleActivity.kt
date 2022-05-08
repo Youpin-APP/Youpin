@@ -7,11 +7,8 @@ import android.util.Log
 import android.widget.Toast
 import com.neu.youpin.R
 import com.neu.youpin.entity.ServiceCreator
-import com.neu.youpin.location.LocationDialog
-import com.neu.youpin.login.SignToken
 import com.neu.youpin.saleUpload.SaleUploadActivity
 import com.neu.youpin.store.*
-import kotlinx.android.synthetic.main.activity_loca_update.*
 import kotlinx.android.synthetic.main.activity_sale.*
 import retrofit2.Call
 import retrofit2.Callback
