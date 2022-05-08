@@ -49,7 +49,7 @@ private const val ARG_PARAM2 = "param2"
  * Use the [ShoppingFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class ShoppingFragment : Fragment() , OnItemClickListener, com.neu.youpin.cart.OnItemClickListener {
+class ShoppingFragment : Fragment(), OnItemClickListener, com.neu.youpin.cart.OnItemClickListener {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
@@ -57,10 +57,10 @@ class ShoppingFragment : Fragment() , OnItemClickListener, com.neu.youpin.cart.O
     private var root: View? = null
     private var rootActivity: HomePageActivity? = null
     private val cartItemList = Vector<CartItem>()
-    private lateinit var adapter : CartListAdapter
+    private lateinit var adapter: CartListAdapter
     private var isEditing = false
     private var totalPrice = 0f
-    private lateinit var cartTotalPrice : TextView
+    private lateinit var cartTotalPrice: TextView
     private val cartService = ServiceCreator.create<CartService>()
     private var uid = ""
 
@@ -84,10 +84,10 @@ class ShoppingFragment : Fragment() , OnItemClickListener, com.neu.youpin.cart.O
         }
         val shopNotLogin = root?.findViewById<TextView>(R.id.ShopNotLogin)
 
-        if(UserApplication.getInstance().isLogin()){
+        if (UserApplication.getInstance().isLogin()) {
             shopNotLogin?.visibility = View.GONE
             uid = UserApplication.getInstance().getId().toString()
-        }else shopNotLogin?.visibility = View.VISIBLE
+        } else shopNotLogin?.visibility = View.VISIBLE
 
         shopNotLogin?.setOnClickListener {
             val loginIntent = Intent(rootActivity, LoginActivity::class.java)
@@ -111,85 +111,94 @@ class ShoppingFragment : Fragment() , OnItemClickListener, com.neu.youpin.cart.O
         cartItemSelectAll?.setOnClickListener {
             Log.d("selectAll", "click" + cartItemSelectAll.isChecked)
             totalPrice = 0f
-            if(cartItemSelectAll.isChecked) {
+            if (cartItemSelectAll.isChecked) {
                 for (cartItem in cartItemList) {
                     cartItem.selected = 1
                     cartService.selectItem(cartItem.caid, cartItem.selected).enqueue(
-                        object : retrofit2.Callback<ResponseBody> {
-                            override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+                        object : retrofit2.Callback<CartOpStatus> {
+                            override fun onResponse(
+                                call: Call<CartOpStatus>,
+                                response: Response<CartOpStatus>
+                            ) {
 
                             }
 
-                            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                            override fun onFailure(call: Call<CartOpStatus>, t: Throwable) {
                                 t.printStackTrace()
                                 Log.d("LoginActivity", "network failed")
                             }
                         })
                     totalPrice += cartItem.price * cartItem.count
                 }
-                adapter.notifyItemRangeChanged(0,adapter.itemCount)
-            }
-            else {
+                adapter.notifyItemRangeChanged(0, adapter.itemCount)
+            } else {
                 for (cartItem in cartItemList) {
                     cartItem.selected = 0
                     cartService.selectItem(cartItem.caid, cartItem.selected).enqueue(
-                        object : retrofit2.Callback<ResponseBody> {
-                            override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+                        object : retrofit2.Callback<CartOpStatus> {
+                            override fun onResponse(
+                                call: Call<CartOpStatus>,
+                                response: Response<CartOpStatus>
+                            ) {
 
                             }
 
-                            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                            override fun onFailure(call: Call<CartOpStatus>, t: Throwable) {
                                 t.printStackTrace()
                                 Log.d("LoginActivity", "network failed")
                             }
                         })
                 }
-                adapter.notifyItemRangeChanged(0,adapter.itemCount)
+                adapter.notifyItemRangeChanged(0, adapter.itemCount)
             }
             updateTotalPrice()
         }
         editCart?.setOnClickListener {
             isEditing = !isEditing
-            if(isEditing) {
+            if (isEditing) {
                 editCart.text = "完成"
                 cartCheckout?.text = "删除"
-            }
-            else {
+            } else {
                 editCart.text = "编辑"
                 cartCheckout?.text = "结算"
             }
         }
         cartCheckout?.setOnClickListener {
-            if(isEditing){
-                val list : ArrayList<Int> = ArrayList()
+            if (isEditing) {
+                val list: ArrayList<Int> = ArrayList()
                 for (cartItem in cartItemList) {
-                    if(cartItem.selected == 1){
+                    if (cartItem.selected == 1) {
                         list.add(cartItem.caid)
                     }
                 }
                 cartService.itemDelete(list).enqueue(
-                    object : retrofit2.Callback<ResponseBody> {
-                        override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+                    object : retrofit2.Callback<CartOpStatus> {
+                        override fun onResponse(
+                            call: Call<CartOpStatus>,
+                            response: Response<CartOpStatus>
+                        ) {
                             initItem()
                         }
-                        override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+
+                        override fun onFailure(call: Call<CartOpStatus>, t: Throwable) {
                             t.printStackTrace()
                             Log.d("LoginActivity", "network failed")
                         }
                     })
 
-            }
-            else {
+            } else {
                 cartService.checkout(uid).enqueue(
-                    object : retrofit2.Callback<ResponseBody> {
-                        override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
-                            val jsonStr = String(response.body()!!.bytes())
-                            val obj = Gson().fromJson(jsonStr, JsonObject::class.java)
+                    object : retrofit2.Callback<CheckOutStatus> {
+                        override fun onResponse(
+                            call: Call<CheckOutStatus>,
+                            response: Response<CheckOutStatus>
+                        ) {
                             val intent = Intent(context, CreateOrderActivity::class.java)
-                            intent.putExtra("oid", obj.get("oid").asInt)
+                            intent.putExtra("oid", response.body()?.oid)
                             startActivity(intent)
                         }
-                        override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+
+                        override fun onFailure(call: Call<CheckOutStatus>, t: Throwable) {
                             t.printStackTrace()
                             Log.d("LoginActivity", "network failed")
                         }
@@ -209,34 +218,41 @@ class ShoppingFragment : Fragment() , OnItemClickListener, com.neu.youpin.cart.O
     override fun onResume() {
         super.onResume()
         val shopNotLogin = root?.findViewById<TextView>(R.id.ShopNotLogin)
-        if(UserApplication.getInstance().isLogin()){
+        if (UserApplication.getInstance().isLogin()) {
             shopNotLogin?.visibility = View.GONE
             uid = UserApplication.getInstance().getId().toString()
-        }else shopNotLogin?.visibility = View.VISIBLE
+        } else shopNotLogin?.visibility = View.VISIBLE
         initItem()
     }
 
     private fun initItem() {
-        cartService.getList(uid).enqueue(object : retrofit2.Callback<ResponseBody> {
-            override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+        cartService.getList(uid).enqueue(object : retrofit2.Callback<List<CartBrief>> {
+            override fun onResponse(
+                call: Call<List<CartBrief>>,
+                response: Response<List<CartBrief>>
+            ) {
                 cartItemList.clear()
-                val jsonStr = String(response.body()!!.bytes())
-                val obj = Gson().fromJson(jsonStr, JsonArray::class.java)
-                val bannerArray = obj.asJsonArray
-                for (jsonElement in bannerArray) {
-                    val cartObj = jsonElement.asJsonObject
-                    cartItemList.add(CartItem(cartObj.get("name").asString,
-                        "http://hqyz.cf:8080/pic/" + cartObj.get("pic").asString,
-                        cartObj.get("price").asFloat,cartObj.get("count").asInt,
-                        cartObj.get("type").asString,cartObj.get("selected").asInt,
-                        cartObj.get("gid").asInt,cartObj.get("caid").asInt))
+                val list = response.body()
+                if (list != null) {
+                    for (index in list.indices) {
+                        val item = list.get(index)
+                        cartItemList.add(
+                            CartItem(
+                                item.name,
+                                "http://hqyz.cf:8080/pic/" + item.pic,
+                                item.price, item.count,
+                                item.type, item.selected,
+                                item.gid, item.caid
+                            )
+                        )
+                    }
                     val recyclerViewBanner = view!!.findViewById<RecyclerView>(R.id.cartItemList)
                     recyclerViewBanner.adapter!!.notifyDataSetChanged()
                     updateTotalPrice()
                 }
             }
 
-            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+            override fun onFailure(call: Call<List<CartBrief>>, t: Throwable) {
                 t.printStackTrace()
                 Log.d("LoginActivity", "network failed")
             }
@@ -244,71 +260,78 @@ class ShoppingFragment : Fragment() , OnItemClickListener, com.neu.youpin.cart.O
     }
 
     @SuppressLint("SetTextI18n")
-    override fun onItemClick(pos: Int, id : Int) {
-        when(id) {
+    override fun onItemClick(pos: Int, id: Int) {
+        when (id) {
             R.id.cartItemPlus -> {
-                cartService.itemAddOne(cartItemList[pos].caid).enqueue(object : retrofit2.Callback<ResponseBody> {
-                    override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
-                        val jsonStr = String(response.body()!!.bytes())
-                        val obj = Gson().fromJson(jsonStr, JsonObject::class.java)
-                        if(obj.get("success").asBoolean) {
-                            cartItemList[pos].count = obj.get("count").asInt
-                            adapter.notifyItemChanged(pos)
-                            updateTotalPrice()
+                cartService.itemAddOne(cartItemList[pos].caid)
+                    .enqueue(object : retrofit2.Callback<CartOpStatus> {
+                        override fun onResponse(
+                            call: Call<CartOpStatus>,
+                            response: Response<CartOpStatus>
+                        ) {
+                            if (response.body()?.success == true) {
+                                cartItemList[pos].count = response.body()?.count!!
+                                adapter.notifyItemChanged(pos)
+                                updateTotalPrice()
+                            }
                         }
-                    }
 
-                    override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
-                        t.printStackTrace()
-                        Log.d("LoginActivity", "network failed")
-                    }
-                })
+                        override fun onFailure(call: Call<CartOpStatus>, t: Throwable) {
+                            t.printStackTrace()
+                            Log.d("LoginActivity", "network failed")
+                        }
+                    })
             }
             R.id.cartItemSub -> {
-                cartService.itemMinusOne(cartItemList[pos].caid).enqueue(object : retrofit2.Callback<ResponseBody> {
-                override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
-                    val jsonStr = String(response.body()!!.bytes())
-                    val obj = Gson().fromJson(jsonStr, JsonObject::class.java)
-                    if(obj.get("success").asBoolean) {
-                        cartItemList[pos].count = obj.get("count").asInt
-                        adapter.notifyItemChanged(pos)
-                        updateTotalPrice()
-                    }
-                }
+                cartService.itemMinusOne(cartItemList[pos].caid)
+                    .enqueue(object : retrofit2.Callback<CartOpStatus> {
+                        override fun onResponse(
+                            call: Call<CartOpStatus>,
+                            response: Response<CartOpStatus>
+                        ) {
+                            if (response.body()?.success == true) {
+                                cartItemList[pos].count = response.body()!!.count!!
+                                adapter.notifyItemChanged(pos)
+                                updateTotalPrice()
+                            }
+                        }
 
-                override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
-                    t.printStackTrace()
-                    Log.d("LoginActivity", "network failed")
-                }
-            })
+                        override fun onFailure(call: Call<CartOpStatus>, t: Throwable) {
+                            t.printStackTrace()
+                            Log.d("LoginActivity", "network failed")
+                        }
+                    })
             }
             R.id.cartItemCheckBox -> {
-                Log.d("checkItem","")
-                cartItemList[pos].selected = 1-cartItemList[pos].selected
+                Log.d("checkItem", "")
+                cartItemList[pos].selected = 1 - cartItemList[pos].selected
                 cartService.selectItem(cartItemList[pos].caid, cartItemList[pos].selected).enqueue(
-                    object : retrofit2.Callback<ResponseBody> {
-                    override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+                    object : retrofit2.Callback<CartOpStatus> {
+                        override fun onResponse(
+                            call: Call<CartOpStatus>,
+                            response: Response<CartOpStatus>
+                        ) {
 
-                    }
+                        }
 
-                    override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
-                        t.printStackTrace()
-                        Log.d("LoginActivity", "network failed")
-                    }
-                })
+                        override fun onFailure(call: Call<CartOpStatus>, t: Throwable) {
+                            t.printStackTrace()
+                            Log.d("LoginActivity", "network failed")
+                        }
+                    })
                 val cartItemSelectAll = view?.findViewById<CheckBox>(R.id.selectAllCart)
-                if(cartItemList[pos].selected == 0 && cartItemSelectAll!!.isChecked) {
+                if (cartItemList[pos].selected == 0 && cartItemSelectAll!!.isChecked) {
                     cartItemSelectAll.isChecked = false
                 }
-                if(cartItemList[pos].selected == 1) {
+                if (cartItemList[pos].selected == 1) {
                     var selectAll = true
                     for (cartItem in cartItemList) {
-                        if(cartItem.selected == 0) {
+                        if (cartItem.selected == 0) {
                             selectAll = false
                             break
                         }
                     }
-                    if(selectAll) {
+                    if (selectAll) {
                         cartItemSelectAll?.isChecked = true
                     }
                 }
@@ -320,10 +343,10 @@ class ShoppingFragment : Fragment() , OnItemClickListener, com.neu.youpin.cart.O
     fun updateTotalPrice() {
         totalPrice = 0f
         for (cartItem in cartItemList) {
-            if(cartItem.selected == 1) {
+            if (cartItem.selected == 1) {
                 totalPrice += cartItem.price * cartItem.count
             }
-            cartTotalPrice.text = "合计: "+String.format("%.2f", totalPrice)+"元"
+            cartTotalPrice.text = "合计: " + String.format("%.2f", totalPrice) + "元"
 
         }
     }
@@ -350,28 +373,43 @@ class ShoppingFragment : Fragment() , OnItemClickListener, com.neu.youpin.cart.O
     }
 }
 
+data class CartBrief(
+    val pic: String,
+    val name: String,
+    val type: String,
+    val gid: Int,
+    val selected: Int,
+    val price: Float,
+    val count: Int,
+    val caid: Int
+)
+
+data class CartOpStatus(val success: Boolean, val count: Int?)
+
+data class CheckOutStatus(val success: Boolean, val oid: Int?)
+
 interface CartService {
     @FormUrlEncoded
     @POST("cart/getList")
-    fun getList(@Field("uid") uid : String): Call<ResponseBody>
+    fun getList(@Field("uid") uid: String): Call<List<CartBrief>>
 
     @FormUrlEncoded
     @POST("cart/cartItemAddOne")
-    fun itemAddOne(@Field("caid") caid : Int): Call<ResponseBody>
+    fun itemAddOne(@Field("caid") caid: Int): Call<CartOpStatus>
 
     @FormUrlEncoded
     @POST("cart/cartItemMinusOne")
-    fun itemMinusOne(@Field("caid") caid : Int): Call<ResponseBody>
+    fun itemMinusOne(@Field("caid") caid: Int): Call<CartOpStatus>
 
     @FormUrlEncoded
     @POST("cart/cartItemDelete")
-    fun itemDelete(@Field("caids") caids : List<Int>): Call<ResponseBody>
+    fun itemDelete(@Field("caids") caids: List<Int>): Call<CartOpStatus>
 
     @FormUrlEncoded
     @POST("cart/selectItem")
-    fun selectItem(@Field("caid") caid : Int, @Field("selected") selected : Int): Call<ResponseBody>
+    fun selectItem(@Field("caid") caid: Int, @Field("selected") selected: Int): Call<CartOpStatus>
 
     @FormUrlEncoded
     @POST("order/checkout")
-    fun checkout(@Field("uid") uid:String): Call<ResponseBody>
+    fun checkout(@Field("uid") uid: String): Call<CheckOutStatus>
 }
