@@ -147,6 +147,7 @@
             android:layout_height="45dp"
             android:background="@color/white">
             <Button
+                android:id="@+id/CreateOrderButtonPay"
                 android:layout_width="wrap_content"
                 android:layout_height="36dp"
                 android:layout_marginEnd="10dp"
@@ -183,7 +184,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
                     android:layout_centerInParent="true"
-                    android:text="1258.00"
+                    android:text=""
                     android:textColor="@color/price_color"
                     android:textSize="18sp" />
             </RelativeLayout>

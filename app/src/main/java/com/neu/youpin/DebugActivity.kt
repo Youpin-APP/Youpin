@@ -35,11 +35,6 @@ class DebugActivity : AppCompatActivity() {
             val intent = Intent(this, OrderActivity::class.java)
             startActivity(intent)
         }
-        val openCreateOrder = findViewById<Button>(R.id.openCreateOrder)
-        openCreateOrder.setOnClickListener {
-            val intent = Intent(this, CreateOrderActivity::class.java)
-            startActivity(intent)
-        }
         val openOrderDetail = findViewById<Button>(R.id.openOrderDetail)
         openOrderDetail.setOnClickListener {
             val intent = Intent(this, OrderDetailActivity::class.java)

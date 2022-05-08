@@ -38,11 +38,11 @@
         android:id="@+id/orderDetailSinglePriceYuan"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="15sp"
+        android:layout_alignBottom="@id/orderDetailImg"
+        android:layout_toEndOf="@id/orderDetailImg"
         android:text="¥"
         android:textColor="@color/black"
-        android:layout_alignBottom="@id/orderDetailImg"
-        android:layout_toEndOf="@id/orderDetailImg" />
+        android:textSize="15sp" />
 
     <TextView
         android:id="@+id/orderDetailSinglePrice"
