@@ -1,5 +1,6 @@
 package com.neu.youpin.store
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -15,11 +16,13 @@ import com.neu.youpin.R
 import com.neu.youpin.entity.ServiceCreator
 import com.neu.youpin.entity.UserApplication
 import com.neu.youpin.location.*
+import com.neu.youpin.order.CreateOrderActivity
 import com.neu.youpin.sale.SelectClassMap
 import com.youth.banner.Banner
 import com.youth.banner.adapter.BannerImageAdapter
 import com.youth.banner.holder.BannerImageHolder
 import com.youth.banner.indicator.CircleIndicator
+import kotlinx.android.synthetic.main.activity_create_order.*
 import kotlinx.android.synthetic.main.activity_shop_detail.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -54,11 +57,15 @@ class ShopDetailActivity : AppCompatActivity() {
         }
 
         ShopDetailAddCart.setOnClickListener {
-            addToCart()
+            addToCart(false)
+        }
+
+        ShopDetailBuy.setOnClickListener {
+            addToCart(true)
         }
     }
 
-    private fun addToCart(){
+    private fun addToCart(isCreate: Boolean){
         UserApplication.getInstance().getId()?.let {
             shopDetailService.putItem(gid, it).enqueue(object : Callback<CartMap> {
                 override fun onResponse(call: Call<CartMap>,
@@ -66,11 +73,44 @@ class ShopDetailActivity : AppCompatActivity() {
                 ) {
                     val body = response.body()
                     if (body != null && body.success) {
-                        doError("添加到购物车成功")
-                    }else doError("添加到购物车失败")
+                        if (isCreate){
+                            createOrder(body.caid)
+                        }else doError("添加到购物车成功")
+                    }else{
+                        if (isCreate){
+                            doError("创建订单失败")
+                        }else doError("添加到购物车失败")
+                    }
                 }
 
                 override fun onFailure(call: Call<CartMap>, t: Throwable) {
+                    t.printStackTrace()
+                    Log.d("ShopDetailActivity", "network failed")
+                }
+            })
+        }
+    }
+
+    private fun createSuccess(oid: Int){
+        val intent = Intent(this, CreateOrderActivity::class.java).apply {
+            putExtra("oid", oid)
+        }
+        startActivity(intent)
+    }
+
+    private fun createOrder(caid: Int){
+        UserApplication.getInstance().getId()?.let {
+            shopDetailService.quickCheckout(it, caid).enqueue(object : Callback<OrderMap> {
+                override fun onResponse(call: Call<OrderMap>,
+                                        response: Response<OrderMap>
+                ) {
+                    val body = response.body()
+                    if (body != null && body.success) {
+                        createSuccess(body.oid)
+                    }else doError("创建订单失败!")
+                }
+
+                override fun onFailure(call: Call<OrderMap>, t: Throwable) {
                     t.printStackTrace()
                     Log.d("ShopDetailActivity", "network failed")
                 }
@@ -153,10 +193,10 @@ class ShopDetailActivity : AppCompatActivity() {
             .plus(" ").plus(location.dname).plus(location.detail)
     }
 
+    @SuppressLint("SetTextI18n")
     private fun init(){
         ShopDetailMainTitle.text = shopDetailMap?.content?.name
-        ShopDetailSecondTitle.text = shopDetailMap?.type1?.name?.
-            plus(shopDetailMap?.type2?.name).plus(shopDetailMap?.type3?.name)
+        ShopDetailSecondTitle.text = "${shopDetailMap?.type1?.name} ${shopDetailMap?.type2?.name} ${shopDetailMap?.type3?.name}"
         ShopDetailItemPrice.text = shopDetailMap?.content?.price.toString()
         // 设置商品缩略图
         val banner: Banner<PicDetail, BannerImageAdapter<PicDetail>> = findViewById(R.id.ShopDetailBanner)
@@ -196,7 +236,9 @@ data class TList(var name:String, var id:Int)
 data class ShopDetailMap(val success:Boolean, val content:ShopContent, val type1:TList, val type2:TList,
                          val type3:TList, val pic_detail: List<PicDetail>, val pic_banner: List<PicDetail>)
 
-data class CartMap(val success: Boolean)
+data class CartMap(val success: Boolean, val caid: Int)
+
+data class OrderMap(val success: Boolean, val oid: Int)
 
 interface ShopDetailService {
     @GET("/goods/getInfo")
@@ -205,6 +247,10 @@ interface ShopDetailService {
     @FormUrlEncoded
     @POST("/cart/putItem")
     fun putItem(@Field("gid") gid: Int, @Field("uid") uid: String): Call<CartMap>
+
+    @FormUrlEncoded
+    @POST("/order/quickCheckout")
+    fun quickCheckout(@Field("uid") uid: String, @Field("caid") caid: Int): Call<OrderMap>
 }
 
 class ListAdapter(private val imagesList: List<PicDetail>) : RecyclerView.Adapter<ListAdapter.ViewHolder>() {

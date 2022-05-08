@@ -9,7 +9,8 @@
     <item
         android:id="@+id/navigation_class"
         android:icon="@drawable/icon_class"
-        android:title="@string/class_str" />
+        android:title="@string/class_str"
+        android:visible="false"/>
 
     <item
         android:id="@+id/navigation_shopping"
