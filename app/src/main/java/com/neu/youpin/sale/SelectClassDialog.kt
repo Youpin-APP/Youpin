@@ -103,10 +103,10 @@ class SelectClassDialog: Dialog {
          * 从外部打开对话框进行对话框的初始化
          * @return
          */
-        fun createGidDialog(list: List<TList>): SelectClassDialog {
+        fun createIdDialog(list: List<TList>): SelectClassDialog {
             classList = list
             // 设置recyclerView
-            initRecycleView()
+             initRecycleView()
 
             (layout.findViewById<View>(R.id.SaleDialogText) as EditText).setText("")
 
@@ -182,6 +182,7 @@ class SelectClassDialog: Dialog {
                 }
             })
         }
+
     }
 }
 
@@ -191,6 +192,7 @@ data class TList(var tname:String, var tid:Int)
 data class T3List(var success:Boolean, var tid1:List<TList>, var tid2:List<TList>, var tid3:List<TList>)
 
 class SelectClassMap(val success: Boolean, val tid1: Int)
+
 
 interface SelectClassService {
     @GET("/goods/getTypeList")

@@ -8,6 +8,7 @@ import android.widget.Toast
 import com.neu.youpin.R
 import com.neu.youpin.entity.ServiceCreator
 import com.neu.youpin.location.LocationDialog
+import com.neu.youpin.login.SignToken
 import com.neu.youpin.saleUpload.SaleUploadActivity
 import com.neu.youpin.store.*
 import kotlinx.android.synthetic.main.activity_loca_update.*
@@ -22,10 +23,12 @@ class SaleActivity : AppCompatActivity() {
     private var locaDialog: SelectClassDialog? = null
     private var shopItemList:List<StoreMap>? = null
     private var shopDetailMap:ShopDetailMap? = null
+    private var shopMainClassList:List<SortList>? = null
 
     private var tid = arrayOf(-1, -1, -1)
     private var tName = arrayOf("", "", "")
     private var gid = 2
+    private var sid = -1
 
     private val saleService = ServiceCreator.create<SaleService>()
 
@@ -36,6 +39,7 @@ class SaleActivity : AppCompatActivity() {
         setContentView(R.layout.activity_sale)
 
         builderForDialog = SelectClassDialog.Builder(this)
+        initMainClassList()
 
         SaleButtonBack.setOnClickListener {
             finish()
@@ -74,6 +78,19 @@ class SaleActivity : AppCompatActivity() {
             locaDialog!!.show()
         }
 
+        SaleGoodSid.setOnClickListener {
+//            val list: MutableList<TList> = mutableListOf<TList>()
+//            for (i in shopItemList!!){
+//                list.add(TList("名称：${i.name}  ￥${i.price}",i.id))
+//            }
+//            locaDialog = builderForDialog!!.setListener(object: SelectClassDialog.SaleListener{
+//                override fun setActivityText(className: String, classId: Int){
+//                    sid = classId
+//                }
+//            }).setTitle("商品主分类").createIdDialog()
+//            locaDialog!!.show()
+        }
+
         SaleButtonEditImg.setOnClickListener {
             if(gid>=0){
                 val saleUploadIntent = Intent(this, SaleUploadActivity::class.java).apply {
@@ -88,6 +105,17 @@ class SaleActivity : AppCompatActivity() {
             if(SaleGoodName.text.toString().isNotBlank()){
                 initItemList(SaleGoodName.text.toString())
             }else doError("商品名为空不得查询")
+        }
+
+        SaleButtonAdd.setOnClickListener {
+//            locaDialog = builderForDialog!!.setListener(object: SelectClassDialog.SaleListener{
+//                override fun setActivityText(className: String, classId: Int){
+//                    SaleGoodTid3.text = className
+//                    tName[2] = className
+//                    tid[2] = classId
+//                }
+//            }).setTitle("商品三级细分类").setType(2, gid).createDialog()
+//            locaDialog!!.show()
         }
     }
 
@@ -134,7 +162,7 @@ class SaleActivity : AppCompatActivity() {
                 gid = classId
                 initItemInfo()
             }
-        }).setTitle("选择商品").setType(2, gid).createGidDialog(list)
+        }).setTitle("选择商品").createIdDialog(list)
         locaDialog!!.show()
     }
 
@@ -148,6 +176,7 @@ class SaleActivity : AppCompatActivity() {
         tid[1] = shopDetailMap?.type2?.id!!
         tid[2] = shopDetailMap?.type3?.id!!
         SaleGoodPrice.setText(shopDetailMap?.content?.price.toString())
+        SaleGoodSid.text = shopDetailMap?.sid?.let { shopMainClassList?.get(it)?.sname }
     }
 
     private fun initItemInfo(){
@@ -167,12 +196,35 @@ class SaleActivity : AppCompatActivity() {
         })
     }
 
+    private fun initMainClassList(){
+        saleService.sortList().enqueue(object : Callback<List<SortList>> {
+            override fun onResponse(call: Call<List<SortList>>,
+                                    response: Response<List<SortList>>
+            ) {
+                shopMainClassList = response.body()
+            }
+            override fun onFailure(call: Call<List<SortList>>, t: Throwable) {
+                t.printStackTrace()
+                Log.d("SaleActivity", "network failed")
+            }
+        })
+    }
+
 }
+
+data class SortList(val sid:Int, val sname: String)
 
 interface SaleService {
     @GET("/goods/getInfo")
     fun getInfo(@Query("id") name: Int): Call<ShopDetailMap>
 
-    @GET("store/search")
+    @GET("/store/search")
     fun search(@Query("name") name: String): Call<List<StoreMap>>
+
+    @FormUrlEncoded
+    @POST("/goodsEdit/addGoods")
+    fun addGoods(@Field("uid") uid: String, @Field("pw") pw: String, @Field("name") name: String): Call<SignToken>
+
+    @GET("/goods/sortList")
+    fun sortList(): Call<List<SortList>>
 }

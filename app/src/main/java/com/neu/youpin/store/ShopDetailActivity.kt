@@ -234,7 +234,7 @@ data class ShopContent(val name:String, val price: Float)
 data class TList(var name:String, var id:Int)
 
 data class ShopDetailMap(val success:Boolean, val content:ShopContent, val type1:TList, val type2:TList,
-                         val type3:TList, val pic_detail: List<PicDetail>, val pic_banner: List<PicDetail>)
+                         val type3:TList, val pic_detail: List<PicDetail>, val pic_banner: List<PicDetail>, val sid:Int)
 
 data class CartMap(val success: Boolean, val caid: Int)
 

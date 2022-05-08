@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.GridLayoutManager
@@ -17,7 +18,9 @@ import com.google.android.material.tabs.TabLayout
 import com.neu.youpin.HomePageActivity
 import com.neu.youpin.R
 import com.neu.youpin.entity.UserApplication
+import com.neu.youpin.location.LocaUpdateActivity
 import com.neu.youpin.login.LoginActivity
+import com.neu.youpin.order.OrderActivity
 import com.neu.youpin.store.ShopItem
 import com.neu.youpin.user.UserItemListAdapter
 import kotlinx.android.synthetic.main.fragment_mine.*
@@ -77,6 +80,13 @@ class MineFragment : Fragment() {
         recyclerView?.layoutManager = layoutManager
         val adapter = UserItemListAdapter(shopItemList)
         recyclerView?.adapter = adapter
+
+        val mineUserOrder: LinearLayout? = root?.findViewById<LinearLayout>(R.id.MineUserOrder)
+        mineUserOrder?.setOnClickListener {
+            val locaIntent = Intent(rootActivity, OrderActivity::class.java)
+            rootActivity?.startActivity(locaIntent)
+        }
+
 
         //跳转到login界面
         val mineButtonLogin: LinearLayout? = root?.findViewById(R.id.MineButtonLogin)

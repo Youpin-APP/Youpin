@@ -15,6 +15,7 @@ import com.google.gson.JsonObject
 import com.neu.youpin.Interface.OnItemClickListener
 import com.neu.youpin.R
 import com.neu.youpin.entity.ServiceCreator
+import com.neu.youpin.entity.UserApplication
 import com.neu.youpin.orderDetail.OrderDetailActivity
 import kotlinx.android.synthetic.main.activity_order.*
 import okhttp3.ResponseBody
@@ -28,12 +29,16 @@ import java.util.*
 
 class OrderActivity : AppCompatActivity() , OnItemClickListener{
     private val orderInfoList = ArrayList<OrderInfo>()
-    private val uid = "11415"
+    private var uid = "11415"
     private val orderListService = ServiceCreator.create<OrderListService>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_order)
         //TODO:这里设置uid
+
+        if(UserApplication.getInstance().isLogin()) uid = UserApplication.getInstance().getId().toString()
+        else finish()
+
         initList()
         val orderListView = findViewById<RecyclerView>(R.id.orderList)
         orderListView.layoutManager = LinearLayoutManager(this)
