@@ -103,10 +103,14 @@ class SelectClassDialog: Dialog {
          * 从外部打开对话框进行对话框的初始化
          * @return
          */
-        fun createIdDialog(list: List<TList>): SelectClassDialog {
-            classList = list
-            // 设置recyclerView
-             initRecycleView()
+        fun createIdDialog(list: List<TList>?): SelectClassDialog {
+            if(list == null){
+                initMainClassList()
+            }else{
+                classList = list
+                // 设置recyclerView
+                initRecycleView()
+            }
 
             (layout.findViewById<View>(R.id.SaleDialogText) as EditText).setText("")
 
@@ -183,6 +187,27 @@ class SelectClassDialog: Dialog {
             })
         }
 
+        private fun initMainClassList(){
+            selectClassService.sortList().enqueue(object : Callback<List<SortList>> {
+                override fun onResponse(call: Call<List<SortList>>,
+                                        response: Response<List<SortList>>
+                ) {
+                    val list = response.body()
+                    if (list != null) {
+                        val tList: MutableList<TList> = mutableListOf<TList>()
+                        for (i in list){
+                            tList.add(TList(i.sname, i.sid))
+                        }
+                        classList = tList
+                    }
+                    initRecycleView()
+                }
+                override fun onFailure(call: Call<List<SortList>>, t: Throwable) {
+                    t.printStackTrace()
+                    Log.d("LoginActivity", "network failed")
+                }
+            })
+        }
     }
 }
 
@@ -193,10 +218,14 @@ data class T3List(var success:Boolean, var tid1:List<TList>, var tid2:List<TList
 
 class SelectClassMap(val success: Boolean, val tid1: Int)
 
+data class SortList(val sid:Int, val sname: String)
 
 interface SelectClassService {
     @GET("/goods/getTypeList")
     fun getTypeList(@Query("gid") gid: Int): Call<T3List>
+
+    @GET("/goods/sortList")
+    fun sortList(): Call<List<SortList>>
 
     @FormUrlEncoded
     @POST("/goodsEdit/addGoodsType")

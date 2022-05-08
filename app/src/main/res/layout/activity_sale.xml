@@ -447,7 +447,7 @@
             android:textColor="@color/purple_font"/>
 
         <Button
-            android:id="@+id/SaleButtonDelete"
+            android:id="@+id/SaleButtonEditImg"
             android:layout_marginStart="10dp"
             android:layout_marginEnd="10dp"
             android:layout_width="80dp"
@@ -455,11 +455,11 @@
             android:layout_weight="1"
             android:layout_gravity="center"
             android:background="@drawable/custom_button_loca_background"
-            android:text="删除"
+            android:text="编辑图片"
             android:textColor="@color/purple_font"/>
     </LinearLayout>
     <Button
-        android:id="@+id/SaleButtonEditImg"
+        android:id="@+id/SaleButtonDelete"
         android:layout_marginTop="10dp"
         android:layout_marginStart="10dp"
         android:layout_marginEnd="10dp"
@@ -467,6 +467,7 @@
         android:layout_height="40dp"
         android:layout_gravity="start"
         android:background="@drawable/custom_button_loca_background"
-        android:text="编辑图片"
-        android:textColor="@color/purple_font"/>
+        android:text="删除"
+        android:textColor="@color/purple_font"
+        android:visibility="gone"/>
 </LinearLayout>

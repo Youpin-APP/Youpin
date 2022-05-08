@@ -23,12 +23,12 @@ class SaleActivity : AppCompatActivity() {
     private var locaDialog: SelectClassDialog? = null
     private var shopItemList:List<StoreMap>? = null
     private var shopDetailMap:ShopDetailMap? = null
-    private var shopMainClassList:List<SortList>? = null
 
     private var tid = arrayOf(-1, -1, -1)
     private var tName = arrayOf("", "", "")
     private var gid = 2
     private var sid = -1
+    private var sName:String? = null
 
     private val saleService = ServiceCreator.create<SaleService>()
 
@@ -39,7 +39,6 @@ class SaleActivity : AppCompatActivity() {
         setContentView(R.layout.activity_sale)
 
         builderForDialog = SelectClassDialog.Builder(this)
-        initMainClassList()
 
         SaleButtonBack.setOnClickListener {
             finish()
@@ -79,16 +78,14 @@ class SaleActivity : AppCompatActivity() {
         }
 
         SaleGoodSid.setOnClickListener {
-//            val list: MutableList<TList> = mutableListOf<TList>()
-//            for (i in shopItemList!!){
-//                list.add(TList("名称：${i.name}  ￥${i.price}",i.id))
-//            }
-//            locaDialog = builderForDialog!!.setListener(object: SelectClassDialog.SaleListener{
-//                override fun setActivityText(className: String, classId: Int){
-//                    sid = classId
-//                }
-//            }).setTitle("商品主分类").createIdDialog()
-//            locaDialog!!.show()
+            locaDialog = builderForDialog!!.setListener(object: SelectClassDialog.SaleListener{
+                override fun setActivityText(className: String, classId: Int){
+                    SaleGoodSid.text = className
+                    sName = className
+                    sid = classId
+                }
+            }).setTitle("商品主分类").createIdDialog(null)
+            locaDialog!!.show()
         }
 
         SaleButtonEditImg.setOnClickListener {
@@ -108,14 +105,17 @@ class SaleActivity : AppCompatActivity() {
         }
 
         SaleButtonAdd.setOnClickListener {
-//            locaDialog = builderForDialog!!.setListener(object: SelectClassDialog.SaleListener{
-//                override fun setActivityText(className: String, classId: Int){
-//                    SaleGoodTid3.text = className
-//                    tName[2] = className
-//                    tid[2] = classId
-//                }
-//            }).setTitle("商品三级细分类").setType(2, gid).createDialog()
-//            locaDialog!!.show()
+            if(tid[0]!=-1 && tid[1]!=-1 && tid[2]!=-1 && sid!=-1 && SaleGoodName.text.toString().isNotBlank()
+                && SaleGoodPrice.text.toString().isNotBlank()){
+                addItemInfo()
+            }else doError("商品信息填写错误")
+        }
+
+        SaleButtonEdit.setOnClickListener {
+            if(tid[0]!=-1 && tid[1]!=-1 && tid[2]!=-1 && sid!=-1 && SaleGoodName.text.toString().isNotBlank()
+                && sid!=-1 && SaleGoodPrice.text.toString().isNotBlank()){
+                editItemInfo()
+            }else doError("商品信息填写错误")
         }
     }
 
@@ -176,7 +176,8 @@ class SaleActivity : AppCompatActivity() {
         tid[1] = shopDetailMap?.type2?.id!!
         tid[2] = shopDetailMap?.type3?.id!!
         SaleGoodPrice.setText(shopDetailMap?.content?.price.toString())
-        SaleGoodSid.text = shopDetailMap?.sid?.let { shopMainClassList?.get(it)?.sname }
+        SaleGoodSid.text = shopDetailMap?.sname
+        sid = shopDetailMap?.sid!!
     }
 
     private fun initItemInfo(){
@@ -196,23 +197,52 @@ class SaleActivity : AppCompatActivity() {
         })
     }
 
-    private fun initMainClassList(){
-        saleService.sortList().enqueue(object : Callback<List<SortList>> {
-            override fun onResponse(call: Call<List<SortList>>,
-                                    response: Response<List<SortList>>
+    private fun addItemInfoSuccess(){
+        SaleGoodPrimary.setText(gid.toString())
+    }
+
+    private fun addItemInfo(){
+        saleService.addGoods(SaleGoodName.text.toString(), sid, tid[0], tid[1],
+            tid[2], SaleGoodPrice.text.toString().toFloat()).enqueue(object : Callback<SaleMap> {
+            override fun onResponse(call: Call<SaleMap>,
+                                    response: Response<SaleMap>
             ) {
-                shopMainClassList = response.body()
+                val body = response.body()
+                if (body != null) {
+                    gid = body.gid
+                    addItemInfoSuccess()
+                }else doError("商品新增失败！！")
             }
-            override fun onFailure(call: Call<List<SortList>>, t: Throwable) {
+            override fun onFailure(call: Call<SaleMap>, t: Throwable) {
                 t.printStackTrace()
-                Log.d("SaleActivity", "network failed")
+                Log.d("ShopDetailActivity", "network failed")
+            }
+        })
+    }
+
+    private fun editItemInfo(){
+        saleService.editGoods(gid, SaleGoodName.text.toString(), sid, SaleGoodPrice.text.toString().toFloat(),
+            tid[0], tid[1], tid[2]).enqueue(object : Callback<SaleStatus> {
+            override fun onResponse(call: Call<SaleStatus>,
+                                    response: Response<SaleStatus>
+            ) {
+                val body = response.body()
+                if (body != null) {
+                    doError("商品修改成功")
+                }else doError("商品修改失败")
+            }
+            override fun onFailure(call: Call<SaleStatus>, t: Throwable) {
+                t.printStackTrace()
+                Log.d("ShopDetailActivity", "network failed")
             }
         })
     }
 
 }
 
-data class SortList(val sid:Int, val sname: String)
+class SaleMap(val gid:Int)
+
+class SaleStatus(val success:Boolean)
 
 interface SaleService {
     @GET("/goods/getInfo")
@@ -223,8 +253,11 @@ interface SaleService {
 
     @FormUrlEncoded
     @POST("/goodsEdit/addGoods")
-    fun addGoods(@Field("uid") uid: String, @Field("pw") pw: String, @Field("name") name: String): Call<SignToken>
+    fun addGoods(@Field("name") name: String, @Field("sid") pw: Int, @Field("tid1") tid1: Int,
+                 @Field("tid2") tid2: Int, @Field("tid3") tid3: Int, @Field("price") price: Float): Call<SaleMap>
 
-    @GET("/goods/sortList")
-    fun sortList(): Call<List<SortList>>
+    @FormUrlEncoded
+    @POST("/goodsEdit/editGoods")
+    fun editGoods(@Field("gid") gid: Int, @Field("name") name: String, @Field("sid") pw: Int, @Field("price") price: Float,
+                  @Field("tid1") tid1: Int, @Field("tid2") tid2: Int, @Field("tid3") tid3: Int): Call<SaleStatus>
 }
