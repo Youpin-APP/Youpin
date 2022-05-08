@@ -54,13 +54,10 @@
             android:name=".user.UserActivity"
             android:exported="false" />
         <activity
-            android:name=".HomePageActivity"
-            android:exported="false" />
-        <activity
             android:name=".store.StoreActivity"
             android:exported="false" />
         <activity
-            android:name=".DebugActivity"
+            android:name=".HomePageActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -50,7 +50,7 @@ class StoreActivity : AppCompatActivity() {
 
         StoreSearchBox.setOnEditorActionListener { textView, actionId, keyEvent ->
             if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-                StoreSearchBox.setText(shopItemName)
+                initItem(StoreSearchBox.text.toString())
                 return@setOnEditorActionListener true
             }
             return@setOnEditorActionListener false
