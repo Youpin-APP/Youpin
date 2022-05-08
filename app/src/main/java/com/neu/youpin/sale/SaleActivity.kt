@@ -117,6 +117,18 @@ class SaleActivity : AppCompatActivity() {
                 editItemInfo()
             }else doError("商品信息填写错误")
         }
+
+        SaleButtonUp.setOnClickListener {
+            if(gid != -1){
+                upItemInfo()
+            }else doError("未选中商品")
+        }
+
+        SaleButtonDown.setOnClickListener {
+            if(gid != -1){
+                downItemInfo()
+            }else doError("未选中商品")
+        }
     }
 
     /**
@@ -178,6 +190,8 @@ class SaleActivity : AppCompatActivity() {
         SaleGoodPrice.setText(shopDetailMap?.content?.price.toString())
         SaleGoodSid.text = shopDetailMap?.sname
         sid = shopDetailMap?.sid!!
+        if(shopDetailMap?.enable==1) setStatusText("上架")
+        else setStatusText("下架")
     }
 
     private fun initItemInfo(){
@@ -238,6 +252,46 @@ class SaleActivity : AppCompatActivity() {
         })
     }
 
+    private fun downItemInfo(){
+        saleService.goodsDown(gid).enqueue(object : Callback<SaleStatus> {
+            override fun onResponse(call: Call<SaleStatus>,
+                                    response: Response<SaleStatus>
+            ) {
+                val body = response.body()
+                if (body != null) {
+                    doError("商品下架成功")
+                    setStatusText("下架")
+                }else doError("商品下架失败")
+            }
+            override fun onFailure(call: Call<SaleStatus>, t: Throwable) {
+                t.printStackTrace()
+                Log.d("ShopDetailActivity", "network failed")
+            }
+        })
+    }
+
+    private fun setStatusText(text: String){
+        SaleGoodStatus.text = text
+    }
+
+    private fun upItemInfo(){
+        saleService.goodsUp(gid).enqueue(object : Callback<SaleStatus> {
+            override fun onResponse(call: Call<SaleStatus>,
+                                    response: Response<SaleStatus>
+            ) {
+                val body = response.body()
+                if (body != null) {
+                    doError("商品上架成功")
+                    setStatusText("上架")
+                }else doError("商品上架失败")
+            }
+            override fun onFailure(call: Call<SaleStatus>, t: Throwable) {
+                t.printStackTrace()
+                Log.d("ShopDetailActivity", "network failed")
+            }
+        })
+    }
+
 }
 
 class SaleMap(val gid:Int)
@@ -260,4 +314,13 @@ interface SaleService {
     @POST("/goodsEdit/editGoods")
     fun editGoods(@Field("gid") gid: Int, @Field("name") name: String, @Field("sid") pw: Int, @Field("price") price: Float,
                   @Field("tid1") tid1: Int, @Field("tid2") tid2: Int, @Field("tid3") tid3: Int): Call<SaleStatus>
+
+    @FormUrlEncoded
+    @POST("/goodsEdit/goodsDown")
+    fun goodsDown(@Field("gid") gid: Int): Call<SaleStatus>
+
+    @FormUrlEncoded
+    @POST("/goodsEdit/goodsUp")
+    fun goodsUp(@Field("gid") gid: Int): Call<SaleStatus>
+
 }

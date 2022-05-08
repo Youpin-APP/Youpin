@@ -378,21 +378,21 @@
                 android:layout_alignParentEnd="true"
                 android:layout_marginEnd="10dp"
                 android:gravity="center"
-                android:text="商品库存:"
+                android:text="商品状态:"
                 android:textColor="@color/black"
                 android:textSize="12sp" />
         </RelativeLayout>
 
 
-        <EditText
+        <TextView
             android:paddingStart="10dp"
-            android:id="@+id/SaleGoodCount"
+            android:id="@+id/SaleGoodStatus"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:inputType="number"
             android:singleLine="true"
             android:textColor="@color/black"
+            android:gravity="center"
             android:textSize="12sp"
             tools:ignore="RtlSymmetry"
             android:background="@drawable/custom_edittext_transparent_background" />
@@ -470,4 +470,34 @@
         android:text="删除"
         android:textColor="@color/purple_font"
         android:visibility="gone"/>
+    <LinearLayout
+        android:layout_marginTop="0dp"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="@color/white"
+        android:orientation="horizontal">
+        <Button
+            android:id="@+id/SaleButtonUp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_width="80dp"
+            android:layout_height="40dp"
+            android:layout_weight="1"
+            android:layout_gravity="center"
+            android:background="@drawable/custom_button_loca_background"
+            android:text="商品上架"
+            android:textColor="@color/purple_font"/>
+        <Button
+            android:id="@+id/SaleButtonDown"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_width="80dp"
+            android:layout_height="40dp"
+            android:layout_weight="1"
+            android:layout_gravity="center"
+            android:background="@drawable/custom_button_loca_background"
+            android:text="商品下架"
+            android:textColor="@color/purple_font"/>
+    </LinearLayout>
+
 </LinearLayout>
