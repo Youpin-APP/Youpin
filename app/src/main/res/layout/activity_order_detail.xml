@@ -31,8 +31,7 @@
         android:layout_height="30dp"
         android:background="@drawable/rect_box"
         android:layout_marginStart="10dp"
-        android:layout_marginEnd="10dp"
-        android:layout_marginBottom="10dp">
+        android:layout_marginEnd="10dp">
         <TextView
             android:id="@+id/orderDetailIdTitle"
             android:layout_width="wrap_content"
@@ -41,11 +40,12 @@
             android:layout_centerVertical="true"
             android:text="订单编号: "/>
         <TextView
+            android:id="@+id/orderId"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_toEndOf="@id/orderDetailIdTitle"
             android:layout_centerVertical="true"
-            android:text="000000001"/>
+            android:text=""/>
         <TextView
             android:id="@+id/orderDetailPriceTitle"
             android:layout_width="wrap_content"
@@ -68,6 +68,74 @@
             android:layout_centerVertical="true"
             android:text="元"/>
     </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:background="@drawable/rect_box"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp">
+
+        <TextView
+            android:id="@+id/orderTime1Title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="0dp"
+            android:layout_marginTop="4dp"
+            android:text="创建时间: " />
+
+        <TextView
+            android:id="@+id/orderTime1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@id/orderTime1Title"
+            android:layout_centerVertical="true"
+            android:text=""/>
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:background="@drawable/rect_box"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp">
+        <TextView
+            android:id="@+id/orderTime2Title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:text="支付时间: "/>
+        <TextView
+            android:id="@+id/orderTime2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@id/orderTime2Title"
+            android:layout_centerVertical="true"
+            android:text=""/>
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:background="@drawable/rect_box"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="10dp">
+        <TextView
+            android:id="@+id/orderTime3Title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:text="完成时间: "/>
+        <TextView
+            android:id="@+id/orderTime3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@id/orderTime3Title"
+            android:layout_centerVertical="true"
+            android:text=""/>
+    </RelativeLayout>
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/orderDetailList"
         android:layout_width="match_parent"
@@ -80,7 +148,7 @@
         android:gravity="start"
         android:orientation="horizontal">
         <Button
-            android:id="@+id/cartCheckoutButton"
+            android:id="@+id/orderPayButton"
             android:layout_width="100dp"
             android:layout_height="40dp"
             android:layout_alignParentEnd="true"
@@ -90,5 +158,16 @@
             android:textColor="@color/white"
             android:text="去支付"
             android:layout_marginEnd="10dp"/>
+        <Button
+            android:id="@+id/orderCancelButton"
+            android:layout_width="100dp"
+            android:layout_height="40dp"
+            android:layout_centerVertical="true"
+            android:background="@drawable/cart_checkout_button"
+            android:layout_toStartOf="@id/orderPayButton"
+            android:textColor="@color/white"
+            android:text="取消订单"
+            android:layout_marginEnd="10dp"
+            android:visibility="gone"/>
     </RelativeLayout>
 </LinearLayout>

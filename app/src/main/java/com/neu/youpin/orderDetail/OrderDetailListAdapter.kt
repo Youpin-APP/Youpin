@@ -6,10 +6,12 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.neu.youpin.R
 import java.util.*
+import kotlin.collections.ArrayList
 
-class OrderDetailListAdapter(private var infoList: Vector<OrderDetailInfo>) :
+class OrderDetailListAdapter(private var infoList: List<Info>?) :
 
     RecyclerView.Adapter<OrderDetailListAdapter.ViewHolder>() {
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -25,12 +27,28 @@ class OrderDetailListAdapter(private var infoList: Vector<OrderDetailInfo>) :
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val info = infoList[position]
-        holder.image.setImageResource(info.pic)
-        holder.name.text = info.name
-        holder.description.text = info.description
-        holder.price.text = info.price.toString()
+        val info = infoList?.get(position)
+//        holder.image.setImageResource(info.pic)
+        if (info != null) {
+            holder.name.text = info.name
+            holder.description.text = "数量:" + info.count + "  " + info.type
+            holder.price.text = info.price.toString()
+            Glide.with(holder.itemView.context)
+                .load("http://hqyz.cf:8080/pic/" +info.pic)
+                .into(holder.image)
+        }
     }
 
-    override fun getItemCount() = infoList.size
+    override fun getItemCount() : Int{
+        return if(infoList != null) {
+            infoList!!.size
+        } else {
+            0
+        }
+    }
+
+    fun setData(infoList: List<Info>) {
+        this.infoList = infoList
+        notifyDataSetChanged()
+    }
 }

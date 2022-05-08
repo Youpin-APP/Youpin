@@ -2,7 +2,10 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="130dp"
-    android:background="@drawable/rect_box">
+    android:background="@drawable/rect_box"
+    android:id="@+id/orderItem"
+    android:clickable="true"
+    android:focusable="true">
     <TextView
         android:id="@+id/orderItemState"
         android:layout_width="wrap_content"

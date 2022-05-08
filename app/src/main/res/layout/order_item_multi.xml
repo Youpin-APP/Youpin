@@ -2,7 +2,10 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="130dp"
-    android:background="@drawable/rect_box">
+    android:background="@drawable/rect_box"
+    android:id="@+id/orderItem"
+    android:clickable="true"
+    android:focusable="true">
     <TextView
         android:id="@+id/orderItemState"
         android:layout_width="wrap_content"
@@ -24,7 +27,9 @@
         android:layout_width="match_parent"
         android:layout_height="100dp"
         android:layout_below="@id/orderItemState"
-        android:layout_alignParentStart="true"/>
+        android:layout_alignParentStart="true"
+        android:clickable="true"
+        android:focusable="true" />
     <TextView
         android:id="@+id/orderItemTotalPrice"
         android:layout_width="60dp"

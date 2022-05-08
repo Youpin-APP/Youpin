@@ -1,43 +1,85 @@
 package com.neu.youpin.order
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
+import android.view.MotionEvent
+import android.view.View
+import android.widget.Button
 import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.gson.Gson
+import com.google.gson.JsonObject
+import com.neu.youpin.Interface.OnItemClickListener
 import com.neu.youpin.R
+import com.neu.youpin.entity.ServiceCreator
+import com.neu.youpin.orderDetail.OrderDetailActivity
+import kotlinx.android.synthetic.main.activity_order.*
+import okhttp3.ResponseBody
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import retrofit2.http.Field
+import retrofit2.http.FormUrlEncoded
+import retrofit2.http.POST
 import java.util.*
 
-class OrderActivity : AppCompatActivity() {
-    private val orderInfoList = Vector<OrderInfo>()
+class OrderActivity : AppCompatActivity() , OnItemClickListener{
+    private val orderInfoList = ArrayList<OrderInfo>()
+    private val uid = "11415"
+    private val orderListService = ServiceCreator.create<OrderListService>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_order)
-
+        //TODO:这里设置uid
         initList()
         val orderListView = findViewById<RecyclerView>(R.id.orderList)
         orderListView.layoutManager = LinearLayoutManager(this)
-        orderListView.adapter = OrderListAdapter(orderInfoList)
-
-        val sendText = findViewById<TextView>(R.id.searchBox) //初始化文本
-        val left = resources.getDrawable(R.drawable.search_img)
-        left.setBounds(0, 0, 50, 50) //必须设置图片的大小否则没有作用
-
-        sendText.setCompoundDrawables(left, null, null, null) //设置图片left这里如果是右边就放到第二个参数里面依次对应
+        val adapter = OrderListAdapter(orderInfoList)
+        adapter.setOnItemClickListener(this)
+        orderListView.adapter = adapter
+        orderBack.setOnClickListener {
+            finish()
+        }
     }
 
     private fun initList() {
-        repeat(2) {
-            var singleImg = Vector<Int>()
-            singleImg.addElement(R.drawable.item_img)
-            var multiImg = Vector<Int>()
-            repeat(6) {
-                multiImg.addElement(R.drawable.item_img)
+        orderListService.getList(uid).enqueue(object : Callback<List<OrderInfo>> {
+            override fun onResponse(call: Call<List<OrderInfo>>, response: Response<List<OrderInfo>>) {
+                val list = response.body()
+                orderInfoList.clear()
+                if (list != null) {
+                    orderInfoList.addAll(list)
+                }
+                var orderListView : RecyclerView? = findViewById(R.id.orderList)
+                if(orderListView != null && orderListView.adapter != null) {
+                    orderListView.adapter!!.notifyDataSetChanged()
+                }
             }
-            orderInfoList.addElement(OrderInfo("furry",singleImg,100,"蓝色"))
-            orderInfoList.addElement(OrderInfo("furry",singleImg,100,"蓝色"))
-            orderInfoList.addElement(OrderInfo("",multiImg,100,"蓝色"))
-            orderInfoList.addElement(OrderInfo("",multiImg,100,"蓝色"))
+
+            override fun onFailure(call: Call<List<OrderInfo>>, t: Throwable) {
+                t.printStackTrace()
+                Log.d("LoginActivity", "network failed")
+            }
+        })
+    }
+
+    override fun onItemClick(pos: Int, id: Int) {
+        when(id) {
+            R.id.orderItem -> {
+                val intent = Intent(this, OrderDetailActivity::class.java)
+                intent.putExtra("oid", orderInfoList[pos].oid)
+                startActivity(intent)
+            }
         }
     }
+
+}
+
+interface OrderListService {
+    @FormUrlEncoded
+    @POST("order/getOrderList")
+    fun getList(@Field("uid") uid : String): Call<List<OrderInfo>>
 }
