@@ -85,11 +85,34 @@ class SelectClassDialog: Dialog {
 
             if(title != null) (layout.findViewById<View>(R.id.SaleDialoTitle) as TextView).text = title
 
+            (layout.findViewById<View>(R.id.SaleDialogAddLayout) as LinearLayout).visibility = View.VISIBLE
+
             (layout.findViewById<View>(R.id.SaleDialogConfirm) as Button).setOnClickListener {
                 if((layout.findViewById<View>(R.id.SaleDialogText) as EditText).text.isEmpty()){
                     Toast.makeText(mContext,"新建分类为空！！",Toast.LENGTH_SHORT).show()
                 }else addByRetrofit()
             }
+
+            dialog.setContentView(layout)
+            dialog.setCancelable(true)     //用户可以点击手机Back键取消对话框显示
+            dialog.setCanceledOnTouchOutside(true)        //用户不能通过点击对话框之外的地方取消对话框显示
+            return dialog
+        }
+
+        /**
+         * 从外部打开对话框进行对话框的初始化
+         * @return
+         */
+        fun createGidDialog(list: List<TList>): SelectClassDialog {
+            classList = list
+            // 设置recyclerView
+            initRecycleView()
+
+            (layout.findViewById<View>(R.id.SaleDialogText) as EditText).setText("")
+
+            if(title != null) (layout.findViewById<View>(R.id.SaleDialoTitle) as TextView).text = title
+
+            (layout.findViewById<View>(R.id.SaleDialogAddLayout) as LinearLayout).visibility = View.GONE
 
             dialog.setContentView(layout)
             dialog.setCancelable(true)     //用户可以点击手机Back键取消对话框显示
